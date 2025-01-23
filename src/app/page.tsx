@@ -1,3 +1,6 @@
+import { ROUTES } from '@data';
+import { redirect } from 'next/navigation';
+
 export default function Page() {
-  return <div>첫페이지</div>;
+  redirect(ROUTES.ONBOARDING.signin);
 }
