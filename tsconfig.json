@@ -23,6 +23,7 @@
       "@apis": ["./src/app/_apis/index.ts"],
       "@data": ["./src/app/_data/index.ts"],
       "@types": ["./src/app/_types/index.ts"],
+      "@utils": ["./src/app/_utils/index.ts"],
       "@/*": ["./src/app/*"]
     }
   },

@@ -19,6 +19,7 @@ const api = async <T>(
   const defaultOptions: RequestInit = {
     method: method,
     headers: {
+      'Content-Type': 'application/json',
       Authorization: authorizationToken ? `Bearer ${authorizationToken}` : '',
       ...options?.headers,
     },

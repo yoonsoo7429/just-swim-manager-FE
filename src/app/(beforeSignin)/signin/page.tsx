@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import styled from './page.module.scss';
+import { HTTP_STATUS } from '@data';
 
 export default function SigninPage() {
   const router = useRouter();
@@ -23,11 +24,11 @@ export default function SigninPage() {
 
     const data = { id, key };
     try {
-      const reponse = await postAdminSignin(data);
+      const response = await postAdminSignin(data);
 
-      if (reponse.status === 200) {
+      if (response.status === HTTP_STATUS.OK) {
+        alert('sign success!');
       }
-      alert('sign success!');
     } catch (error) {
       setError('서버와의 통신 중 문제가 발생했습니다.');
     }
@@ -35,32 +36,25 @@ export default function SigninPage() {
 
   return (
     <div className={styled.container}>
-      <form
-        onSubmit={handleSignin}
-        className={styled.form} // SCSS 클래스 적용
-      >
-        <h1 className={styled.header}>관리자 로그인</h1>
+      <form onSubmit={handleSignin} className={styled.form}>
+        <div className={styled.header}>Just-Swim-Manager</div>
         <input
           type="text"
           placeholder="ID를 입력하세요"
           value={id}
           onChange={(e) => setId(e.target.value)}
-          className={styled.input} // SCSS 클래스 적용
+          className={styled.input}
         />
         <input
           type="password"
           placeholder="Key를 입력하세요"
           value={key}
           onChange={(e) => setKey(e.target.value)}
-          className={styled.input} // SCSS 클래스 적용
+          className={styled.input}
         />
         {error && <p className={styled.error}>{error}</p>}{' '}
-        {/* SCSS 클래스 적용 */}
-        <button
-          type="submit"
-          className={styled.button} // SCSS 클래스 적용
-        >
-          로그인
+        <button type="submit" className={styled.button}>
+          Signin
         </button>
       </form>
     </div>
