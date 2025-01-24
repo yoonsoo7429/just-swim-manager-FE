@@ -1,11 +1,12 @@
 'use client';
 
 import { postAdminSignin } from '@apis';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import styled from './page.module.scss';
 import { HTTP_STATUS } from '@data';
+import { setTokenInCookies } from '@utils';
 
 export default function SigninPage() {
   const router = useRouter();
@@ -26,8 +27,9 @@ export default function SigninPage() {
     try {
       const response = await postAdminSignin(data);
 
-      if (response.status === HTTP_STATUS.OK) {
-        alert('sign success!');
+      if (response.status) {
+        await setTokenInCookies(response.data as string);
+        // redirect('/customer');
       }
     } catch (error) {
       setError('서버와의 통신 중 문제가 발생했습니다.');

@@ -31,7 +31,7 @@ const api = async <T>(
     const response = await fetch(URL, finalOptions);
     const data = await response.json();
 
-    return { status: response.status, data };
+    return data;
   } catch (error) {
     throw new Error('Redirect to not-found pages');
   }
