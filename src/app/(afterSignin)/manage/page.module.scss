@@ -1,0 +1,50 @@
+.pageContainer {
+  width: 100%;
+  padding: 20px;
+}
+
+.dashboard {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboardItem {
+  background-color: #cbb9b9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 30%;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboardItem h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.dashboardItem p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.linkButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.linkButton a {
+  color: white;
+  text-decoration: none;
+}
+
+.linkButton:hover {
+  background-color: #0056b3;
+}

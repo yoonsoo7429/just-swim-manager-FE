@@ -24,6 +24,8 @@
       "@data": ["./src/app/_data/index.ts"],
       "@types": ["./src/app/_types/index.ts"],
       "@utils": ["./src/app/_utils/index.ts"],
+      "@assets/*": ["./public/assets/*"],
+      "@assets": ["./src/app/_assets/index.ts"],
       "@/*": ["./src/app/*"]
     }
   },
