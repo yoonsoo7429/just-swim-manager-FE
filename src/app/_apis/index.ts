@@ -1,1 +1,1 @@
-export * from './auth/postAdminSignin';
+export * from './auth';

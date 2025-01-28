@@ -1,22 +1,45 @@
 'use client';
 
+import { getDashboardInfo } from '@/_apis/auth';
 import styles from './page.module.scss';
+import { useEffect, useState } from 'react';
+import { DashboardProps } from '@types';
 
 export default function ManagePage() {
-  // 예시 데이터 (실제 데이터는 API 등으로 받아옵니다)
-  const totalCustomers = 120; // 전체 고객 수
-  const recentCustomers = 5; // 최근 추가된 고객 수
-  const totalRegisteredStudents = 80; // 수업에 등록된 고객 수
-  const totalReRegisteredStudents = 15; // 재등록한 학생 수
-  const totalPayments = 250000; // 총 결제 금액
+  const [dashboardInfo, setDashboardInfo] = useState<DashboardProps>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dashboardInfo = await getDashboardInfo();
+        setDashboardInfo(dashboardInfo);
+      } catch (error) {
+        console.error('Error fetching DashboardInfo', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // 총 고객 수
+  const totalCustomers = dashboardInfo?.customers.length;
+
+  // 오늘 날짜 계산
+  const today = new Date();
+  const todayString = today.toISOString().split('T')[0];
+
+  // 오늘 추가된 고객 계산
+  const recentCustomers =
+    dashboardInfo?.customers.filter((customer) => {
+      const createdDate = new Date(customer.customerCreatedAt)
+        .toISOString()
+        .split('T')[0];
+      return createdDate === todayString;
+    }).length ?? 0;
+
+  //
 
   return (
     <div className={styles.container}>
       <h2>관리 대시보드</h2>
-      <p>
-        여기는 관리 대시보드입니다. 고객 관리, 강습 관리, 결제 정보 등의 링크로
-        이동할 수 있습니다.
-      </p>
 
       <div className={styles.dashboard}>
         {/* 고객 현황 */}
@@ -28,7 +51,7 @@ export default function ManagePage() {
               <p>{totalCustomers}명</p>
             </div>
             <div className={styles.statCard}>
-              <h4>최근 추가된 고객</h4>
+              <h4>오늘 추가된 고객</h4>
               <p>{recentCustomers}명</p>
             </div>
           </div>
@@ -38,14 +61,12 @@ export default function ManagePage() {
         <div className={styles.dashboardItem}>
           <h3>수업 현황</h3>
           <div className={styles.dashboardStats}>
-            <div className={styles.statCard}>
-              <h4>수업에 등록된 고객</h4>
-              <p>{totalRegisteredStudents}명</p>
-            </div>
-            <div className={styles.statCard}>
-              <h4>재등록 고객</h4>
-              <p>{totalReRegisteredStudents}명</p>
-            </div>
+            {dashboardInfo?.lectures.map((lecture) => (
+              <div key={lecture.lectureId} className={styles.statCard}>
+                <h4>{lecture.lectureTitle}</h4>
+                <p>{lecture.member?.length ?? 0}명</p>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -54,7 +75,13 @@ export default function ManagePage() {
           <h3>결제 정보</h3>
           <div className={styles.statCard}>
             <h4>총 결제 금액</h4>
-            <p>{totalPayments}원</p>
+            <p>
+              {dashboardInfo?.payments.reduce(
+                (sum, payment) => sum + parseFloat(payment.paymentFee),
+                0,
+              ) ?? 0}
+              원
+            </p>
           </div>
         </div>
       </div>
