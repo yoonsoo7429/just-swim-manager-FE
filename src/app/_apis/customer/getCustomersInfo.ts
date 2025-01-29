@@ -2,16 +2,16 @@
 
 import { notFound } from 'next/navigation';
 
-import { DashboardProps } from '@types';
+import { CustomerProps } from '@types';
 import { Fetch } from '@utils';
 
-export async function getDashboardInfo(): Promise<DashboardProps> {
+export async function getCustomersInfo(): Promise<CustomerProps[]> {
   const result = await Fetch<{
     status: boolean;
     message: string;
-    data: DashboardProps;
+    data: CustomerProps[];
   }>({
-    url: `${process.env.NEXT_PUBLIC_API_URL}/dashboard`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/customer`,
     method: 'GET',
     header: {
       token: true,

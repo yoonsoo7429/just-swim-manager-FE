@@ -14,7 +14,7 @@ export default function Sidebar() {
       <ul>
         <li>
           <IconDashboard width={24} height={24} fill="#fff" />
-          <Link href="/manage/customer">대시 보드</Link>
+          <Link href="/manage">대시 보드</Link>
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />

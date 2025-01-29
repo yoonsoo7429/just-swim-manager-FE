@@ -1,7 +1,8 @@
 'use client';
 
-import { getDashboardInfo } from '@/_apis/auth';
 import styles from './page.module.scss';
+
+import { getDashboardInfo } from '@/_apis/auth';
 import { useEffect, useState } from 'react';
 import { DashboardProps } from '@types';
 
