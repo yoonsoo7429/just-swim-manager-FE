@@ -1,3 +1,6 @@
+import { LectureForDashboardProps } from './typeLecture';
+import { PaymentProps } from './typePayment';
+
 export interface CustomerProps {
   customerId: string;
   name: string;
@@ -8,4 +11,10 @@ export interface CustomerProps {
   customerCreatedAt: string;
   customerUpdatedAt: string;
   customerDeletedAt: string | null;
+}
+
+export interface CustomerDetailProps {
+  customer: CustomerProps;
+  lecture: LectureForDashboardProps[];
+  payment: PaymentProps[];
 }

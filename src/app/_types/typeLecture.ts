@@ -13,6 +13,6 @@ export interface LectureProps {
   lectureDeletedAt: string | null;
 }
 
-export interface LectureForBashboardProps extends LectureProps {
+export interface LectureForDashboardProps extends LectureProps {
   member: MemberProps[];
 }

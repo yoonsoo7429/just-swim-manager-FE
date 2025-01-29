@@ -1,0 +1,57 @@
+@import '@/globals.scss';
+
+.modal_content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-weight: bold;
+
+  h3 {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .section {
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+
+    h4 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      text-align: center;
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: 15px;
+        border: 1px solid #e6e6e6;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background-color: #fafafa;
+
+        &:hover {
+          background-color: #f7f7f7;
+        }
+
+        p {
+          font-size: 1rem;
+          color: #333;
+        }
+      }
+    }
+  }
+}

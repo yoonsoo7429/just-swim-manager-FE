@@ -1,13 +1,19 @@
 'use client';
 
+import { getCustomerDetail } from '@/_apis/customer/getCustomerDetail';
 import styles from './page.module.scss';
 
 import { getCustomersInfo } from '@apis';
-import { CustomerProps } from '@types';
+import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
+import { DetailInfoModal } from '@components';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
+  const [selectedCustomer, setSelectedCustomer] =
+    useState<CustomerDetailProps | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,6 +25,21 @@ export default function CustomerPage() {
     };
     fetchData();
   }, []);
+
+  const handleCustomerClick = async (id: string) => {
+    try {
+      const customerDetail = await getCustomerDetail(id);
+      setSelectedCustomer(customerDetail);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Error fetching customer detail', error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedCustomer(null);
+  };
 
   return (
     <div className={styles.container}>
@@ -37,7 +58,9 @@ export default function CustomerPage() {
           </thead>
           <tbody>
             {customersInfo.map((customer) => (
-              <tr key={customer.customerId}>
+              <tr
+                key={customer.customerId}
+                onClick={() => handleCustomerClick(customer.customerId)}>
                 <td>{customer.name}</td>
                 <td>{customer.address}</td>
                 <td>{customer.phoneNumber}</td>
@@ -51,6 +74,13 @@ export default function CustomerPage() {
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && selectedCustomer && (
+        <DetailInfoModal
+          detailInfo={selectedCustomer}
+          hideModal={handleCloseModal}
+        />
+      )}
     </div>
   );
 }
