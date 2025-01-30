@@ -9,21 +9,21 @@
 
   h3 {
     font-size: 1.8rem;
-    color: #333;
+    color: $--gray-900;
     text-align: center;
   }
 
   p {
     font-size: 1rem;
-    color: #666;
+    color: $--gray-800;
     line-height: 1.6;
     margin-bottom: 10px;
   }
 
   .section {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #ddd;
 
     h4 {
       font-size: 1.3rem;
