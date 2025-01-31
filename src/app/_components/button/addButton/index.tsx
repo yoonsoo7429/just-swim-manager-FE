@@ -13,7 +13,7 @@ export function AddButton({ type }: { type: string }) {
   }, []);
 
   const getLink = () => {
-    return `/${type}/add`;
+    return `/manage/${type}/add`;
   };
 
   return (

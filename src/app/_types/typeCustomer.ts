@@ -19,7 +19,7 @@ export interface CustomerDetailProps {
   payment: PaymentProps[];
 }
 
-export interface CreateCustomerProps {
+export interface CustomerBasicProps {
   name: string;
   gender: string;
   phoneNumber: string;

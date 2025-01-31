@@ -2,12 +2,14 @@
 
 import { notFound } from 'next/navigation';
 
-import { CreateCustomerProps, CustomerProps } from '@types';
+import { CustomerBasicProps, CustomerProps } from '@types';
 import { Fetch } from '@utils';
 
-export async function createCustomer(
-  data: CreateCustomerProps,
-): Promise<CustomerProps> {
+export async function createCustomer(data: CustomerBasicProps): Promise<{
+  status: boolean;
+  message: string;
+  data: CustomerProps;
+}> {
   const result = await Fetch<{
     status: boolean;
     message: string;
@@ -24,7 +26,7 @@ export async function createCustomer(
   });
 
   if (result.status) {
-    return result.data;
+    return result;
   } else {
     return notFound();
   }

@@ -1,6 +1,6 @@
 'use client';
 
-import { getCustomerDetail } from '@/_apis/customer/getCustomerDetail';
+import { getCustomerDetail } from '@/_apis';
 import styles from './page.module.scss';
 
 import { getCustomersInfo } from '@apis';
