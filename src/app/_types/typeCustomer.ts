@@ -18,3 +18,11 @@ export interface CustomerDetailProps {
   lecture: LectureForDashboardProps[];
   payment: PaymentProps[];
 }
+
+export interface CreateCustomerProps {
+  name: string;
+  gender: string;
+  phoneNumber: string;
+  birthDate: string;
+  address: string;
+}

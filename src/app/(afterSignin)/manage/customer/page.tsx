@@ -7,6 +7,7 @@ import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
 import { DetailInfoModal } from '@components';
+import { AddButton } from '@/_components/button';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
@@ -43,7 +44,10 @@ export default function CustomerPage() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>고객 관리</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>고객 관리</h2>
+        <AddButton type="customer" />
+      </div>
       <div className={styles.dashboard}>
         <table className={styles.table}>
           <thead>
