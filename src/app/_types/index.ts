@@ -7,3 +7,4 @@ export * from './typeMember';
 export * from './typePayment';
 export * from './typeModal';
 export * from './typeHeader';
+export * from './typeForm';

@@ -6,8 +6,7 @@ import styles from './page.module.scss';
 import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
-import { DetailInfoModal } from '@components';
-import { AddButton } from '@/_components';
+import { DetailInfoModal, AddButton } from '@components';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
