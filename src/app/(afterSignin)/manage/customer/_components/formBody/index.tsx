@@ -1,12 +1,13 @@
 'use client';
 
-import { HTMLAttributes, MouseEvent, useState } from 'react';
-
 import styles from './styles.module.scss';
+
+import { HTMLAttributes, MouseEvent, useState } from 'react';
 import { customerSchema, CustomerType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formAction } from './action';
+import { HistoryBackHeader } from '@/_components';
 
 function InputWrapper({
   children,
@@ -32,11 +33,11 @@ function InputWrapper({
 export function FormBody({
   type = 'add',
   id = '',
-  lecture,
+  customer,
 }: {
   type?: 'add' | 'modify';
   id?: string;
-  lecture?: CustomerType;
+  customer?: CustomerType;
 }) {
   const isModify = type === 'modify';
 
@@ -78,5 +79,9 @@ export function FormBody({
     }));
   };
 
-  return <div>createCustomer 페이지</div>;
+  return (
+    <div className={styles.container}>
+      <HistoryBackHeader title={'고객 정보 입력'} />
+    </div>
+  );
 }

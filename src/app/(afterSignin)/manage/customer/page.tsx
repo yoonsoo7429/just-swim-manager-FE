@@ -7,7 +7,7 @@ import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
 import { DetailInfoModal } from '@components';
-import { AddButton } from '@/_components/button';
+import { AddButton } from '@/_components';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);

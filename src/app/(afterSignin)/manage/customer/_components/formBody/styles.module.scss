@@ -1,0 +1,12 @@
+@import '@/globals.scss';
+
+.container {
+  padding: 20px;
+  background-color: $--gray-200;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
