@@ -5,9 +5,7 @@ import {
   ForwardedRef,
   InputHTMLAttributes,
   forwardRef,
-  useEffect,
   useRef,
-  useState,
 } from 'react';
 
 import { TextInputProps } from '@types';

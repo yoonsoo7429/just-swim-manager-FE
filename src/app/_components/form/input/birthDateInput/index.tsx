@@ -27,11 +27,12 @@ function _BirthDateInput(
       const newBirthParts = { ...birthParts, [part]: value };
       setBirthParts(newBirthParts);
 
+      const birthDate = `${newBirthParts.year}.${newBirthParts.month}.${newBirthParts.date}`;
+
       const syntheticEvent = {
-        ...event,
         target: {
-          ...event.target,
-          value: `${newBirthParts.year}.${newBirthParts.month}.${newBirthParts.date}`,
+          name: 'birthDate',
+          value: birthDate,
         },
       };
 

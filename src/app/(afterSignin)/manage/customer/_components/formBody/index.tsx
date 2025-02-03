@@ -7,11 +7,13 @@ import { customerSchema, CustomerType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formAction } from './action';
-import { HistoryBackHeader } from '@components';
+import { FormButton, HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
 import SelectionInput from '@/_components/form/input/selectionInput';
 import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
 import BirthDateInput from '@/_components/form/input/birthDateInput';
+
+import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
 
 function InputWrapper({
   children,
@@ -86,7 +88,7 @@ export function FormBody({
   return (
     <div className={styles.container}>
       <HistoryBackHeader title={'고객 정보 입력'} />
-      <div className={styles.content_container}>
+      <form action={onValid} className={styles.content_container}>
         <div className={styles.left_container}>
           {/* 이름 */}
           <InputWrapper
@@ -96,7 +98,7 @@ export function FormBody({
             <TextInput
               {...register('name')}
               placeholder="이름을 입력해주세요"
-              valid={String(!errors.name)}
+              valid={!errors.name}
               errorMessage={errors.name?.message}
               defaultValue={isModify ? customer?.name : ''}
             />
@@ -111,7 +113,7 @@ export function FormBody({
               options={['남자', '여자']}
               {...register('gender')}
               placeholder="성별을 선택해주세요"
-              valid={String(!errors.gender)}
+              valid={!errors.gender}
               errorMessage={errors.gender?.message}
             />
           </InputWrapper>
@@ -123,7 +125,7 @@ export function FormBody({
             onClick={clearDuplicateError}>
             <PhoneNumberInput
               {...register('phoneNumber')}
-              valid={String(!errors.phoneNumber)}
+              valid={!errors.phoneNumber}
               errorMessage={errors.phoneNumber?.message}
             />
           </InputWrapper>
@@ -137,7 +139,7 @@ export function FormBody({
             onClick={clearDuplicateError}>
             <BirthDateInput
               {...register('birthDate')}
-              valid={String(!errors.phoneNumber)}
+              valid={!errors.phoneNumber}
               errorMessage={errors.phoneNumber?.message}
             />
           </InputWrapper>
@@ -150,13 +152,29 @@ export function FormBody({
             <TextInput
               {...register('address')}
               placeholder="주소를 입력해주세요요"
-              valid={String(!errors.address)}
+              valid={!errors.address}
               errorMessage={errors.address?.message}
               defaultValue={isModify ? customer?.address : ''}
             />
           </InputWrapper>
+          <div className={styles.button_container}>
+            <FormButton
+              text="추가하기"
+              active={isValid && !serverErrors.duplicate}
+            />
+          </div>
         </div>
-      </div>
+      </form>
+      {serverErrors.duplicate && (
+        <div className={styles.error_container}>
+          {serverErrors.duplicate && (
+            <div className={styles.error_message}>
+              <IconCheckboxInvalid />
+              <p>{serverErrors.duplicate}</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

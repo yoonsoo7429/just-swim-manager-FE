@@ -27,11 +27,12 @@ function _PhoneNumberInput(
       const newPhoneParts = { ...phoneParts, [part]: value };
       setPhoneParts(newPhoneParts);
 
+      const phoneNumber = `${newPhoneParts.first}-${newPhoneParts.second}-${newPhoneParts.third}`;
+
       const syntheticEvent = {
-        ...event,
         target: {
-          ...event.target,
-          value: `${newPhoneParts.first}-${newPhoneParts.second}-${newPhoneParts.third}`,
+          name: 'phoneNumber',
+          value: phoneNumber,
         },
       };
 

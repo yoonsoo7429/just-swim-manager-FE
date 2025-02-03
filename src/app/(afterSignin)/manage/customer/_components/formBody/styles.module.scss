@@ -37,6 +37,13 @@
   flex: 1;
 }
 
+.button_container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 25px;
+}
+
 .fieldset {
   position: relative;
 }
@@ -56,5 +63,36 @@
     @include Body4-R;
 
     color: $--Primary-blue;
+  }
+}
+
+.error_container {
+  position: absolute;
+
+  left: 50%;
+  bottom: 86px;
+
+  transform: translate(-50%);
+
+  .error_message {
+    width: fit-content;
+
+    margin: 0 auto;
+    padding: 13px 18px;
+
+    border-radius: 10px;
+    border-bottom: 1px solid $--Cancel;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 20px;
+
+    white-space: nowrap;
+
+    & > p {
+      color: $--Cancel;
+    }
   }
 }
