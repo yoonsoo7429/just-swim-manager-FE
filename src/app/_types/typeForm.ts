@@ -4,3 +4,11 @@ export interface TextInputProps {
   link?: boolean;
   errorMessage: string | undefined;
 }
+
+export interface SelectionInputProps {
+  name: string;
+  options: string[];
+  valid?: boolean;
+  errorMessage?: string;
+  onChange?: (event: { target: HTMLInputElement }) => void;
+}

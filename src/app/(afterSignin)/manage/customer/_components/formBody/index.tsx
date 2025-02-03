@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { formAction } from './action';
 import { HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
+import SelectionInput from '@/_components/form/input/selectionInput';
 
 function InputWrapper({
   children,
@@ -85,6 +86,7 @@ export function FormBody({
       <HistoryBackHeader title={'고객 정보 입력'} />
       <div className={styles.content_container}>
         <div className={styles.left_container}>
+          {/* 이름 */}
           <InputWrapper
             name="이름"
             required={true}
@@ -97,10 +99,22 @@ export function FormBody({
               defaultValue={isModify ? customer?.name : ''}
             />
           </InputWrapper>
+
+          {/* 성별 */}
           <InputWrapper
             name="성별"
             required={true}
-            onClick={clearDuplicateError}></InputWrapper>
+            onClick={clearDuplicateError}>
+            <SelectionInput
+              options={['남자', '여자']}
+              {...register('gender')}
+              placeholder="성별을 선택해주세요"
+              valid={!errors.gender}
+              errorMessage={errors.gender?.message}
+            />
+          </InputWrapper>
+
+          {/* 전화 번호 */}
           <InputWrapper
             name="전화 번호"
             required={true}
