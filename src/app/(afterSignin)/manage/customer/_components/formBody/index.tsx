@@ -11,6 +11,7 @@ import { HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
 import SelectionInput from '@/_components/form/input/selectionInput';
 import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
+import BirthDateInput from '@/_components/form/input/birthDateInput';
 
 function InputWrapper({
   children,
@@ -95,7 +96,7 @@ export function FormBody({
             <TextInput
               {...register('name')}
               placeholder="이름을 입력해주세요"
-              valid={!errors.name}
+              valid={String(!errors.name)}
               errorMessage={errors.name?.message}
               defaultValue={isModify ? customer?.name : ''}
             />
@@ -110,7 +111,7 @@ export function FormBody({
               options={['남자', '여자']}
               {...register('gender')}
               placeholder="성별을 선택해주세요"
-              valid={!errors.gender}
+              valid={String(!errors.gender)}
               errorMessage={errors.gender?.message}
             />
           </InputWrapper>
@@ -122,16 +123,26 @@ export function FormBody({
             onClick={clearDuplicateError}>
             <PhoneNumberInput
               {...register('phoneNumber')}
-              valid={!errors.phoneNumber}
+              valid={String(!errors.phoneNumber)}
               errorMessage={errors.phoneNumber?.message}
             />
           </InputWrapper>
         </div>
+
         <div className={styles.right_container}>
+          {/* 생년 월일 */}
           <InputWrapper
             name="생년월일"
             required={true}
-            onClick={clearDuplicateError}></InputWrapper>
+            onClick={clearDuplicateError}>
+            <BirthDateInput
+              {...register('birthDate')}
+              valid={String(!errors.phoneNumber)}
+              errorMessage={errors.phoneNumber?.message}
+            />
+          </InputWrapper>
+
+          {/* 주소 */}
           <InputWrapper
             name="주소"
             required={true}
@@ -139,7 +150,7 @@ export function FormBody({
             <TextInput
               {...register('address')}
               placeholder="주소를 입력해주세요요"
-              valid={!errors.address}
+              valid={String(!errors.address)}
               errorMessage={errors.address?.message}
               defaultValue={isModify ? customer?.address : ''}
             />

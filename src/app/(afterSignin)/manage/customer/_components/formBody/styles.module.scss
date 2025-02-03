@@ -24,6 +24,8 @@
   flex-direction: column;
   gap: 22px;
   flex: 1;
+
+  border-right: $--gray-100 2px solid;
 }
 
 .right_container {

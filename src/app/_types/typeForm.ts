@@ -1,6 +1,6 @@
 export interface TextInputProps {
   name: string;
-  valid?: boolean;
+  valid?: string;
   link?: boolean;
   errorMessage: string | undefined;
 }
@@ -8,14 +8,21 @@ export interface TextInputProps {
 export interface SelectionInputProps {
   name: string;
   options: string[];
-  valid?: boolean;
-  errorMessage?: string;
+  valid?: string;
+  errorMessage?: string | undefined;
   onChange?: (event: { target: HTMLInputElement }) => void;
 }
 
 export interface PhoneNumberInputProps {
   name: string;
-  valid?: boolean;
-  errorMessage?: string;
+  valid?: string;
+  errorMessage?: string | undefined;
+  onChange: (event: { target: HTMLInputElement }) => void;
+}
+
+export interface BirhtDateInputProps {
+  name: string;
+  valid?: string;
+  errorMessage?: string | undefined;
   onChange: (event: { target: HTMLInputElement }) => void;
 }
