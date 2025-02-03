@@ -27,14 +27,8 @@ function _TextInput(
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const targetRef = useRef<HTMLInputElement>(null);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    setCount(targetRef.current?.value.length || 0);
-  }, []);
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setCount(event.target.value.length);
     onChange(event);
   };
 

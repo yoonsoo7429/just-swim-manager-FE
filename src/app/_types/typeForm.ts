@@ -12,3 +12,10 @@ export interface SelectionInputProps {
   errorMessage?: string;
   onChange?: (event: { target: HTMLInputElement }) => void;
 }
+
+export interface PhoneNumberInputProps {
+  name: string;
+  valid?: boolean;
+  errorMessage?: string;
+  onChange: (event: { target: HTMLInputElement }) => void;
+}

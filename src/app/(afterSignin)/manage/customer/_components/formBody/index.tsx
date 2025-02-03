@@ -10,6 +10,7 @@ import { formAction } from './action';
 import { HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
 import SelectionInput from '@/_components/form/input/selectionInput';
+import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
 
 function InputWrapper({
   children,
@@ -118,7 +119,13 @@ export function FormBody({
           <InputWrapper
             name="전화 번호"
             required={true}
-            onClick={clearDuplicateError}></InputWrapper>
+            onClick={clearDuplicateError}>
+            <PhoneNumberInput
+              {...register('phoneNumber')}
+              valid={!errors.phoneNumber}
+              errorMessage={errors.phoneNumber?.message}
+            />
+          </InputWrapper>
         </div>
         <div className={styles.right_container}>
           <InputWrapper
