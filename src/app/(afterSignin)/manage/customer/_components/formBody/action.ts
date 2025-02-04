@@ -33,7 +33,7 @@ export async function formAction(
     const result = await updateCustomer(data, id);
 
     if (result.status) {
-      redirect('/customer');
+      redirect('/manage/customer');
     } else {
       return notFound();
     }
@@ -41,7 +41,7 @@ export async function formAction(
     const result = await createCustomer(data);
 
     if (result.status) {
-      redirect('/customer');
+      redirect('/manage/customer');
     } else {
       return notFound();
     }

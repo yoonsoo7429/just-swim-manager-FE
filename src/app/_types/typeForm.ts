@@ -32,3 +32,7 @@ export interface FormButtonProps {
   loading?: string;
   active?: boolean;
 }
+
+export interface EditButtonProps {
+  id: string;
+}

@@ -1,0 +1,17 @@
+@import '@/globals.scss';
+
+.link {
+  display: inline-block;
+  background-color: $--gray-500;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $--Primary-blue;
+  }
+}

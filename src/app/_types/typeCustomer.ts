@@ -1,10 +1,15 @@
 import { LectureForDashboardProps } from './typeLecture';
 import { PaymentProps } from './typePayment';
 
+export enum CustomerGender {
+  Man = '남자',
+  Woman = '여자',
+}
+
 export interface CustomerProps {
   customerId: string;
   name: string;
-  gender: string;
+  gender: CustomerGender;
   phoneNumber: string;
   birthDate: string;
   address: string;
@@ -21,7 +26,7 @@ export interface CustomerDetailProps {
 
 export interface CustomerBasicProps {
   name: string;
-  gender: string;
+  gender: CustomerGender;
   phoneNumber: string;
   birthDate: string;
   address: string;

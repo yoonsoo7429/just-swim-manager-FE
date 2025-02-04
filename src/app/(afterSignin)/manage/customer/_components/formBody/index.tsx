@@ -87,7 +87,9 @@ export function FormBody({
 
   return (
     <div className={styles.container}>
-      <HistoryBackHeader title={'고객 정보 입력'} />
+      <HistoryBackHeader
+        title={type === 'add' ? '고객 정보 입력' : '고객 정보 수정하기'}
+      />
       <form action={onValid} className={styles.content_container}>
         <div className={styles.left_container}>
           {/* 이름 */}
@@ -151,7 +153,7 @@ export function FormBody({
             onClick={clearDuplicateError}>
             <TextInput
               {...register('address')}
-              placeholder="주소를 입력해주세요요"
+              placeholder="주소를 입력해주세요"
               valid={!errors.address}
               errorMessage={errors.address?.message}
               defaultValue={isModify ? customer?.address : ''}

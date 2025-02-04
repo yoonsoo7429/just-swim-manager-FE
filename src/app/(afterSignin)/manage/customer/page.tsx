@@ -6,7 +6,7 @@ import styles from './page.module.scss';
 import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
-import { DetailInfoModal, AddButton } from '@components';
+import { DetailInfoModal, AddButton, EditButton } from '@components';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
@@ -57,6 +57,7 @@ export default function CustomerPage() {
               <th>생년월일</th>
               <th>성별</th>
               <th>서비스 가입일</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +71,17 @@ export default function CustomerPage() {
                 <td>{customer.birthDate}</td>
                 <td>{customer.gender}</td>
                 <td>
-                  {new Date(customer.customerCreatedAt).toLocaleDateString()}
+                  {new Date(customer.customerCreatedAt).toLocaleDateString(
+                    'ko-KR',
+                    {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    },
+                  )}
+                </td>
+                <td>
+                  <EditButton id={customer.customerId} />
                 </td>
               </tr>
             ))}

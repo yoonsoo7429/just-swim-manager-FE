@@ -1,9 +1,10 @@
+import { CustomerGender } from '@types';
 import { z } from 'zod';
 
 export const customerSchema = z.object({
   name: z.string().min(2, '이름은 최소 2자 이상이어야 합니다.'),
-  gender: z.enum(['남자', '여자'], {
-    message: "성별은 '남자' 또는 '여자'만 가능합니다.",
+  gender: z.nativeEnum(CustomerGender, {
+    errorMap: () => ({ message: "성별은 '남자' 또는 '여자'만 가능합니다." }),
   }),
   phoneNumber: z
     .string()
