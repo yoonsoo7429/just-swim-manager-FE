@@ -20,13 +20,22 @@ function _SelectionInput(
     options,
     valid,
     onChange = () => {},
+    value = '',
     errorMessage = '',
     ...props
   }: SelectionInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const [selection, setSelection] = useState<string | null>(null);
+  const [selection, setSelection] = useState<string | null>(
+    value ? String(value) : null,
+  );
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (value !== selection) {
+      setSelection(value ? String(value) : null);
+    }
+  }, [value]);
 
   const handleSelection = (value: string) => {
     setSelection(value);

@@ -1,12 +1,25 @@
 'use client';
 
-import { ChangeEvent, ForwardedRef, forwardRef, useState } from 'react';
+import {
+  ChangeEvent,
+  ForwardedRef,
+  forwardRef,
+  InputHTMLAttributes,
+  useEffect,
+  useState,
+} from 'react';
 import { BirhtDateInputProps } from '@types';
 
 import styles from './styles.module.scss';
 
 function _BirthDateInput(
-  { name, errorMessage = '', onChange, ...props }: BirhtDateInputProps,
+  {
+    name,
+    errorMessage = '',
+    onChange,
+    value = '',
+    ...props
+  }: BirhtDateInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const [birthParts, setBirthParts] = useState({
@@ -14,6 +27,23 @@ function _BirthDateInput(
     month: '',
     date: '',
   });
+
+  useEffect(() => {
+    if (value) {
+      const [year, month, date] = String(value).split('.');
+      setBirthParts({ year: year || '', month: month || '', date: date || '' });
+    }
+  }, [value]);
+
+  useEffect(() => {
+    const birthDate = `${birthParts.year}.${birthParts.month}.${birthParts.date}`;
+    onChange({
+      target: {
+        name: 'birthDate',
+        value: birthDate,
+      },
+    } as ChangeEvent<HTMLInputElement>);
+  }, [birthParts, onChange]);
 
   const handleChange =
     (part: 'year' | 'month' | 'date') =>
@@ -26,17 +56,6 @@ function _BirthDateInput(
 
       const newBirthParts = { ...birthParts, [part]: value };
       setBirthParts(newBirthParts);
-
-      const birthDate = `${newBirthParts.year}.${newBirthParts.month}.${newBirthParts.date}`;
-
-      const syntheticEvent = {
-        target: {
-          name: 'birthDate',
-          value: birthDate,
-        },
-      };
-
-      onChange(syntheticEvent as ChangeEvent<HTMLInputElement>);
     };
 
   return (

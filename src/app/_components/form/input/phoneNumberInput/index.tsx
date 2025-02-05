@@ -1,12 +1,25 @@
 'use client';
 
-import { ChangeEvent, ForwardedRef, forwardRef, useState } from 'react';
+import {
+  ChangeEvent,
+  ForwardedRef,
+  forwardRef,
+  InputHTMLAttributes,
+  useEffect,
+  useState,
+} from 'react';
 import { PhoneNumberInputProps } from '@types';
 
 import styles from './styles.module.scss';
 
 function _PhoneNumberInput(
-  { name, errorMessage = '', onChange, ...props }: PhoneNumberInputProps,
+  {
+    name,
+    errorMessage = '',
+    onChange,
+    value = '',
+    ...props
+  }: PhoneNumberInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const [phoneParts, setPhoneParts] = useState({
@@ -14,6 +27,27 @@ function _PhoneNumberInput(
     second: '',
     third: '',
   });
+
+  useEffect(() => {
+    if (value) {
+      const [first, second, third] = String(value).split('-');
+      setPhoneParts({
+        first: first || '',
+        second: second || '',
+        third: third || '',
+      });
+    }
+  }, [value]);
+
+  useEffect(() => {
+    const phoneNumber = `${phoneParts.first}-${phoneParts.second}-${phoneParts.third}`;
+    onChange({
+      target: {
+        name: 'phoneNumber',
+        value: phoneNumber,
+      },
+    } as ChangeEvent<HTMLInputElement>);
+  }, [phoneParts, onChange]);
 
   const handleChange =
     (part: 'first' | 'second' | 'third') =>
@@ -26,17 +60,6 @@ function _PhoneNumberInput(
 
       const newPhoneParts = { ...phoneParts, [part]: value };
       setPhoneParts(newPhoneParts);
-
-      const phoneNumber = `${newPhoneParts.first}-${newPhoneParts.second}-${newPhoneParts.third}`;
-
-      const syntheticEvent = {
-        target: {
-          name: 'phoneNumber',
-          value: phoneNumber,
-        },
-      };
-
-      onChange(syntheticEvent as ChangeEvent<HTMLInputElement>);
     };
 
   return (

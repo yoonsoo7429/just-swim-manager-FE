@@ -6,6 +6,7 @@ import { HTMLAttributes, MouseEvent, useState } from 'react';
 import { customerSchema, CustomerType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { formAction } from './action';
 import { FormButton, HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
@@ -101,6 +102,7 @@ export function FormBody({
               {...register('name')}
               placeholder="이름을 입력해주세요"
               valid={!errors.name}
+              value={customer?.name}
               errorMessage={errors.name?.message}
               defaultValue={isModify ? customer?.name : ''}
             />
@@ -115,8 +117,10 @@ export function FormBody({
               options={['남자', '여자']}
               {...register('gender')}
               placeholder="성별을 선택해주세요"
+              value={customer?.gender}
               valid={!errors.gender}
               errorMessage={errors.gender?.message}
+              defaultValue={isModify ? customer?.gender : ''}
             />
           </InputWrapper>
 
@@ -128,7 +132,9 @@ export function FormBody({
             <PhoneNumberInput
               {...register('phoneNumber')}
               valid={!errors.phoneNumber}
+              value={customer?.phoneNumber}
               errorMessage={errors.phoneNumber?.message}
+              defaultValue={isModify ? customer?.phoneNumber : ''}
             />
           </InputWrapper>
         </div>
@@ -141,8 +147,10 @@ export function FormBody({
             onClick={clearDuplicateError}>
             <BirthDateInput
               {...register('birthDate')}
-              valid={!errors.phoneNumber}
-              errorMessage={errors.phoneNumber?.message}
+              valid={!errors.birthDate}
+              value={customer?.birthDate}
+              errorMessage={errors.birthDate?.message}
+              defaultValue={isModify ? customer?.birthDate : ''}
             />
           </InputWrapper>
 
@@ -155,13 +163,14 @@ export function FormBody({
               {...register('address')}
               placeholder="주소를 입력해주세요"
               valid={!errors.address}
+              value={customer?.address}
               errorMessage={errors.address?.message}
               defaultValue={isModify ? customer?.address : ''}
             />
           </InputWrapper>
           <div className={styles.button_container}>
             <FormButton
-              text="추가하기"
+              text="확인"
               active={isValid && !serverErrors.duplicate}
             />
           </div>

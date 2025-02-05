@@ -5,7 +5,9 @@ import {
   ForwardedRef,
   InputHTMLAttributes,
   forwardRef,
+  useEffect,
   useRef,
+  useState,
 } from 'react';
 
 import { TextInputProps } from '@types';
@@ -19,12 +21,23 @@ function _TextInput(
     name,
     valid = true,
     onChange = () => {},
+    value = '',
     errorMessage = '',
     ...props
   }: TextInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const [text, setText] = useState<string | null>(value ? String(value) : null);
   const targetRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (value !== text) {
+      setText(value ? String(value) : null);
+    }
+    onChange({
+      target: { name, value: String(value) },
+    } as ChangeEvent<HTMLInputElement>);
+  }, [value, onChange]);
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event);
