@@ -9,3 +9,7 @@ export interface ModalBodyProps {
 export interface detailInfoModalProps extends ModalBodyProps {
   detailInfo: CustomerDetailProps;
 }
+
+export interface UploadExcelModalProps {
+  onClose: () => void;
+}

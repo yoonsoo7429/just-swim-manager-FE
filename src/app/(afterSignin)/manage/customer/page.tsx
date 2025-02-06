@@ -7,12 +7,15 @@ import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
 import { DetailInfoModal, AddButton, EditButton } from '@components';
+import { UploadExcelModal } from '@/_components/modal/uploadExcelModal';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
   const [selectedCustomer, setSelectedCustomer] =
     useState<CustomerDetailProps | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCustomerDeltailModalOpen, setIsCustomerDeltailModalOpen] =
+    useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,14 +33,14 @@ export default function CustomerPage() {
     try {
       const customerDetail = await getCustomerDetail(id);
       setSelectedCustomer(customerDetail);
-      setIsModalOpen(true);
+      setIsCustomerDeltailModalOpen(true);
     } catch (error) {
       console.error('Error fetching customer detail', error);
     }
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsCustomerDeltailModalOpen(false);
     setSelectedCustomer(null);
   };
 
@@ -45,7 +48,14 @@ export default function CustomerPage() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>고객 관리</h2>
-        <AddButton type="customer" />
+        <div className={styles.button_group}>
+          <AddButton type="customer" />
+          <button
+            className={styles.upload_excel_button}
+            onClick={() => setIsUploadModalOpen(true)}>
+            엑셀 업로드
+          </button>
+        </div>
       </div>
       <div className={styles.dashboard}>
         <table className={styles.table}>
@@ -89,11 +99,15 @@ export default function CustomerPage() {
         </table>
       </div>
 
-      {isModalOpen && selectedCustomer && (
+      {isCustomerDeltailModalOpen && selectedCustomer && (
         <DetailInfoModal
           detailInfo={selectedCustomer}
           hideModal={handleCloseModal}
         />
+      )}
+
+      {isUploadModalOpen && (
+        <UploadExcelModal onClose={() => setIsUploadModalOpen(false)} />
       )}
     </div>
   );
