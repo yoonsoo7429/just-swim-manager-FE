@@ -4,7 +4,10 @@ import { notFound } from 'next/navigation';
 
 import { Fetch } from '@utils';
 
-export async function deleteCustomer(id: string): Promise<void> {
+export async function deleteCustomer(id: string): Promise<{
+  status: boolean;
+  message: string;
+}> {
   const result = await Fetch<{
     status: boolean;
     message: string;
@@ -22,5 +25,5 @@ export async function deleteCustomer(id: string): Promise<void> {
     return notFound();
   }
 
-  return;
+  return result;
 }

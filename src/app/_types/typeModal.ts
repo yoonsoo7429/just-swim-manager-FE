@@ -13,3 +13,8 @@ export interface detailInfoModalProps extends ModalBodyProps {
 export interface UploadExcelModalProps {
   onClose: () => void;
 }
+
+export interface ConfirmModalProps extends ModalBodyProps {
+  message: string;
+  confirmCallback: (event: MouseEvent<HTMLButtonElement>) => void;
+}

@@ -36,3 +36,11 @@ export interface FormButtonProps {
 export interface EditButtonProps {
   id: string;
 }
+
+export interface ConfirmButtonProps {
+  text: string;
+  kind: 'confirm' | 'confirm-sub' | 'cancel' | 'cancel-sub' | 'normal';
+  border?: boolean;
+  loading?: string;
+  active?: boolean;
+}

@@ -3,11 +3,35 @@
 import { detailInfoModalProps } from '@types';
 import { ModalBody } from '../modalBody';
 import styles from './styles.module.scss';
+import { ConfirmModal } from '../confirmModal';
+import { useCallback, useState } from 'react';
+import { deleteCustomer } from '@apis';
 
 export function DetailInfoModal({
   detailInfo,
   hideModal,
 }: detailInfoModalProps) {
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string>('');
+
+  const openDeleteModal = useCallback((id: string) => {
+    setDeleteId(id);
+    setDeleteModalOpen(true);
+  }, []);
+
+  const closeDeleteModal = useCallback(() => {
+    setDeleteModalOpen(false);
+    setDeleteId('');
+  }, []);
+
+  const deleteInfo = async (id: string) => {
+    const response = await deleteCustomer(id);
+
+    if (response.status) {
+      window.location.reload();
+    }
+  };
+
   return (
     <ModalBody hideModal={hideModal}>
       <div className={styles.modal_content}>
@@ -72,6 +96,19 @@ export function DetailInfoModal({
           </>
         )}
       </div>
+      <button
+        onClick={() => openDeleteModal(detailInfo.customer.customerId)}
+        className={styles.delete_button}>
+        고객 삭제
+      </button>
+
+      {isDeleteModalOpen && (
+        <ConfirmModal
+          message={'고객 정보를 삭제하시겠습니까?'}
+          hideModal={closeDeleteModal}
+          confirmCallback={() => deleteInfo(deleteId)}
+        />
+      )}
     </ModalBody>
   );
 }
