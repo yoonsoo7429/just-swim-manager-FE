@@ -42,13 +42,13 @@ export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
 
   return (
     <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
+      <div className={styles.modal_content}>
         <h3>엑셀 업로드</h3>
         <input type="file" accept=".xlsx,.xls" onChange={handleFileChange} />
-        <div className={styles.buttons}>
+        <div className={styles.button_box}>
           <button onClick={onClose}>취소</button>
           <button onClick={handleUpload} disabled={!selectedFile || isUploading}>
-            {isUploading ? '업로드 중...' : '업로드 완료'}
+            {isUploading ? '업로드 중...' : '업로드'}
           </button>
         </div>
       </div>

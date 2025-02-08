@@ -12,6 +12,7 @@ export async function uploadExcel(file: File): Promise<{
 }> {
   const formData = new FormData();
   formData.append('file', file);
+  console.log(formData.get('file'));
 
   try {
     const result = await Fetch<{
