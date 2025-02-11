@@ -1,4 +1,4 @@
-import { MemberProps } from './typeMember';
+import { MemberInfoForLectureProps, MemberProps } from './typeMember';
 
 export interface LectureProps {
   lectureId: string;
@@ -14,5 +14,14 @@ export interface LectureProps {
 }
 
 export interface LectureForDashboardProps extends LectureProps {
-  member: MemberProps[];
+  member: MemberInfoForLectureProps[];
+}
+
+export interface LectrueBasicProps {
+  lectureTitle: string;
+  lectureLevel: string;
+  lectureDays: string;
+  lectureTime: string;
+  lectureFee: string;
+  lectureCapacity: string;
 }

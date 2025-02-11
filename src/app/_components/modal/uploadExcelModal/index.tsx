@@ -1,6 +1,6 @@
 'use client';
 
-import { uploadExcel } from '@/_apis/upload';
+import { uploadExcel } from '@/_apis';
 import { UploadExcelModalProps } from '@types';
 import { useState } from 'react';
 

@@ -22,7 +22,7 @@ export default function Sidebar() {
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />
-          <Link href="/manage/lesson">강습 관리</Link>
+          <Link href="/manage/lecture">강습 관리</Link>
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />

@@ -1,16 +1,16 @@
 'use client';
 
-import { detailInfoModalProps } from '@types';
+import { CustomerDetailInfoModalProps } from '@types';
 import { ModalBody } from '../modalBody';
 import styles from './styles.module.scss';
 import { ConfirmModal } from '../confirmModal';
 import { useCallback, useState } from 'react';
 import { deleteCustomer } from '@apis';
 
-export function DetailInfoModal({
+export function CustomerDetailInfoModal({
   detailInfo,
   hideModal,
-}: detailInfoModalProps) {
+}: CustomerDetailInfoModalProps) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string>('');
 

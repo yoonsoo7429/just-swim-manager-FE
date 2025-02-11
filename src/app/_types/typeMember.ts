@@ -1,3 +1,5 @@
+import { CustomerProps } from './typeCustomer';
+
 export interface MemberProps {
   memberId: string;
   customerId: string;
@@ -6,4 +8,8 @@ export interface MemberProps {
   memberCreatedAt: string;
   memberUpdatedAt: string;
   memberDeletedAt: string | null;
+}
+
+export interface MemberInfoForLectureProps extends MemberProps {
+  customer: CustomerProps;
 }

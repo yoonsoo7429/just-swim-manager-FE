@@ -1,13 +1,18 @@
 import { MouseEvent } from 'react';
 import { CustomerDetailProps } from './typeCustomer';
+import { LectureForDashboardProps } from './typeLecture';
 
 export interface ModalBodyProps {
   children?: React.ReactNode;
   hideModal: (event: MouseEvent<HTMLElement>) => void;
 }
 
-export interface detailInfoModalProps extends ModalBodyProps {
+export interface CustomerDetailInfoModalProps extends ModalBodyProps {
   detailInfo: CustomerDetailProps;
+}
+
+export interface LectureDetailInfoModalProps extends ModalBodyProps {
+  detailInfo: LectureForDashboardProps;
 }
 
 export interface UploadExcelModalProps {

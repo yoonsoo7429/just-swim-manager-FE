@@ -6,7 +6,7 @@ import styles from './page.module.scss';
 import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
-import { DetailInfoModal, AddButton, EditButton } from '@components';
+import { CustomerDetailInfoModal, AddButton, EditButton } from '@components';
 import { UploadExcelModal } from '@/_components/modal/uploadExcelModal';
 
 export default function CustomerPage() {
@@ -100,7 +100,7 @@ export default function CustomerPage() {
       </div>
 
       {isCustomerDeltailModalOpen && selectedCustomer && (
-        <DetailInfoModal
+        <CustomerDetailInfoModal
           detailInfo={selectedCustomer}
           hideModal={handleCloseModal}
         />
