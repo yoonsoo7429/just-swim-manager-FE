@@ -3,7 +3,6 @@
 import { LectureDetailInfoModalProps } from '@types';
 import { ModalBody } from '../modalBody';
 import styles from './styles.module.scss';
-import { EditButton } from '@/_components/button';
 
 export function LectureDetailInfoModal({
   detailInfo,
@@ -22,12 +21,11 @@ export function LectureDetailInfoModal({
                 <th>생년 월일</th>
                 <th>전화번호</th>
                 <th>등록 일자</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
               {detailInfo?.member?.map((member) => (
-                <tr key={member.lectureId}>
+                <tr key={member.memberId}>
                   <td>{member.customer?.name}</td>
                   <td>{member.customer?.gender}</td>
                   <td>{member.customer?.birthDate}</td>
@@ -36,10 +34,6 @@ export function LectureDetailInfoModal({
                     {new Date(
                       member.customer.customerCreatedAt,
                     ).toLocaleDateString()}
-                  </td>
-
-                  <td>
-                    <EditButton id={member.memberId} />
                   </td>
                 </tr>
               ))}

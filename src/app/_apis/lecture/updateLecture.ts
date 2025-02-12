@@ -1,10 +1,10 @@
 'use server';
 
-import { LectrueBasicProps } from '@types';
+import { LectureBasicProps } from '@types';
 import { Fetch } from '@utils';
 
 export async function updateLecture(
-  data: LectrueBasicProps,
+  data: LectureBasicProps,
   id: string,
 ): Promise<{ status: boolean; message: string }> {
   const result = await Fetch<{

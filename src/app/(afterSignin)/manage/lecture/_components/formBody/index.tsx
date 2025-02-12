@@ -3,7 +3,7 @@
 import styles from './styles.module.scss';
 
 import { HTMLAttributes, MouseEvent, useState } from 'react';
-import { customerSchema, CustomerType } from './schema';
+import { lectureSchema, LectureType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -15,7 +15,7 @@ import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
 import BirthDateInput from '@/_components/form/input/birthDateInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
-import { CustomerGender } from '@types';
+import { LectureLevel } from '@types';
 
 function InputWrapper({
   children,
@@ -41,11 +41,11 @@ function InputWrapper({
 export function FormBody({
   type = 'add',
   id = '',
-  customer,
+  lecture,
 }: {
   type?: 'add' | 'modify';
   id?: string;
-  customer?: CustomerType;
+  lecture?: LectureType;
 }) {
   const isModify = type === 'modify';
 
@@ -57,12 +57,12 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<CustomerType>({
-    resolver: zodResolver(customerSchema),
+  } = useForm<LectureType>({
+    resolver: zodResolver(lectureSchema),
     mode: 'onChange',
   });
 
-  const onSubmit = handleSubmit(async (input: CustomerType) => {
+  const onSubmit = handleSubmit(async (input: LectureType) => {
     const data = {
       ...input,
     };
@@ -90,85 +90,106 @@ export function FormBody({
   return (
     <div className={styles.container}>
       <HistoryBackHeader
-        title={type === 'add' ? '고객 정보 입력' : '고객 정보 수정하기'}
+        title={type === 'add' ? '수업 정보 입력' : '수업 정보 수정하기'}
       />
       <form action={onValid} className={styles.content_container}>
         <div className={styles.left_container}>
-          {/* 이름 */}
+          {/* 수업명 */}
           <InputWrapper
-            name="이름"
+            name="수업명"
             required={true}
             onClick={clearDuplicateError}>
             <TextInput
-              {...register('name')}
-              placeholder="이름을 입력해주세요"
-              valid={!errors.name}
-              value={customer?.name}
-              errorMessage={errors.name?.message}
-              defaultValue={isModify ? customer?.name : ''}
+              {...register('lectureTitle')}
+              placeholder="수업명을 입력해주세요"
+              valid={!errors.lectureTitle}
+              value={lecture?.lectureTitle}
+              errorMessage={errors.lectureTitle?.message}
+              defaultValue={isModify ? lecture?.lectureTitle : ''}
             />
           </InputWrapper>
 
-          {/* 성별 */}
+          {/* 급수 */}
           <InputWrapper
-            name="성별"
+            name="급수"
             required={true}
             onClick={clearDuplicateError}>
             <SelectionInput
-              options={[CustomerGender.Man, CustomerGender.Woman]}
-              {...register('gender')}
-              placeholder="성별을 선택해주세요"
-              value={customer?.gender}
-              valid={!errors.gender}
-              errorMessage={errors.gender?.message}
-              defaultValue={isModify ? customer?.gender : ''}
+              options={[
+                LectureLevel.BEGGINER_LEVEL,
+                LectureLevel.INTERMEDIATE_LEVEL,
+                LectureLevel.ADVANCED_LEVEL,
+                LectureLevel.MASTER_LEVEL,
+              ]}
+              {...register('lectureLevel')}
+              placeholder="급수를 선택해주세요"
+              value={lecture?.lectureLevel}
+              valid={!errors.lectureLevel}
+              errorMessage={errors.lectureLevel?.message}
+              defaultValue={isModify ? lecture?.lectureLevel : ''}
             />
           </InputWrapper>
 
-          {/* 전화 번호 */}
+          {/* 수업 요일 */}
           <InputWrapper
-            name="전화 번호"
+            name="수업 요일"
             required={true}
             onClick={clearDuplicateError}>
             <PhoneNumberInput
-              {...register('phoneNumber')}
-              valid={!errors.phoneNumber}
-              value={customer?.phoneNumber}
-              errorMessage={errors.phoneNumber?.message}
-              defaultValue={isModify ? customer?.phoneNumber : ''}
+              {...register('lectureDays')}
+              valid={!errors.lectureDays}
+              value={lecture?.lectureDays}
+              errorMessage={errors.lectureDays?.message}
+              defaultValue={isModify ? lecture?.lectureDays : ''}
             />
           </InputWrapper>
         </div>
 
         <div className={styles.right_container}>
-          {/* 생년 월일 */}
+          {/* 수업 시간 */}
           <InputWrapper
-            name="생년월일"
+            name="수업 시간"
             required={true}
             onClick={clearDuplicateError}>
             <BirthDateInput
-              {...register('birthDate')}
-              valid={!errors.birthDate}
-              value={customer?.birthDate}
-              errorMessage={errors.birthDate?.message}
-              defaultValue={isModify ? customer?.birthDate : ''}
+              {...register('lectureTime')}
+              valid={!errors.lectureTime}
+              value={lecture?.lectureTime}
+              errorMessage={errors.lectureTime?.message}
+              defaultValue={isModify ? lecture?.lectureTime : ''}
             />
           </InputWrapper>
 
-          {/* 주소 */}
+          {/* 수업료 */}
           <InputWrapper
-            name="주소"
+            name="수업료"
             required={true}
             onClick={clearDuplicateError}>
             <TextInput
-              {...register('address')}
-              placeholder="주소를 입력해주세요"
-              valid={!errors.address}
-              value={customer?.address}
-              errorMessage={errors.address?.message}
-              defaultValue={isModify ? customer?.address : ''}
+              {...register('lectureFee')}
+              placeholder="수업료"
+              valid={!errors.lectureFee}
+              value={lecture?.lectureFee}
+              errorMessage={errors.lectureFee?.message}
+              defaultValue={isModify ? lecture?.lectureFee : ''}
             />
           </InputWrapper>
+
+          {/* 수용 가능 인원 */}
+          {/* <InputWrapper
+            name="수용 가능 인원"
+            required={true}
+            onClick={clearDuplicateError}>
+            <TextInput
+              {...register('lectureCapacity')}
+              placeholder="수용 가능 인원를 입력해주세요"
+              valid={!errors.lectureCapacity}
+              value={lecture?.lectureCapacity}
+              errorMessage={errors.lectureCapacity?.message}
+              defaultValue={isModify ? parseInt(lecture?.lectureCapacity) : ''}
+            />
+          </InputWrapper> */}
+
           <div className={styles.button_container}>
             <FormButton
               text="확인"
