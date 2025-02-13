@@ -27,19 +27,15 @@ function _TextInput(
   }: TextInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const [text, setText] = useState<string | null>(value ? String(value) : null);
+  const [text, setText] = useState<string>(String(value));
   const targetRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (value !== text) {
-      setText(value ? String(value) : null);
-    }
-    onChange({
-      target: { name, value: String(value) },
-    } as ChangeEvent<HTMLInputElement>);
-  }, [value, onChange]);
+    setText(String(value));
+  }, [value]);
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
     onChange(event);
   };
 
@@ -51,6 +47,7 @@ function _TextInput(
         className={`${styles.text_input} ${!valid ? styles.invalid : ''}`}
         ref={mergeRefs(targetRef, ref)}
         type="text"
+        value={text}
         onChange={onChangeHandler}
       />
       {valid && <IconInputValid width={18} height={18} fill="#3689FF" />}

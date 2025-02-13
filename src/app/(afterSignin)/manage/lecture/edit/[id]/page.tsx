@@ -6,11 +6,12 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LectureForDashboardProps } from '@types';
 
-export default function LectureEidtPage() {
+export default function LectureEditPage() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : (params.id as string);
-  const [lectureDetail, setLectureDetail] =
-    useState<LectureForDashboardProps | null>(null);
+  const [lectureDetail, setLectureDetail] = useState<
+    LectureForDashboardProps | undefined
+  >(undefined);
 
   useEffect(() => {
     if (!id) return;

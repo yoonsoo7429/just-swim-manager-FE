@@ -16,6 +16,7 @@ import BirthDateInput from '@/_components/form/input/birthDateInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
 import { LectureLevel } from '@types';
+import DayInput from '@/_components/form/input/dayInput';
 
 function InputWrapper({
   children,
@@ -57,10 +58,13 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<LectureType>({
     resolver: zodResolver(lectureSchema),
     mode: 'onChange',
   });
+
+  console.log(watch());
 
   const onSubmit = handleSubmit(async (input: LectureType) => {
     const data = {
@@ -135,10 +139,10 @@ export function FormBody({
             name="수업 요일"
             required={true}
             onClick={clearDuplicateError}>
-            <PhoneNumberInput
+            <DayInput
               {...register('lectureDays')}
               valid={!errors.lectureDays}
-              value={lecture?.lectureDays}
+              value={lecture?.lectureDays || ''}
               errorMessage={errors.lectureDays?.message}
               defaultValue={isModify ? lecture?.lectureDays : ''}
             />

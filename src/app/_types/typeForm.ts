@@ -27,6 +27,13 @@ export interface BirhtDateInputProps {
   onChange: (event: { target: HTMLInputElement }) => void;
 }
 
+export interface DayInputProps {
+  name: string;
+  valid?: boolean;
+  errorMessage?: string | undefined;
+  onChange?: (event: { target: HTMLInputElement }) => void;
+}
+
 export interface FormButtonProps {
   text: string;
   loading?: string;
