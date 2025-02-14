@@ -34,6 +34,14 @@ export interface DayInputProps {
   onChange?: (event: { target: HTMLInputElement }) => void;
 }
 
+export interface TimeInputProps {
+  name: string;
+  valid?: boolean;
+  errorMessage: string | undefined;
+  defaultValue?: string;
+  defaultTimeValue?: string;
+}
+
 export interface FormButtonProps {
   text: string;
   loading?: string;

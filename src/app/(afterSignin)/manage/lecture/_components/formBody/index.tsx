@@ -6,17 +6,16 @@ import { HTMLAttributes, MouseEvent, useState } from 'react';
 import { lectureSchema, LectureType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { LectureLevel } from '@types';
 
 import { formAction } from './action';
 import { FormButton, HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
 import SelectionInput from '@/_components/form/input/selectionInput';
-import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
-import BirthDateInput from '@/_components/form/input/birthDateInput';
+import DayInput from '@/_components/form/input/dayInput';
+import TimeInput from '@/_components/form/input/timeInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
-import { LectureLevel } from '@types';
-import DayInput from '@/_components/form/input/dayInput';
 
 function InputWrapper({
   children,
@@ -155,7 +154,7 @@ export function FormBody({
             name="수업 시간"
             required={true}
             onClick={clearDuplicateError}>
-            <BirthDateInput
+            <TimeInput
               {...register('lectureTime')}
               valid={!errors.lectureTime}
               value={lecture?.lectureTime}
