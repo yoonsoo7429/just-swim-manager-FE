@@ -12,16 +12,13 @@ import { BirhtDateInputProps } from '@types';
 
 import styles from './styles.module.scss';
 
-function _BirthDateInput(
-  {
-    name,
-    errorMessage = '',
-    onChange,
-    value = '',
-    ...props
-  }: BirhtDateInputProps & InputHTMLAttributes<HTMLInputElement>,
-  ref: ForwardedRef<HTMLInputElement>,
-) {
+function _BirthDateInput({
+  name,
+  errorMessage = '',
+  onChange,
+  value = '',
+  ...props
+}: BirhtDateInputProps & InputHTMLAttributes<HTMLInputElement>) {
   const [birthParts, setBirthParts] = useState({
     year: '',
     month: '',

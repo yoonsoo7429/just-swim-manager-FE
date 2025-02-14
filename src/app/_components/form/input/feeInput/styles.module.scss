@@ -1,0 +1,70 @@
+@import '@/globals.scss';
+
+.input_wrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .text_input {
+    @include Body4-R;
+
+    width: 200px;
+    height: 40px;
+    padding: 10px 12px;
+
+    background-color: $--gray-50;
+
+    outline: 2px solid $--gray-100;
+    border-radius: 6px;
+
+    border: none;
+    font-size: 14px;
+  }
+
+  .text_input::placeholder {
+    color: $--gray-500;
+  }
+
+  .text_input:focus {
+    outline: 2px solid $--Primary-blue;
+  }
+
+  .invalid {
+    outline: 2px solid $--Cancel;
+  }
+
+  .text_input:placeholder-shown.invalid {
+    outline: 2px solid $--gray-100;
+  }
+
+  .text_input:placeholder-shown:focus.invalid {
+    outline: 2px solid $--Primary-blue;
+  }
+
+  svg {
+    position: absolute;
+
+    top: 50%;
+    transform: translate(0, -50%);
+
+    right: 12px; /* 아이콘 위치 조정 */
+  }
+
+  .text_input:placeholder-shown + svg {
+    display: none;
+  }
+
+  .error_message {
+    position: absolute;
+    left: 2px;
+    bottom: -22px;
+
+    & > p {
+      @include Body4-R;
+
+      color: $--Cancel;
+    }
+  }
+}

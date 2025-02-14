@@ -14,6 +14,8 @@ import TextInput from '@/_components/form/input/textInput';
 import SelectionInput from '@/_components/form/input/selectionInput';
 import DayInput from '@/_components/form/input/dayInput';
 import TimeInput from '@/_components/form/input/timeInput';
+import FeeInput from '@/_components/form/input/feeInput';
+import CapacityInput from '@/_components/form/input/capacityInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
 
@@ -57,17 +59,21 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
-    watch,
   } = useForm<LectureType>({
     resolver: zodResolver(lectureSchema),
     mode: 'onChange',
   });
 
-  console.log(watch());
-
   const onSubmit = handleSubmit(async (input: LectureType) => {
+    // 요금 처리
+    const getRawValue = () => {
+      return input.lectureFee.replace(/[^0-9]/g, '');
+    };
+
     const data = {
       ...input,
+      lectureFee: getRawValue(),
+      lectureCapacity: Number(input.lectureCapacity),
     };
 
     const result = await formAction(data, type, id);
@@ -168,7 +174,7 @@ export function FormBody({
             name="수업료"
             required={true}
             onClick={clearDuplicateError}>
-            <TextInput
+            <FeeInput
               {...register('lectureFee')}
               placeholder="수업료"
               valid={!errors.lectureFee}
@@ -179,19 +185,19 @@ export function FormBody({
           </InputWrapper>
 
           {/* 수용 가능 인원 */}
-          {/* <InputWrapper
-            name="수용 가능 인원"
+          <InputWrapper
+            name="인원수"
             required={true}
             onClick={clearDuplicateError}>
-            <TextInput
+            <CapacityInput
               {...register('lectureCapacity')}
-              placeholder="수용 가능 인원를 입력해주세요"
+              placeholder="인원수를 입력해주세요"
               valid={!errors.lectureCapacity}
               value={lecture?.lectureCapacity}
               errorMessage={errors.lectureCapacity?.message}
-              defaultValue={isModify ? parseInt(lecture?.lectureCapacity) : ''}
+              defaultValue={isModify ? lecture?.lectureCapacity : ''}
             />
-          </InputWrapper> */}
+          </InputWrapper>
 
           <div className={styles.button_container}>
             <FormButton

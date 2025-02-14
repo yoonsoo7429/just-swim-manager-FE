@@ -42,6 +42,21 @@ export interface TimeInputProps {
   defaultTimeValue?: string;
 }
 
+export interface FeeInputProps {
+  name: string;
+  valid?: boolean;
+  link?: boolean;
+  errorMessage: string | undefined;
+}
+
+export interface CapacityInputProps {
+  name: string;
+  valid?: boolean;
+  link?: boolean;
+  onChange?: (event: { target: HTMLInputElement }) => void;
+  errorMessage: string | undefined;
+}
+
 export interface FormButtonProps {
   text: string;
   loading?: string;

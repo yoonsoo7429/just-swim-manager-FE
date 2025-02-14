@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { TimeInputProps } from '@types';
 import { mergeRefs } from '@utils';
-import IconClock from '@assets/icon_clock.svg';
 
 import styled from './styles.module.scss';
 
@@ -22,7 +21,6 @@ const TimeBlock = ({
   selectedMinute,
   changeHour,
   changeMinute,
-  placeholder = '',
   valid,
 }: {
   selectedHour: string;
