@@ -59,10 +59,13 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<LectureType>({
     resolver: zodResolver(lectureSchema),
     mode: 'onChange',
   });
+
+  console.log(watch());
 
   const onSubmit = handleSubmit(async (input: LectureType) => {
     // 요금 처리
@@ -114,7 +117,6 @@ export function FormBody({
               valid={!errors.lectureTitle}
               value={lecture?.lectureTitle}
               errorMessage={errors.lectureTitle?.message}
-              defaultValue={isModify ? lecture?.lectureTitle : ''}
             />
           </InputWrapper>
 

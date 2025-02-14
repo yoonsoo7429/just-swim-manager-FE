@@ -91,7 +91,7 @@ export default function CustomerPage() {
                   )}
                 </td>
                 <td>
-                  <EditButton id={customer.customerId} />
+                  <EditButton type="customer" id={customer.customerId} />
                 </td>
               </tr>
             ))}

@@ -14,7 +14,7 @@ export interface LectureProps {
   lectureDays: string;
   lectureTime: string;
   lectureFee: string;
-  lectureCapacity: number;
+  lectureCapacity: string;
   lectureCreatedAt: string;
   lectureUpdatedAt: string;
   lectureDeletedAt: string | null;

@@ -16,7 +16,6 @@ export default function LecturePage() {
     useState<LectureForDashboardProps | null>(null);
   const [isLectureDeltailModalOpen, setIsLectureDeltailModalOpen] =
     useState(false);
-  console.log(lecturesInfo);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,7 +80,7 @@ export default function LecturePage() {
                 <td>{lecture.lectureFee}</td>
 
                 <td>
-                  <EditButton id={lecture.lectureId} />
+                  <EditButton type="lecture" id={lecture.lectureId} />
                 </td>
               </tr>
             ))}

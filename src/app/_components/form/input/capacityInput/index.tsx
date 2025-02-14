@@ -6,6 +6,7 @@ import {
   useRef,
   InputHTMLAttributes,
   useState,
+  ChangeEvent,
 } from 'react';
 import { CapacityInputProps } from '@types';
 
@@ -32,7 +33,7 @@ function _CapacityInput(
     setCapacity(newValue);
     onChange({
       target: { name, value: newValue },
-    } as React.ChangeEvent<HTMLInputElement>);
+    } as ChangeEvent<HTMLInputElement>);
   };
 
   return (

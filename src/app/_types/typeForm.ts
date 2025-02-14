@@ -64,6 +64,7 @@ export interface FormButtonProps {
 }
 
 export interface EditButtonProps {
+  type: string;
   id: string;
 }
 

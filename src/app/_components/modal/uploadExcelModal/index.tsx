@@ -1,11 +1,11 @@
 'use client';
 
-import { uploadExcel } from '@/_apis';
 import { UploadExcelModalProps } from '@types';
 import { useState } from 'react';
 
 import styles from './styles.module.scss';
 import { useRouter } from 'next/navigation';
+import { getTokenInCookies } from '@utils';
 
 export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -27,7 +27,22 @@ export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
     setIsUploading(true);
 
     try {
-      const response = await uploadExcel(selectedFile);
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const token = await getTokenInCookies();
+      console.log(token);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/uploads/excel`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        },
+      );
 
       if (response.status) {
         onClose();
@@ -44,7 +59,12 @@ export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
     <div className={styles.modalOverlay}>
       <div className={styles.modal_content}>
         <h3>엑셀 업로드</h3>
-        <input type="file" accept=".xlsx,.xls" onChange={handleFileChange} />
+        <input
+          name="file"
+          type="file"
+          accept=".xlsx,.xls"
+          onChange={handleFileChange}
+        />
         <div className={styles.button_box}>
           <button onClick={onClose}>취소</button>
           <button onClick={handleUpload} disabled={!selectedFile || isUploading}>
