@@ -79,3 +79,25 @@
 .table tbody tr:hover {
   background-color: #f1f1f1;
 }
+
+.delete_button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
