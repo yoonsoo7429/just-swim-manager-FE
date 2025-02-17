@@ -4,8 +4,15 @@
   position: relative;
 
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
+
+  .currency_symbol {
+    position: absolute;
+    left: 12px;
+    font-size: 14px;
+    color: #333;
+  }
 
   .text_input {
     @include Body4-R;
@@ -13,6 +20,7 @@
     width: 200px;
     height: 40px;
     padding: 10px 12px;
+    padding-left: 30px;
 
     background-color: $--gray-50;
 
@@ -45,10 +53,8 @@
 
   svg {
     position: absolute;
-
     top: 50%;
     transform: translate(0, -50%);
-
     right: 12px; /* 아이콘 위치 조정 */
   }
 

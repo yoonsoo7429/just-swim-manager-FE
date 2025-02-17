@@ -93,6 +93,7 @@ function _TimeInput(
     defaultValue = '',
     defaultTimeValue = '06:00',
     errorMessage = '',
+    onChange = () => {},
     ...props
   }: TimeInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
@@ -110,15 +111,24 @@ function _TimeInput(
   const [endHour, setEndHour] = useState<string>(defaultEndHour);
   const [endMinute, setEndMinute] = useState<string>(defaultEndMinute);
 
+  const timeValue = `${startHour}:${startMinute}-${endHour}:${endMinute}`;
+
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.setAttribute(
-        'value',
-        `${startHour}:${startMinute}-${endHour}:${endMinute}`,
-      );
-      inputRef.current.dispatchEvent(new Event('change', { bubbles: true }));
+      inputRef.current.value = timeValue;
     }
-  }, [startHour, startMinute, endHour, endMinute]);
+  }, [timeValue]);
+
+  const handleChange = () => {
+    if (inputRef.current) {
+      inputRef.current.value = timeValue;
+      onChange({ target: inputRef.current } as any);
+    }
+  };
+
+  useEffect(() => {
+    handleChange();
+  }, [timeValue]);
 
   return (
     <div className={styled.wrapper}>
@@ -150,9 +160,10 @@ function _TimeInput(
         {...props}
         name={name}
         ref={mergeRefs(inputRef, ref)}
-        type="text"
+        type="hidden"
+        value={timeValue}
         readOnly
-        hidden
+        onChange={handleChange}
       />
     </div>
   );

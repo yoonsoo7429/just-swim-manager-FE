@@ -37,7 +37,7 @@ function _FeeInput(
     if (!cleanValue) return '';
 
     const formattedValue = cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return `₩${formattedValue}`;
+    return formattedValue;
   };
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +51,7 @@ function _FeeInput(
 
   return (
     <div className={styles.input_wrapper}>
+      <span className={styles.currency_symbol}>₩</span>
       <input
         {...props}
         name={name}

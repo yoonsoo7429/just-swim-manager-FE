@@ -52,8 +52,9 @@ export function FormBody({
   const isModify = type === 'modify';
 
   const [serverErrors, setServerErrors] = useState<{
+    title: string;
     duplicate: string;
-  }>({ duplicate: '' });
+  }>({ title: '', duplicate: '' });
 
   const {
     register,
@@ -90,6 +91,15 @@ export function FormBody({
     await onSubmit();
   };
 
+  const clearTitleError = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+
+    setServerErrors((s) => ({
+      ...s,
+      title: '',
+    }));
+  };
+
   const clearDuplicateError = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
 
@@ -107,14 +117,11 @@ export function FormBody({
       <form action={onValid} className={styles.content_container}>
         <div className={styles.left_container}>
           {/* 수업명 */}
-          <InputWrapper
-            name="수업명"
-            required={true}
-            onClick={clearDuplicateError}>
+          <InputWrapper name="수업명" required={true} onClick={clearTitleError}>
             <TextInput
               {...register('lectureTitle')}
               placeholder="수업명을 입력해주세요"
-              valid={!errors.lectureTitle}
+              valid={!errors.lectureTitle && !serverErrors.title}
               value={lecture?.lectureTitle}
               errorMessage={errors.lectureTitle?.message}
             />
@@ -209,8 +216,14 @@ export function FormBody({
           </div>
         </div>
       </form>
-      {serverErrors.duplicate && (
+      {(serverErrors.title || serverErrors.duplicate) && (
         <div className={styles.error_container}>
+          {serverErrors.title && (
+            <div className={styles.error_message}>
+              <IconCheckboxInvalid />
+              <p>{serverErrors.title}</p>
+            </div>
+          )}
           {serverErrors.duplicate && (
             <div className={styles.error_message}>
               <IconCheckboxInvalid />

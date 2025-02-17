@@ -31,7 +31,6 @@ export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
       formData.append('file', selectedFile);
 
       const token = await getTokenInCookies();
-      console.log(token);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/uploads/excel`,

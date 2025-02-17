@@ -7,6 +7,7 @@ import {
   InputHTMLAttributes,
   useState,
   ChangeEvent,
+  useEffect,
 } from 'react';
 import { CapacityInputProps } from '@types';
 
@@ -28,12 +29,14 @@ function _CapacityInput(
 
   const [capacity, setCapacity] = useState(value);
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    setCapacity(String(value));
+  }, [value]);
+
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.replace(/[^0-9]/g, '');
     setCapacity(newValue);
-    onChange({
-      target: { name, value: newValue },
-    } as ChangeEvent<HTMLInputElement>);
+    onChange(event);
   };
 
   return (

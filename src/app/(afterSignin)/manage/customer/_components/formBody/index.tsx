@@ -6,6 +6,7 @@ import { HTMLAttributes, MouseEvent, useState } from 'react';
 import { customerSchema, CustomerType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { CustomerGender } from '@types';
 
 import { formAction } from './action';
 import { FormButton, HistoryBackHeader } from '@components';
@@ -15,7 +16,6 @@ import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
 import BirthDateInput from '@/_components/form/input/birthDateInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
-import { CustomerGender } from '@types';
 
 function InputWrapper({
   children,
@@ -57,10 +57,13 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<CustomerType>({
     resolver: zodResolver(customerSchema),
     mode: 'onChange',
+    defaultValues: customer,
   });
+  console.log(watch());
 
   const onSubmit = handleSubmit(async (input: CustomerType) => {
     const data = {
@@ -105,7 +108,6 @@ export function FormBody({
               valid={!errors.name}
               value={customer?.name}
               errorMessage={errors.name?.message}
-              defaultValue={isModify ? customer?.name : ''}
             />
           </InputWrapper>
 
