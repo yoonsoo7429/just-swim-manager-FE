@@ -25,11 +25,12 @@
 
   .button_group {
     display: flex;
-    gap: 50px;
+    gap: 30px;
     margin-right: 50px;
   }
 
-  .upload_excel_button {
+  .upload_excel_button,
+  .export_excel_button {
     background-color: $--gray-500;
     color: white;
     font-size: 1rem;

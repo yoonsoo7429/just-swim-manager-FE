@@ -15,7 +15,7 @@ export interface LectureDetailInfoModalProps extends ModalBodyProps {
   detailInfo: LectureForDashboardProps;
 }
 
-export interface UploadExcelModalProps {
+export interface excelModalProps {
   onClose: () => void;
 }
 

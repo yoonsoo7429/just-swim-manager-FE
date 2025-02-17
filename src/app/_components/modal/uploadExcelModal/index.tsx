@@ -1,13 +1,13 @@
 'use client';
 
-import { UploadExcelModalProps } from '@types';
+import { excelModalProps } from '@types';
 import { useState } from 'react';
 
 import styles from './styles.module.scss';
 import { useRouter } from 'next/navigation';
 import { getTokenInCookies } from '@utils';
 
-export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
+export function UploadExcelModal({ onClose }: excelModalProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
@@ -33,7 +33,7 @@ export function UploadExcelModal({ onClose }: UploadExcelModalProps) {
       const token = await getTokenInCookies();
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/uploads/excel`,
+        `${process.env.NEXT_PUBLIC_API_URL}/upload/excel`,
         {
           method: 'POST',
           headers: {

@@ -6,7 +6,12 @@ import styles from './page.module.scss';
 import { getCustomersInfo } from '@apis';
 import { CustomerDetailProps, CustomerProps } from '@types';
 import { useEffect, useState } from 'react';
-import { CustomerDetailInfoModal, AddButton, EditButton } from '@components';
+import {
+  CustomerDetailInfoModal,
+  AddButton,
+  EditButton,
+  ExportExcelModal,
+} from '@components';
 import { UploadExcelModal } from '@/_components/modal/uploadExcelModal';
 
 export default function CustomerPage() {
@@ -16,6 +21,7 @@ export default function CustomerPage() {
   const [isCustomerDeltailModalOpen, setIsCustomerDeltailModalOpen] =
     useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +59,12 @@ export default function CustomerPage() {
           <button
             className={styles.upload_excel_button}
             onClick={() => setIsUploadModalOpen(true)}>
-            엑셀 업로드
+            엑셀 Upload
+          </button>
+          <button
+            className={styles.export_excel_button}
+            onClick={() => setIsExportModalOpen(true)}>
+            엑셀 Export
           </button>
         </div>
       </div>
@@ -108,6 +119,10 @@ export default function CustomerPage() {
 
       {isUploadModalOpen && (
         <UploadExcelModal onClose={() => setIsUploadModalOpen(false)} />
+      )}
+
+      {isExportModalOpen && (
+        <ExportExcelModal onClose={() => setIsExportModalOpen(false)} />
       )}
     </div>
   );
