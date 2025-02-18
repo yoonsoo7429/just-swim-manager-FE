@@ -1,12 +1,13 @@
 'use client';
 
 import { getLectureDetail } from '@/_apis';
-import styles from './page.module.scss';
 
 import { getLecturesInfo } from '@apis';
 import { LectureForDashboardProps } from '@types';
 import { useEffect, useState } from 'react';
 import { LectureDetailInfoModal, AddButton, EditButton } from '@components';
+
+import styles from './page.module.scss';
 
 export default function LecturePage() {
   const [lecturesInfo, setLecturesInfo] = useState<LectureForDashboardProps[]>(
@@ -14,7 +15,7 @@ export default function LecturePage() {
   );
   const [selectedLecture, setSelectedLecture] =
     useState<LectureForDashboardProps | null>(null);
-  const [isLectureDeltailModalOpen, setIsLectureDeltailModalOpen] =
+  const [isLectureDetailModalOpen, setIsLectureDetailModalOpen] =
     useState(false);
 
   useEffect(() => {
@@ -33,14 +34,14 @@ export default function LecturePage() {
     try {
       const lectureDetail = await getLectureDetail(id);
       setSelectedLecture(lectureDetail);
-      setIsLectureDeltailModalOpen(true);
+      setIsLectureDetailModalOpen(true);
     } catch (error) {
       console.error('Error fetching lecture detail', error);
     }
   };
 
   const handleCloseModal = () => {
-    setIsLectureDeltailModalOpen(false);
+    setIsLectureDetailModalOpen(false);
     setSelectedLecture(null);
   };
 
@@ -88,7 +89,7 @@ export default function LecturePage() {
         </table>
       </div>
 
-      {isLectureDeltailModalOpen && selectedLecture && (
+      {isLectureDetailModalOpen && selectedLecture && (
         <LectureDetailInfoModal
           detailInfo={selectedLecture}
           hideModal={handleCloseModal}

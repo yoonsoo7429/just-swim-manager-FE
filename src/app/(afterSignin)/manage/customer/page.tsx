@@ -18,7 +18,7 @@ export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
   const [selectedCustomer, setSelectedCustomer] =
     useState<CustomerDetailProps | null>(null);
-  const [isCustomerDeltailModalOpen, setIsCustomerDeltailModalOpen] =
+  const [isCustomerDetailModalOpen, setIsCustomerDetailModalOpen] =
     useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -39,14 +39,14 @@ export default function CustomerPage() {
     try {
       const customerDetail = await getCustomerDetail(id);
       setSelectedCustomer(customerDetail);
-      setIsCustomerDeltailModalOpen(true);
+      setIsCustomerDetailModalOpen(true);
     } catch (error) {
       console.error('Error fetching customer detail', error);
     }
   };
 
   const handleCloseModal = () => {
-    setIsCustomerDeltailModalOpen(false);
+    setIsCustomerDetailModalOpen(false);
     setSelectedCustomer(null);
   };
 
@@ -110,7 +110,7 @@ export default function CustomerPage() {
         </table>
       </div>
 
-      {isCustomerDeltailModalOpen && selectedCustomer && (
+      {isCustomerDetailModalOpen && selectedCustomer && (
         <CustomerDetailInfoModal
           detailInfo={selectedCustomer}
           hideModal={handleCloseModal}

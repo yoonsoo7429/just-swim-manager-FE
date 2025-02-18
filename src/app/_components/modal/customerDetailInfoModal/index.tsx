@@ -2,10 +2,11 @@
 
 import { CustomerDetailInfoModalProps } from '@types';
 import { ModalBody } from '../modalBody';
-import styles from './styles.module.scss';
 import { ConfirmModal } from '../confirmModal';
 import { useCallback, useState } from 'react';
 import { deleteCustomer } from '@apis';
+
+import styles from './styles.module.scss';
 
 export function CustomerDetailInfoModal({
   detailInfo,
