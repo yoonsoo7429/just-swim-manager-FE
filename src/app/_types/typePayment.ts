@@ -1,6 +1,12 @@
 import { CustomerProps } from './typeCustomer';
 import { LectureProps } from './typeLecture';
 
+export enum PaymentState {
+  COMPLETE = '결제 완납',
+  ADDITIONAL_REQUIRED = '추가 결제 필요',
+  PENDING = '결제 필요',
+}
+
 export interface PaymentProps {
   paymentId: string;
   customerId: string;

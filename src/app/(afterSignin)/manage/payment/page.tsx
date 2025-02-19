@@ -3,7 +3,7 @@
 import styles from './page.module.scss';
 
 import { useEffect, useState } from 'react';
-import { PaymentForDashboardProps } from '@types';
+import { PaymentForDashboardProps, PaymentState } from '@types';
 import { getPaymentDetail, getPaymentsInfo } from '@apis';
 import { AddButton, EditButton } from '@components';
 import { PaymentDetailInfoModal } from '@/_components/modal/paymentDetailInfoModal';
@@ -44,6 +44,14 @@ export default function PaymentPage() {
     setSelectedPayment(null);
   };
 
+  const getPaymentState = (paymentFee: string, lectureFee: string) => {
+    let paymentFeeNum = parseInt(paymentFee);
+    let lectureFeeNum = parseInt(lectureFee);
+    if (paymentFeeNum === 0) return PaymentState.PENDING;
+    if (paymentFeeNum < lectureFeeNum) return PaymentState.ADDITIONAL_REQUIRED;
+    return PaymentState.COMPLETE;
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -58,7 +66,9 @@ export default function PaymentPage() {
             <tr>
               <th>이름</th>
               <th>수업명</th>
-              <th>결제 요금</th>
+              <th>수업료</th>
+              <th>결제한 요금</th>
+              <th>결제 상태</th>
               <th>결제 날짜</th>
               <th></th>
             </tr>
@@ -70,7 +80,14 @@ export default function PaymentPage() {
                 onClick={() => handlePaymentClick(payment.paymentId)}>
                 <td>{payment.customer.name}</td>
                 <td>{payment.lecture.lectureTitle}</td>
+                <td>{payment.lecture.lectureFee}</td>
                 <td>{payment.paymentFee}</td>
+                <td>
+                  {getPaymentState(
+                    payment.paymentFee,
+                    payment.lecture.lectureFee,
+                  )}
+                </td>
                 <td>{payment.paymentDate}</td>
 
                 <td>
