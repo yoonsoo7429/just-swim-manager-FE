@@ -29,3 +29,7 @@ export interface PaymentBasicProps {
   paymentFee: string;
   paymentDate: string;
 }
+
+export interface PaymentDetailProps extends PaymentProps {
+  lectureTitle: string;
+}

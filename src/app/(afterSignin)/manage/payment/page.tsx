@@ -7,6 +7,7 @@ import { PaymentForDashboardProps, PaymentState } from '@types';
 import { getPaymentDetail, getPaymentsInfo } from '@apis';
 import { AddButton, EditButton } from '@components';
 import { PaymentDetailInfoModal } from '@/_components/modal/paymentDetailInfoModal';
+import { feeFormat } from '@utils';
 
 export default function PaymentPage() {
   const [paymentsInfo, setPaymentsInfo] = useState<PaymentForDashboardProps[]>(
@@ -80,8 +81,8 @@ export default function PaymentPage() {
                 onClick={() => handlePaymentClick(payment.paymentId)}>
                 <td>{payment.customer.name}</td>
                 <td>{payment.lecture.lectureTitle}</td>
-                <td>{payment.lecture.lectureFee}</td>
-                <td>{payment.paymentFee}</td>
+                <td>{`${feeFormat(payment.lecture.lectureFee)} 원`}</td>
+                <td>{`${feeFormat(payment.paymentFee)} 원`}</td>
                 <td>
                   {getPaymentState(
                     payment.paymentFee,

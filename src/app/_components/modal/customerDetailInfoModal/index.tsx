@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react';
 import { deleteCustomer } from '@apis';
 
 import styles from './styles.module.scss';
+import { feeFormat } from '@utils';
 
 export function CustomerDetailInfoModal({
   detailInfo,
@@ -14,6 +15,8 @@ export function CustomerDetailInfoModal({
 }: CustomerDetailInfoModalProps) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string>('');
+
+  console.log(detailInfo);
 
   const openDeleteModal = useCallback((id: string) => {
     setDeleteId(id);
@@ -63,12 +66,8 @@ export function CustomerDetailInfoModal({
                       <p>강습 명: {lecture.lectureTitle}</p>
                       <p>강습 요일: {lecture.lectureDays}</p>
                       <p>강습 시간: {lecture.lectureTime}</p>
-                      <p>강습료: {lecture.lectureFee}</p>
+                      <p>강습료: {`${feeFormat(lecture.lectureFee)} 원`}</p>
                       <p>강습 Level: {lecture.lectureLevel}</p>
-                      <p>
-                        강습 인원: {lecture.member.length} /{' '}
-                        {lecture.lectureCapacity}
-                      </p>
                     </li>
                   ))}
                 </ul>
@@ -84,9 +83,20 @@ export function CustomerDetailInfoModal({
                 <ul>
                   {detailInfo.payment.map((payment) => (
                     <li key={payment.paymentId}>
-                      <p>결제료: ${payment.paymentFee}</p>
+                      <p>수업명: {payment.lectureTitle}</p>
+                      <p>결제 요금: {`${feeFormat(payment.paymentFee)} 원`}</p>
                       <p>결제 적용일: {payment.paymentDate}</p>
-                      <p>결제일: {payment.paymentCreatedAt}</p>
+                      <p>
+                        결제일:{' '}
+                        {new Date(payment.paymentCreatedAt).toLocaleDateString(
+                          'ko-KR',
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )}
+                      </p>
                     </li>
                   ))}
                 </ul>

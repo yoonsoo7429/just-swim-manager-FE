@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { LectureDetailInfoModal, AddButton, EditButton } from '@components';
 
 import styles from './page.module.scss';
+import { feeFormat } from '@utils';
 
 export default function LecturePage() {
   const [lecturesInfo, setLecturesInfo] = useState<LectureForDashboardProps[]>(
@@ -78,7 +79,7 @@ export default function LecturePage() {
                 <td>
                   {lecture?.member?.length} / {lecture.lectureCapacity}
                 </td>
-                <td>{lecture.lectureFee}</td>
+                <td>{`${feeFormat(lecture.lectureFee)} 원`}</td>
 
                 <td>
                   <EditButton type="lecture" id={lecture.lectureId} />

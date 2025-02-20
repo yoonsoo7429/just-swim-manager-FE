@@ -1,5 +1,5 @@
 import { LectureForDashboardProps } from './typeLecture';
-import { PaymentProps } from './typePayment';
+import { PaymentDetailProps } from './typePayment';
 
 export enum CustomerGender {
   Man = '남자',
@@ -21,7 +21,7 @@ export interface CustomerProps {
 export interface CustomerDetailProps {
   customer: CustomerProps;
   lecture: LectureForDashboardProps[];
-  payment: PaymentProps[];
+  payment: PaymentDetailProps[];
 }
 
 export interface CustomerBasicProps {
