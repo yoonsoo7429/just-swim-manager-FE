@@ -90,7 +90,6 @@ function _TimeInput(
   {
     name,
     valid = true,
-    defaultValue = '',
     defaultTimeValue = '06:00',
     errorMessage = '',
     onChange = () => {},
@@ -100,11 +99,11 @@ function _TimeInput(
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const flag = checkValue(defaultValue);
-  const defaultStartHour = flag ? defaultValue.slice(0, 2) : '06';
-  const defaultStartMinute = flag ? defaultValue.slice(3, 5) : '00';
-  const defaultEndHour = flag ? defaultValue.slice(6, 8) : '07';
-  const defaultEndMinute = flag ? defaultValue.slice(9) : '00';
+  const flag = checkValue(props.value as string);
+  const defaultStartHour = flag ? (props.value as string).slice(0, 2) : '00';
+  const defaultStartMinute = flag ? (props.value as string).slice(3, 5) : '00';
+  const defaultEndHour = flag ? (props.value as string).slice(6, 8) : '00';
+  const defaultEndMinute = flag ? (props.value as string).slice(9) : '00';
 
   const [startHour, setStartHour] = useState<string>(defaultStartHour);
   const [startMinute, setStartMinute] = useState<string>(defaultStartMinute);

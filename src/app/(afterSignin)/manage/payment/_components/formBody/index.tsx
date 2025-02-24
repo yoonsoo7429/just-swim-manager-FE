@@ -87,7 +87,7 @@ export function FormBody({
 
   const handleCourseSelect = async (lecture: LectureProps) => {
     setSelectedLecture(lecture);
-    const paymentList = await getPaymentsInfo(lecture.courseId);
+    const paymentList = await getPaymentsInfo(parseInt(lecture.lectureId));
     setPayments(paymentList);
     // 오른쪽 영역 초기화
     setSelectedPayment(null);
@@ -96,15 +96,10 @@ export function FormBody({
   };
 
   const onSubmit = handleSubmit(async (input: PaymentType) => {
-    // 요금 처리
-    const getRawValue = () => {
-      return input.paymentFee.replace(/[^0-9]/g, '');
-    };
-
     const data = {
       ...input,
-      paymentFee: getRawValue(),
-      paymentCapacity: Number(input.paymentCapacity),
+      lectureId: selectedLecture?.lectureId,
+      customerId: selectedPayment?.customerId,
     };
 
     const result = await formAction(data, type, id);
@@ -139,7 +134,7 @@ export function FormBody({
   return (
     <div className={styles.container}>
       <HistoryBackHeader
-        title={type === 'add' ? '수업 정보 입력' : '수업 정보 수정하기'}
+        title={type === 'add' ? '결제 정보 입력' : '결제 정보 수정하기'}
       />
       <form action={onValid} className={styles.content_container}>
         <div className={styles.left_container}>

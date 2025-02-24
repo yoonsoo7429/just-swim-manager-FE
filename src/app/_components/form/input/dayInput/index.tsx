@@ -70,7 +70,11 @@ function _DayInput(
   const inputRef = useRef<HTMLInputElement>(null);
   const [days, setDays] = useState(makeInitialValue(defaultValue));
 
-  const changeSelectedDay = (day: keyof typeof days) => {
+  const changeSelectedDay = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    day: keyof typeof days,
+  ) => {
+    e.preventDefault();
     setDays((prev) => ({
       ...prev,
       [day]: !prev[day],
@@ -87,8 +91,8 @@ function _DayInput(
   }, [days, onChange, name]);
 
   useEffect(() => {
-    setDays(makeInitialValue(defaultValue));
-  }, [defaultValue]);
+    setDays(makeInitialValue(props.value as string));
+  }, [props.value]);
 
   return (
     <div className={styles.input_wrapper}>
@@ -98,7 +102,7 @@ function _DayInput(
           <button
             key={day}
             className={`${styles.day_button} ${days[DAY_KOR_TO_ENG[day]] ? styles.selected : ''}`}
-            onClick={() => changeSelectedDay(DAY_KOR_TO_ENG[day])}>
+            onClick={(e) => changeSelectedDay(e, DAY_KOR_TO_ENG[day])}>
             <span>{day}</span>
           </button>
         ))}

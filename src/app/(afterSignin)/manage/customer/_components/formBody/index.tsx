@@ -57,13 +57,11 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
-    watch,
   } = useForm<CustomerType>({
     resolver: zodResolver(customerSchema),
     mode: 'onChange',
     defaultValues: customer,
   });
-  console.log(watch());
 
   const onSubmit = handleSubmit(async (input: CustomerType) => {
     const data = {

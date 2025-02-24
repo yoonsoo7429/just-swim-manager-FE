@@ -6,14 +6,14 @@ import { LectureForDashboardProps } from '@types';
 import { Fetch } from '@utils';
 
 export async function getLectureDetail(
-  id: string,
+  lectureId: number,
 ): Promise<LectureForDashboardProps> {
   const result = await Fetch<{
     status: boolean;
     message: string;
     data: LectureForDashboardProps;
   }>({
-    url: `${process.env.NEXT_PUBLIC_API_URL}/lecture/${id}`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/lecture/${lectureId}`,
     method: 'GET',
     header: {
       token: true,

@@ -60,13 +60,10 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
-    watch,
   } = useForm<LectureType>({
     resolver: zodResolver(lectureSchema),
     mode: 'onChange',
   });
-
-  console.log(watch());
 
   const onSubmit = handleSubmit(async (input: LectureType) => {
     // 요금 처리
@@ -122,7 +119,7 @@ export function FormBody({
               {...register('lectureTitle')}
               placeholder="수업명을 입력해주세요"
               valid={!errors.lectureTitle && !serverErrors.title}
-              value={lecture?.lectureTitle}
+              value={lecture ? lecture?.lectureTitle : ''}
               errorMessage={errors.lectureTitle?.message}
             />
           </InputWrapper>
@@ -141,10 +138,9 @@ export function FormBody({
               ]}
               {...register('lectureLevel')}
               placeholder="급수를 선택해주세요"
-              value={lecture?.lectureLevel}
+              value={lecture ? lecture?.lectureLevel : ''}
               valid={!errors.lectureLevel}
               errorMessage={errors.lectureLevel?.message}
-              defaultValue={isModify ? lecture?.lectureLevel : ''}
             />
           </InputWrapper>
 
@@ -156,9 +152,8 @@ export function FormBody({
             <DayInput
               {...register('lectureDays')}
               valid={!errors.lectureDays}
-              value={lecture?.lectureDays || ''}
+              value={lecture ? lecture?.lectureDays : ''}
               errorMessage={errors.lectureDays?.message}
-              defaultValue={isModify ? lecture?.lectureDays : ''}
             />
           </InputWrapper>
         </div>
@@ -172,9 +167,8 @@ export function FormBody({
             <TimeInput
               {...register('lectureTime')}
               valid={!errors.lectureTime}
-              value={lecture?.lectureTime}
+              value={lecture ? lecture?.lectureTime : ''}
               errorMessage={errors.lectureTime?.message}
-              defaultValue={isModify ? lecture?.lectureTime : ''}
             />
           </InputWrapper>
 
@@ -187,9 +181,8 @@ export function FormBody({
               {...register('lectureFee')}
               placeholder="수업료"
               valid={!errors.lectureFee}
-              value={lecture?.lectureFee}
+              value={lecture ? lecture?.lectureFee : ''}
               errorMessage={errors.lectureFee?.message}
-              defaultValue={isModify ? lecture?.lectureFee : ''}
             />
           </InputWrapper>
 
@@ -202,9 +195,8 @@ export function FormBody({
               {...register('lectureCapacity')}
               placeholder="인원수를 입력해주세요"
               valid={!errors.lectureCapacity}
-              value={lecture?.lectureCapacity}
+              value={lecture ? lecture?.lectureCapacity : ''}
               errorMessage={errors.lectureCapacity?.message}
-              defaultValue={isModify ? lecture?.lectureCapacity : ''}
             />
           </InputWrapper>
 

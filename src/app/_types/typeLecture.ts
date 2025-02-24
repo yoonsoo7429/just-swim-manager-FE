@@ -1,4 +1,4 @@
-import { MemberInfoForLectureProps } from './typeMember';
+import { MemberInfoForLectureProps, MemberProps } from './typeMember';
 
 export enum LectureLevel {
   BEGGINER_LEVEL = '초급',
@@ -18,6 +18,7 @@ export interface LectureProps {
   lectureCreatedAt: string;
   lectureUpdatedAt: string;
   lectureDeletedAt: string | null;
+  member: MemberProps[];
 }
 
 export interface LectureForDashboardProps extends LectureProps {
