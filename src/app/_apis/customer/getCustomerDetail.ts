@@ -6,14 +6,14 @@ import { CustomerDetailProps } from '@types';
 import { Fetch } from '@utils';
 
 export async function getCustomerDetail(
-  id: string,
+  customerId: number,
 ): Promise<CustomerDetailProps> {
   const result = await Fetch<{
     status: boolean;
     message: string;
     data: CustomerDetailProps;
   }>({
-    url: `${process.env.NEXT_PUBLIC_API_URL}/customer/${id}`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/customer/${customerId}`,
     method: 'GET',
     header: {
       token: true,

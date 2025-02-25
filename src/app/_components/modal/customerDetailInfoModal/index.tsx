@@ -16,8 +16,6 @@ export function CustomerDetailInfoModal({
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string>('');
 
-  console.log(detailInfo);
-
   const openDeleteModal = useCallback((id: string) => {
     setDeleteId(id);
     setDeleteModalOpen(true);

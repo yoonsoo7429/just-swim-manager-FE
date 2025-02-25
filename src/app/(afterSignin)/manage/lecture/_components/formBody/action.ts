@@ -17,9 +17,14 @@ export async function formAction(
   let valid = true;
 
   for (const lecture of lectures) {
+    if (type === 'modify' && lecture.lectureId === id) {
+      continue;
+    }
+
     if (data.lectureTitle === lecture.lectureTitle) {
       valid = false;
       errors.title = '중복된 강의명이 존재합니다.';
+      break;
     }
   }
 
