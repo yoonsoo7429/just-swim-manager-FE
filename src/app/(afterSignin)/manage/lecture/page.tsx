@@ -33,7 +33,7 @@ export default function LecturePage() {
 
   const handleLectureClick = async (id: string) => {
     try {
-      const lectureDetail = await getLectureDetail(id);
+      const lectureDetail = await getLectureDetail(parseInt(id));
       setSelectedLecture(lectureDetail);
       setIsLectureDetailModalOpen(true);
     } catch (error) {

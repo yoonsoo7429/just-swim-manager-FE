@@ -37,7 +37,7 @@ export default function CustomerPage() {
 
   const handleCustomerClick = async (id: string) => {
     try {
-      const customerDetail = await getCustomerDetail(id);
+      const customerDetail = await getCustomerDetail(parseInt(id));
       setSelectedCustomer(customerDetail);
       setIsCustomerDetailModalOpen(true);
     } catch (error) {

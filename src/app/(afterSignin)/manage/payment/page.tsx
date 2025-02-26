@@ -32,7 +32,7 @@ export default function PaymentPage() {
 
   const handlePaymentClick = async (id: string) => {
     try {
-      const paymentDetail = await getPaymentDetail(id);
+      const paymentDetail = await getPaymentDetail(parseInt(id));
       setSelectedPayment(paymentDetail);
       setIsPaymentDetailModalOpen(true);
     } catch (error) {
@@ -89,7 +89,7 @@ export default function PaymentPage() {
                     payment.lecture.lectureFee,
                   )}
                 </td>
-                <td>{payment.paymentDate}</td>
+                <td>{payment.paymentDate ? payment.paymentDate : '-'}</td>
 
                 <td>
                   <EditButton type="payment" id={payment.paymentId} />

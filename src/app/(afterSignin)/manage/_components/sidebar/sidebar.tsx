@@ -26,7 +26,7 @@ export default function Sidebar() {
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />
-          <Link href="/manage/payment">결제 정보</Link>
+          <Link href="/manage/payment">결제 관리</Link>
         </li>
       </ul>
     </nav>
