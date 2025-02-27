@@ -55,7 +55,6 @@ export default function CustomerPage() {
       <div className={styles.header}>
         <h2 className={styles.title}>고객 관리</h2>
         <div className={styles.button_group}>
-          <AddButton type="customer" />
           <button
             className={styles.upload_excel_button}
             onClick={() => setIsUploadModalOpen(true)}>
@@ -66,6 +65,7 @@ export default function CustomerPage() {
             onClick={() => setIsExportModalOpen(true)}>
             엑셀 Export
           </button>
+          <AddButton type="customer" />
         </div>
       </div>
       <div className={styles.dashboard}>

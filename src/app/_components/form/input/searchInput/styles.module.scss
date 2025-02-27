@@ -1,0 +1,32 @@
+@import '@/globals.scss';
+
+.search {
+  background-color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+
+  .search_icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translate(0, -50%);
+    pointer-events: none;
+  }
+
+  .searchInput {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+}

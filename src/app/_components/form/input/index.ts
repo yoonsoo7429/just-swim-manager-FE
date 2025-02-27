@@ -6,3 +6,4 @@ export * from './dayInput';
 export * from './timeInput';
 export * from './feeInput';
 export * from './capacityInput';
+export * from './searchInput';

@@ -57,6 +57,12 @@ export interface CapacityInputProps {
   errorMessage: string | undefined;
 }
 
+export interface SearchInputProps {
+  value: string;
+  onChange?: (event: { target: HTMLInputElement }) => void;
+  placeholder?: string;
+}
+
 export interface FormButtonProps {
   text: string;
   loading?: string;

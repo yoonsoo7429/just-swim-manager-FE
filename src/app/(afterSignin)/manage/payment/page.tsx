@@ -8,6 +8,7 @@ import { getPaymentDetail, getPaymentsInfo } from '@apis';
 import { AddButton, EditButton } from '@components';
 import { PaymentDetailInfoModal } from '@/_components/modal/paymentDetailInfoModal';
 import { feeFormat } from '@utils';
+import SearchInput from '@/_components/form/input/searchInput';
 
 export default function PaymentPage() {
   const [paymentsInfo, setPaymentsInfo] = useState<PaymentForDashboardProps[]>(
@@ -17,6 +18,7 @@ export default function PaymentPage() {
     useState<PaymentForDashboardProps | null>(null);
   const [isPaymentDetailModalOpen, setIsPaymentDetailModalOpen] =
     useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,11 +55,36 @@ export default function PaymentPage() {
     return PaymentState.COMPLETE;
   };
 
+  const handleSearchChange = (event: { target: HTMLInputElement }) => {
+    setSearchValue(event.target.value);
+  };
+
+  const filteredPayments = paymentsInfo.filter((payment) => {
+    const paymentDate = payment.paymentDate || '';
+    const searchTerm = searchValue || '';
+
+    const sanitizedSearchTerm = searchTerm.replace(
+      /[-/\\^$*+?.()|[\]{}]/g,
+      '\\$&',
+    );
+
+    return (
+      payment.customer.name.includes(sanitizedSearchTerm) ||
+      payment.lecture.lectureTitle.includes(sanitizedSearchTerm) ||
+      paymentDate.includes(sanitizedSearchTerm)
+    );
+  });
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>결제 정보</h2>
         <div className={styles.button_group}>
+          <SearchInput
+            value={searchValue}
+            onChange={handleSearchChange}
+            placeholder="결제 정보 검색"
+          />
           <AddButton type="payment" />
         </div>
       </div>
@@ -75,27 +102,28 @@ export default function PaymentPage() {
             </tr>
           </thead>
           <tbody>
-            {paymentsInfo.map((payment) => (
-              <tr
-                key={payment.paymentId}
-                onClick={() => handlePaymentClick(payment.paymentId)}>
-                <td>{payment.customer.name}</td>
-                <td>{payment.lecture.lectureTitle}</td>
-                <td>{`${feeFormat(payment.lecture.lectureFee)} 원`}</td>
-                <td>{`${feeFormat(payment.paymentFee)} 원`}</td>
-                <td>
-                  {getPaymentState(
-                    payment.paymentFee,
-                    payment.lecture.lectureFee,
-                  )}
-                </td>
-                <td>{payment.paymentDate ? payment.paymentDate : '-'}</td>
+            {paymentsInfo &&
+              filteredPayments.map((payment) => (
+                <tr
+                  key={payment.paymentId}
+                  onClick={() => handlePaymentClick(payment.paymentId)}>
+                  <td>{payment.customer.name}</td>
+                  <td>{payment.lecture.lectureTitle}</td>
+                  <td>{`${feeFormat(payment.lecture.lectureFee)} 원`}</td>
+                  <td>{`${feeFormat(payment.paymentFee)} 원`}</td>
+                  <td>
+                    {getPaymentState(
+                      payment.paymentFee,
+                      payment.lecture.lectureFee,
+                    )}
+                  </td>
+                  <td>{payment.paymentDate ? payment.paymentDate : '-'}</td>
 
-                <td>
-                  <EditButton type="payment" id={payment.paymentId} />
-                </td>
-              </tr>
-            ))}
+                  <td>
+                    <EditButton type="payment" id={payment.paymentId} />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
