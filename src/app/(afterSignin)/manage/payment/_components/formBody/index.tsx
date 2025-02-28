@@ -17,8 +17,8 @@ import FeeInput from '@/_components/form/input/feeInput';
 import CapacityInput from '@/_components/form/input/capacityInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
-import { LectureProps, PaymentProps } from '@types';
-import { getLecturesInfo, getPaymentsInfo } from '@apis';
+import { LectureProps, MemberInfoForLectureProps } from '@types';
+import { getLecturesInfo, getMembersInfo } from '@apis';
 
 function InputWrapper({
   children,
@@ -72,10 +72,9 @@ export function FormBody({
   const [selectedLecture, setSelectedLecture] = useState<LectureProps | null>(
     null,
   );
-  const [payments, setPayments] = useState<PaymentProps[]>([]);
-  const [selectedPayment, setSelectedPayment] = useState<PaymentProps | null>(
-    null,
-  );
+  const [members, setMembers] = useState<MemberInfoForLectureProps[]>([]);
+  const [selectedMember, setSelectedMember] =
+    useState<MemberInfoForLectureProps | null>(null);
 
   useEffect(() => {
     async function fetchLectures() {
@@ -85,21 +84,20 @@ export function FormBody({
     fetchLectures();
   }, []);
 
-  const handleCourseSelect = async (lecture: LectureProps) => {
+  const handleLectureSelect = async (lecture: LectureProps) => {
     setSelectedLecture(lecture);
-    const paymentList = await getPaymentsInfo(parseInt(lecture.lectureId));
-    setPayments(paymentList);
-    // 오른쪽 영역 초기화
-    setSelectedPayment(null);
-    setInputPaymentFee('');
-    setInputPaymentDate('');
+
+    const memberList = await getMembersInfo(lecture.lectureId);
+    setMembers(memberList);
+
+    setSelectedMember(null);
   };
 
   const onSubmit = handleSubmit(async (input: PaymentType) => {
     const data = {
       ...input,
       lectureId: selectedLecture?.lectureId,
-      customerId: selectedPayment?.customerId,
+      customerId: selectedMember?.customerId,
     };
 
     const result = await formAction(data, type, id);
@@ -131,6 +129,11 @@ export function FormBody({
     }));
   };
 
+  const paymentFee = selectedLecture?.lectureFee || payment?.paymentFee || '';
+  const paymentDate =
+    payment?.paymentDate ||
+    new Date().toLocaleDateString('ko-KR').replace(/\./g, '.');
+
   return (
     <div className={styles.container}>
       <HistoryBackHeader
@@ -143,9 +146,9 @@ export function FormBody({
             {lectures.map((lecture) => (
               <li
                 key={lecture.lectureId}
-                onClick={() => handleCourseSelect(lecture)}
+                onClick={() => handleLectureSelect(lecture)}
                 className={
-                  selectedCourse?.lectureId === lecture.lectureId
+                  selectedLecture?.lectureId === lecture.lectureId
                     ? styles.active
                     : ''
                 }>
@@ -153,53 +156,24 @@ export function FormBody({
               </li>
             ))}
           </ul>
+
+          {/* 고객 선택 */}
+          {/* {selectedLecture && (
+            <InputWrapper name="고객 선택" required>
+              <SelectionInput
+                options={customers.map((customer) => ({
+                  label: customer.name,
+                  value: customer.customerId,
+                }))}
+                onChange={(e) => setSelectedCustomer(customers.find((c) => c.customerId === e.target.value))}
+                value={selectedCustomer?.customerId}
+                errorMessage={errors.paymentCustomer?.message}
+              />
+            </InputWrapper>
+          )} */}
         </div>
 
         <div className={styles.right_container}>
-          {/* 수업 시간 */}
-          <InputWrapper
-            name="수업 시간"
-            required={true}
-            onClick={clearDuplicateError}>
-            <TimeInput
-              {...register('paymentTime')}
-              valid={!errors.paymentTime}
-              value={payment?.paymentTime}
-              errorMessage={errors.paymentTime?.message}
-              defaultValue={isModify ? payment?.paymentTime : ''}
-            />
-          </InputWrapper>
-
-          {/* 수업료 */}
-          <InputWrapper
-            name="수업료"
-            required={true}
-            onClick={clearDuplicateError}>
-            <FeeInput
-              {...register('paymentFee')}
-              placeholder="수업료"
-              valid={!errors.paymentFee}
-              value={payment?.paymentFee}
-              errorMessage={errors.paymentFee?.message}
-              defaultValue={isModify ? payment?.paymentFee : ''}
-            />
-          </InputWrapper>
-
-          {/* 수용 가능 인원 */}
-          <InputWrapper
-            name="인원수"
-            required={true}
-            onClick={clearDuplicateError}>
-            <CapacityInput
-              {...register('paymentCapacity')}
-              placeholder="인원수를 입력해주세요"
-              valid={!errors.paymentCapacity}
-              value={payment?.paymentCapacity}
-              errorMessage={errors.paymentCapacity?.message}
-              defaultValue={isModify ? payment?.paymentCapacity : ''}
-            />
-          </InputWrapper>
-
           <div className={styles.button_container}>
             <FormButton
               text="확인"
@@ -208,7 +182,7 @@ export function FormBody({
           </div>
         </div>
       </form>
-      {(serverErrors.title || serverErrors.duplicate) && (
+      {/* {(serverErrors.title || serverErrors.duplicate) && (
         <div className={styles.error_container}>
           {serverErrors.title && (
             <div className={styles.error_message}>
@@ -223,7 +197,7 @@ export function FormBody({
             </div>
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 }

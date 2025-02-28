@@ -24,8 +24,8 @@ export interface PaymentForDashboardProps extends PaymentProps {
 }
 
 export interface PaymentBasicProps {
-  customerId: number;
-  lectureId: number;
+  customerId: string | undefined;
+  lectureId: string | undefined;
   paymentFee: string;
   paymentDate: string;
 }
