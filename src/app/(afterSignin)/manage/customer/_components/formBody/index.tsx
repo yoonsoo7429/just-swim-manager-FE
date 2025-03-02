@@ -13,7 +13,7 @@ import { FormButton, HistoryBackHeader } from '@components';
 import TextInput from '@/_components/form/input/textInput';
 import SelectionInput from '@/_components/form/input/selectionInput';
 import PhoneNumberInput from '@/_components/form/input/phoneNumberInput';
-import BirthDateInput from '@/_components/form/input/birthDateInput';
+import DateInput from '@/_components/form/input/dateInput';
 
 import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
 
@@ -160,7 +160,7 @@ export function FormBody({
             name="생년월일"
             required={true}
             onClick={clearDuplicateError}>
-            <BirthDateInput
+            <DateInput
               {...register('birthDate')}
               valid={!errors.birthDate}
               value={isModify ? customer?.birthDate : ''}

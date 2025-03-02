@@ -8,21 +8,21 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { BirhtDateInputProps } from '@types';
+import { DateInputProps } from '@types';
 
 import styles from './styles.module.scss';
 
-function _BirthDateInput(
+function _dateInput(
   {
     name,
     errorMessage = '',
     onChange,
     value = '',
     ...props
-  }: BirhtDateInputProps & InputHTMLAttributes<HTMLInputElement>,
+  }: DateInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const [birthParts, setBirthParts] = useState({
+  const [dateParts, setDateParts] = useState({
     year: '',
     month: '',
     date: '',
@@ -31,19 +31,19 @@ function _BirthDateInput(
   useEffect(() => {
     if (value) {
       const [year, month, date] = String(value).split('.');
-      setBirthParts({ year: year || '', month: month || '', date: date || '' });
+      setDateParts({ year: year || '', month: month || '', date: date || '' });
     }
   }, [value]);
 
   useEffect(() => {
-    const birthDate = `${birthParts.year}.${birthParts.month}.${birthParts.date}`;
+    const dateData = `${dateParts.year}.${dateParts.month}.${dateParts.date}`;
     onChange({
       target: {
-        name: 'birthDate',
-        value: birthDate,
+        name,
+        value: dateData,
       },
     } as ChangeEvent<HTMLInputElement>);
-  }, [birthParts, onChange]);
+  }, [dateParts, onChange]);
 
   const handleChange =
     (part: 'year' | 'month' | 'date') =>
@@ -54,39 +54,39 @@ function _BirthDateInput(
       if ((part === 'month' || part === 'date') && value.length > 2)
         value = value.slice(0, 2);
 
-      const newBirthParts = { ...birthParts, [part]: value };
-      setBirthParts(newBirthParts);
+      const newBirthParts = { ...dateParts, [part]: value };
+      setDateParts(newBirthParts);
     };
 
   return (
     <div className={styles.input_wrapper}>
-      <div className={styles.birth_container}>
+      <div className={styles.date_container}>
         <input
           {...props}
           type="text"
-          value={birthParts.year}
+          value={dateParts.year}
           onChange={handleChange('year')}
           placeholder="YYYY"
           maxLength={4}
-          className={styles.birth_input}
+          className={styles.date_input}
         />
-        <span className={styles.hyphen}>-</span>
+        <span className={styles.hyphen}>.</span>
         <input
           type="text"
-          value={birthParts.month}
+          value={dateParts.month}
           onChange={handleChange('month')}
           placeholder="MM"
-          maxLength={4}
-          className={styles.birth_input}
+          maxLength={2}
+          className={styles.date_input}
         />
-        <span className={styles.hyphen}>-</span>
+        <span className={styles.hyphen}>.</span>
         <input
           type="text"
-          value={birthParts.date}
+          value={dateParts.date}
           onChange={handleChange('date')}
           placeholder="DD"
-          maxLength={4}
-          className={styles.birth_input}
+          maxLength={2}
+          className={styles.date_input}
         />
       </div>
       {errorMessage && (
@@ -98,4 +98,4 @@ function _BirthDateInput(
   );
 }
 
-export default forwardRef(_BirthDateInput);
+export default forwardRef(_dateInput);

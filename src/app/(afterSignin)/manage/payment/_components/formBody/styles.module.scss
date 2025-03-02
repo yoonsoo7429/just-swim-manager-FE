@@ -17,6 +17,7 @@
   gap: 20px;
 }
 
+.mid_container,
 .left_container {
   padding: 24px 16px;
 
@@ -26,6 +27,43 @@
   flex: 1;
 
   border-right: $--gray-100 2px solid;
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 12px 16px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid $--gray-300;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+
+    &:hover {
+      background-color: $--gray-100;
+    }
+
+    &.active {
+      background-color: $--Primary-blue;
+      color: white;
+      font-weight: bold;
+    }
+  }
 }
 
 .right_container {

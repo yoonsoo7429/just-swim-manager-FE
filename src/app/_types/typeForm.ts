@@ -20,7 +20,7 @@ export interface PhoneNumberInputProps {
   onChange: (event: { target: HTMLInputElement }) => void;
 }
 
-export interface BirhtDateInputProps {
+export interface DateInputProps {
   name: string;
   valid?: boolean;
   errorMessage?: string | undefined;

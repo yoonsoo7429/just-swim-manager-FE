@@ -1,6 +1,7 @@
 'use client';
 
 import styles from './styles.module.scss';
+import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
 
 import { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 import { paymentSchema, PaymentType } from './schema';
@@ -9,16 +10,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { formAction } from './action';
 import { FormButton, HistoryBackHeader } from '@components';
-import TextInput from '@/_components/form/input/textInput';
-import SelectionInput from '@/_components/form/input/selectionInput';
-import DayInput from '@/_components/form/input/dayInput';
-import TimeInput from '@/_components/form/input/timeInput';
 import FeeInput from '@/_components/form/input/feeInput';
-import CapacityInput from '@/_components/form/input/capacityInput';
-
-import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
+import DateInput from '@/_components/form/input/dateInput';
 import { LectureProps, MemberInfoForLectureProps } from '@types';
 import { getLecturesInfo, getMembersInfo } from '@apis';
+import { dateFormate } from '@utils';
 
 function InputWrapper({
   children,
@@ -60,13 +56,12 @@ export function FormBody({
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
     watch,
   } = useForm<PaymentType>({
     resolver: zodResolver(paymentSchema),
     mode: 'onChange',
   });
-
-  console.log(watch());
 
   const [lectures, setLectures] = useState<LectureProps[]>([]);
   const [selectedLecture, setSelectedLecture] = useState<LectureProps | null>(
@@ -84,6 +79,18 @@ export function FormBody({
     fetchLectures();
   }, []);
 
+  useEffect(() => {
+    if (isModify && payment) {
+      setValue('paymentDate', payment.paymentDate);
+      setValue('paymentFee', payment.paymentFee);
+    } else {
+      if (selectedLecture) {
+        setValue('paymentFee', selectedLecture.lectureFee);
+        setValue('paymentDate', dateFormate(new Date()));
+      }
+    }
+  }, [selectedLecture, setValue, isModify, payment]);
+
   const handleLectureSelect = async (lecture: LectureProps) => {
     setSelectedLecture(lecture);
 
@@ -91,6 +98,10 @@ export function FormBody({
     setMembers(memberList);
 
     setSelectedMember(null);
+  };
+
+  const handleMemberSelect = async (member: MemberInfoForLectureProps) => {
+    setSelectedMember(member);
   };
 
   const onSubmit = handleSubmit(async (input: PaymentType) => {
@@ -111,15 +122,6 @@ export function FormBody({
     await onSubmit();
   };
 
-  const clearTitleError = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-
-    setServerErrors((s) => ({
-      ...s,
-      title: '',
-    }));
-  };
-
   const clearDuplicateError = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
 
@@ -129,11 +131,6 @@ export function FormBody({
     }));
   };
 
-  const paymentFee = selectedLecture?.lectureFee || payment?.paymentFee || '';
-  const paymentDate =
-    payment?.paymentDate ||
-    new Date().toLocaleDateString('ko-KR').replace(/\./g, '.');
-
   return (
     <div className={styles.container}>
       <HistoryBackHeader
@@ -141,7 +138,7 @@ export function FormBody({
       />
       <form action={onValid} className={styles.content_container}>
         <div className={styles.left_container}>
-          <h3>수업 리스트</h3>
+          <h3>수업 선택</h3>
           <ul>
             {lectures.map((lecture) => (
               <li
@@ -156,24 +153,55 @@ export function FormBody({
               </li>
             ))}
           </ul>
+        </div>
 
-          {/* 고객 선택 */}
-          {/* {selectedLecture && (
-            <InputWrapper name="고객 선택" required>
-              <SelectionInput
-                options={customers.map((customer) => ({
-                  label: customer.name,
-                  value: customer.customerId,
-                }))}
-                onChange={(e) => setSelectedCustomer(customers.find((c) => c.customerId === e.target.value))}
-                value={selectedCustomer?.customerId}
-                errorMessage={errors.paymentCustomer?.message}
-              />
-            </InputWrapper>
-          )} */}
+        {/* 고객 선택 */}
+        <div className={styles.mid_container}>
+          <h3>수강생 선택</h3>
+          <ul>
+            {members.map((member) => (
+              <li
+                key={member.memberId}
+                onClick={() => handleMemberSelect(member)}
+                className={
+                  selectedMember?.memberId === member.memberId
+                    ? styles.active
+                    : ''
+                }>
+                {member.customer.name} ({member.customer.birthDate})
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className={styles.right_container}>
+          {/* 결제 금액 */}
+          <InputWrapper
+            name="결제 금액"
+            required={true}
+            onClick={clearDuplicateError}>
+            <FeeInput
+              {...register('paymentFee')}
+              placeholder="결제 금액"
+              valid={!errors.paymentFee}
+              value={watch('paymentFee')}
+              errorMessage={errors.paymentFee?.message}
+            />
+          </InputWrapper>
+
+          {/* 결제 날짜 */}
+          <InputWrapper
+            name="결제 날짜"
+            required={true}
+            onClick={clearDuplicateError}>
+            <DateInput
+              {...register('paymentDate')}
+              valid={!errors.paymentDate}
+              value={watch('paymentDate')}
+              errorMessage={errors.paymentDate?.message}
+            />
+          </InputWrapper>
+
           <div className={styles.button_container}>
             <FormButton
               text="확인"
@@ -182,14 +210,8 @@ export function FormBody({
           </div>
         </div>
       </form>
-      {/* {(serverErrors.title || serverErrors.duplicate) && (
+      {serverErrors.duplicate && (
         <div className={styles.error_container}>
-          {serverErrors.title && (
-            <div className={styles.error_message}>
-              <IconCheckboxInvalid />
-              <p>{serverErrors.title}</p>
-            </div>
-          )}
           {serverErrors.duplicate && (
             <div className={styles.error_message}>
               <IconCheckboxInvalid />
@@ -197,7 +219,7 @@ export function FormBody({
             </div>
           )}
         </div>
-      )} */}
+      )}
     </div>
   );
 }

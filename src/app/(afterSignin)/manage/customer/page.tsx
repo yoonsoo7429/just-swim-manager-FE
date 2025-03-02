@@ -13,6 +13,7 @@ import {
   ExportExcelModal,
 } from '@components';
 import { UploadExcelModal } from '@/_components/modal/uploadExcelModal';
+import { dateFormate } from '@utils';
 
 export default function CustomerPage() {
   const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
@@ -91,16 +92,7 @@ export default function CustomerPage() {
                 <td>{customer.phoneNumber}</td>
                 <td>{customer.birthDate}</td>
                 <td>{customer.gender}</td>
-                <td>
-                  {new Date(customer.customerCreatedAt).toLocaleDateString(
-                    'ko-KR',
-                    {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    },
-                  )}
-                </td>
+                <td>{dateFormate(customer.customerCreatedAt)}</td>
                 <td>
                   <EditButton type="customer" id={customer.customerId} />
                 </td>

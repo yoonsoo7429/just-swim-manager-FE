@@ -7,21 +7,11 @@ export async function formAction(
   type: 'add' | 'modify',
   id: string,
 ) {
-  const payments = await getPaymentsInfo();
-
   const errors = {
-    title: '',
     duplicate: '',
   };
 
   let valid = true;
-
-  for (const payment of payments) {
-    if (data.paymentTitle === payment.paymentTitle) {
-      valid = false;
-      errors.title = '중복된 강의명이 존재합니다.';
-    }
-  }
 
   if (!valid) {
     return errors;
