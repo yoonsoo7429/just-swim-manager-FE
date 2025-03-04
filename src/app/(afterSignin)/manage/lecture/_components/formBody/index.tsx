@@ -147,12 +147,7 @@ export function FormBody({
             required={true}
             onClick={clearDuplicateError}>
             <SelectionInput
-              options={[
-                LectureLevel.BEGGINER_LEVEL,
-                LectureLevel.INTERMEDIATE_LEVEL,
-                LectureLevel.ADVANCED_LEVEL,
-                LectureLevel.MASTER_LEVEL,
-              ]}
+              options={Object.values(LectureLevel)}
               {...register('lectureLevel')}
               placeholder="급수를 선택해주세요"
               value={isModify ? lecture?.lectureLevel : ''}

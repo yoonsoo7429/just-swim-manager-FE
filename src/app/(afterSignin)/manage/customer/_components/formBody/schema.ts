@@ -1,4 +1,4 @@
-import { CustomerGender } from '@types';
+import { CustomerGender, CustomerProgress } from '@types';
 import { z } from 'zod';
 
 export const customerSchema = z.object({
@@ -13,6 +13,9 @@ export const customerSchema = z.object({
     .string()
     .regex(/^\d{4}\.\d{2}\.\d{2}$/, '생년월일은 YYYY.MM.DD 형식이어야 합니다.'),
   address: z.string().min(5, '주소는 최소 5자 이상 입력해야 합니다.'),
+  progress: z.nativeEnum(CustomerProgress, {
+    errorMap: () => ({ message: '수강생 레벨에 맞는 진도를 선택해주세요.' }),
+  }),
 });
 
 export type CustomerType = z.infer<typeof customerSchema>;

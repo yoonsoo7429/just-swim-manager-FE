@@ -6,7 +6,7 @@ import { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 import { customerSchema, CustomerType } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CustomerGender } from '@types';
+import { CustomerGender, CustomerProgress } from '@types';
 
 import { formAction } from './action';
 import { FormButton, HistoryBackHeader } from '@components';
@@ -131,7 +131,7 @@ export function FormBody({
             required={true}
             onClick={clearDuplicateError}>
             <SelectionInput
-              options={[CustomerGender.Man, CustomerGender.Woman]}
+              options={Object.values(CustomerGender)}
               {...register('gender')}
               placeholder="성별을 선택해주세요"
               value={isModify ? customer?.gender : ''}
@@ -152,9 +152,7 @@ export function FormBody({
               errorMessage={errors.phoneNumber?.message}
             />
           </InputWrapper>
-        </div>
 
-        <div className={styles.right_container}>
           {/* 생년 월일 */}
           <InputWrapper
             name="생년월일"
@@ -167,7 +165,9 @@ export function FormBody({
               errorMessage={errors.birthDate?.message}
             />
           </InputWrapper>
+        </div>
 
+        <div className={styles.right_container}>
           {/* 주소 */}
           <InputWrapper
             name="주소"
@@ -179,6 +179,21 @@ export function FormBody({
               valid={!errors.address}
               value={isModify ? customer?.address : ''}
               errorMessage={errors.address?.message}
+            />
+          </InputWrapper>
+
+          {/* 진도 */}
+          <InputWrapper
+            name="진도"
+            required={true}
+            onClick={clearDuplicateError}>
+            <SelectionInput
+              options={Object.values(CustomerProgress)}
+              {...register('progress')}
+              placeholder="진도를 선택해주세요"
+              value={isModify ? customer?.progress : ''}
+              valid={!errors.progress}
+              errorMessage={errors.progress?.message}
             />
           </InputWrapper>
           <div className={styles.button_container}>

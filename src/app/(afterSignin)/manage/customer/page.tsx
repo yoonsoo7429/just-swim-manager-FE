@@ -4,7 +4,7 @@ import { getCustomerDetail } from '@/_apis';
 import styles from './page.module.scss';
 
 import { getCustomersInfo } from '@apis';
-import { CustomerDetailProps, CustomerProps } from '@types';
+import { CustomerDetailProps, CustomerProps, ProgressColorMap } from '@types';
 import { useEffect, useState } from 'react';
 import {
   CustomerDetailInfoModal,
@@ -74,10 +74,11 @@ export default function CustomerPage() {
           <thead>
             <tr>
               <th>이름</th>
-              <th>주소</th>
-              <th>전화번호</th>
-              <th>생년월일</th>
               <th>성별</th>
+              <th>전화번호</th>
+              <th>진도</th>
+              <th>생년월일</th>
+              <th>주소</th>
               <th>서비스 가입일</th>
               <th></th>
             </tr>
@@ -88,10 +89,21 @@ export default function CustomerPage() {
                 key={customer.customerId}
                 onClick={() => handleCustomerClick(customer.customerId)}>
                 <td>{customer.name}</td>
-                <td>{customer.address}</td>
-                <td>{customer.phoneNumber}</td>
-                <td>{customer.birthDate}</td>
                 <td>{customer.gender}</td>
+                <td>{customer.phoneNumber}</td>
+                <td>
+                  <span
+                    style={{
+                      backgroundColor:
+                        ProgressColorMap[
+                          customer?.progress as keyof typeof ProgressColorMap
+                        ] || '#000',
+                    }}>
+                    {customer.progress}
+                  </span>
+                </td>
+                <td>{customer.birthDate}</td>
+                <td>{customer.address}</td>
                 <td>{dateFormate(customer.customerCreatedAt)}</td>
                 <td>
                   <EditButton type="customer" id={customer.customerId} />
