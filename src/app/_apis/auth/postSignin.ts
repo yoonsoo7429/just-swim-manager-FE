@@ -1,10 +1,10 @@
 'use server';
 
-import { AdminEntity } from '@/_types';
+import { UserEntity } from '@/_types';
 import { HTTP_METHODS } from '@data';
 import api from '../api';
 
-export const postAdminSignin = async (data: AdminEntity) => {
+export const postSignin = async (data: UserEntity) => {
   return await api('/signin', HTTP_METHODS.POST, {
     body: JSON.stringify(data),
   });

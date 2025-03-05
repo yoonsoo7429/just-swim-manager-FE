@@ -1,2 +1,3 @@
-export * from './postAdminSignin';
+export * from './postSignin';
+export * from './postSignup';
 export * from './getDashboardInfo';

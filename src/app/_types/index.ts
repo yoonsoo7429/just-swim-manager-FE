@@ -1,4 +1,4 @@
-export * from './typeAdmin';
+export * from './typeUser';
 export * from './http';
 export * from './typeCustomer';
 export * from './typeDashboard';

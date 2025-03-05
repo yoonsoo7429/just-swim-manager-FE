@@ -4,6 +4,7 @@ import { HTTP_METHODS_TYPE } from '@types';
 import { cookies } from 'next/headers';
 
 type Response<T> = {
+  error?: string;
   status: number;
   data: T;
 };
