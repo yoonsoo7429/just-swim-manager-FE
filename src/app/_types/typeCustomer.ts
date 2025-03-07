@@ -1,5 +1,6 @@
 import { LectureForDashboardProps } from './typeLecture';
 import { PaymentDetailProps } from './typePayment';
+import { UserProps } from './typeUser';
 
 export enum CustomerGender {
   Man = '남자',
@@ -38,12 +39,7 @@ export const ProgressColorMap = {
 
 export interface CustomerProps {
   customerId: string;
-  name: string;
-  gender: CustomerGender;
-  phoneNumber: string;
-  birthDate: string;
-  address: string;
-  progress: CustomerProgress;
+  user: UserProps;
   customerCreatedAt: string;
   customerUpdatedAt: string;
   customerDeletedAt: string | null;
