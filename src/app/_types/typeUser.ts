@@ -6,6 +6,19 @@ export type Provider = (typeof SNS)[keyof typeof SNS];
 export type UserType = (typeof USER_TYPE)[keyof typeof USER_TYPE];
 export type UserGender = (typeof USER_GENDER)[keyof typeof USER_GENDER];
 
+export interface UserBasicProps {
+  userType: UserType;
+  provider: Provider;
+  gender: UserGender;
+  email: string;
+  name: string;
+  birth: string;
+  address: string;
+  phoneNumber: string;
+}
+
+export interface UpdateUserProps extends Partial<UserBasicProps> {}
+
 export interface UserProps {
   userId: string;
   userType: UserType;
@@ -13,8 +26,8 @@ export interface UserProps {
   gender: UserGender;
   email: string;
   name: string;
-  profileImage: string;
   birth: string;
+  address: string;
   phoneNumber: string;
   userCreatedAt: string;
   userUpdatedAt: string;

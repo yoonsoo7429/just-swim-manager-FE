@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { HTTP_STATUS, TEXT, USER_TYPE, ROUTES } from '@data';
 import IconKakao from '@assets/icon_kakao.svg';
 import IconNaver from '@assets/icon_naver.svg';
-import { getUserDetail, getSignUp } from '@apis';
+import { getUserDetail, signin } from '@apis';
 import { getTokenInCookies } from '@utils';
 import { Provider } from '@types';
+import { useUserStore } from '@store';
 
 const SNS_ICONS = {
   kakao: IconKakao,
@@ -16,6 +17,7 @@ const SNS_ICONS = {
 
 export function SNSSignInButton({ sns }: { sns: Provider }) {
   const router = useRouter();
+  const { setAddUserProfile, setAddUserToken, getUserType } = useUserStore();
   const Icon = SNS_ICONS[sns];
 
   const handleOnboarding = async () => {
@@ -24,22 +26,21 @@ export function SNSSignInButton({ sns }: { sns: Provider }) {
     if (authorizationToken) {
       const userInfo = await getUserDetail();
 
-      if (status === HTTP_STATUS.NOT_ACCEPTABLE) {
+      if (userInfo.status === HTTP_STATUS.NOT_ACCEPTABLE) {
         setAddUserToken('');
         return router.replace(ROUTES.ONBOARDING.signin);
       }
-
-      setAddUserProfile({ token: authorizationToken, profile: data?.data });
+      setAddUserProfile({ token: authorizationToken, profile: userInfo.data });
       const checkType = getUserType(authorizationToken);
       if (
         checkType === USER_TYPE.INSTRUCTOR ||
         checkType === USER_TYPE.CUSTOMER
       ) {
-        return router.replace(ROUTES.SCHEDULE.root);
+        return router.replace(ROUTES.MANAGE.root);
       }
       return router.replace(ROUTES.ONBOARDING.type);
     }
-    const redirectURL = await getSignUp(sns);
+    const redirectURL = await signin(sns);
     if (!redirectURL) {
       throw new Error('Failed to get the redirect URL');
     }
@@ -53,7 +54,6 @@ export function SNSSignInButton({ sns }: { sns: Provider }) {
         className={`${styles[`${sns}_button`]}`}>
         <div>
           <Icon className={styles.sns_image} />
-          <p>{TEXT.SIGNUP_PAGE.provider[sns]}</p>
         </div>
       </button>
     </div>

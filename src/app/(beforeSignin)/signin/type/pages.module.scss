@@ -1,0 +1,134 @@
+@import '@/globals.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 60vw;
+  margin: auto;
+
+  h1 {
+    @include Heading1;
+  }
+}
+
+.section {
+  width: 100%;
+  background-color: #f7faff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  .button {
+    flex: 1 1 calc(33.333% - 10px);
+    padding: 10px 0;
+
+    border: 2px solid $--gray-100;
+    border-radius: 8px;
+
+    background-color: $--gray-50;
+    color: $--gray-600;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s;
+
+    &:hover {
+      background-color: $--gray-100;
+    }
+
+    &.selected {
+      background-color: $--Primary-blue;
+      color: #fff;
+      border-color: $--Primary-blue;
+    }
+  }
+}
+
+.next_button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: $--Primary-blue;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #005ecb;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.submit_button {
+  background-color: $--Primary-blue;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+.selected_info_bar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected_item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #1e8ee2;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: white;
+    transform: scale(1.05);
+  }
+}

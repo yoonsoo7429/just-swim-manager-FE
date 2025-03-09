@@ -12,9 +12,3 @@ export const HTTP_STATUS = {
   NOT_ACCEPTABLE: 406,
   INTERNAL_SERVER_ERROR: 500,
 } as const;
-
-//   CREATED: 201,
-//   NO_CONTENT: 204,
-//   UNAUTHORIZED: 401,
-//   FORBIDDEN: 403,
-//   NOT_FOUND: 404,

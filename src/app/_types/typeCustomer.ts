@@ -2,11 +2,6 @@ import { LectureForDashboardProps } from './typeLecture';
 import { PaymentDetailProps } from './typePayment';
 import { UserProps } from './typeUser';
 
-export enum CustomerGender {
-  Man = '남자',
-  Woman = '여자',
-}
-
 export enum CustomerProgress {
   FREE_K = '자유형K',
   FREE_S = '자유형S',
@@ -53,7 +48,6 @@ export interface CustomerDetailProps {
 
 export interface CustomerBasicProps {
   name: string;
-  gender: CustomerGender;
   phoneNumber: string;
   birthDate: string;
   address: string;
