@@ -18,6 +18,7 @@ export default function Type() {
   const [gender, setGender] = useState<UserGender>();
   const [address, setAddress] = useState<string>('');
   const [token, setToken] = useState<string>();
+  const [instructorKey, setInstructorKey] = useState<string>('');
 
   const [collapsed, setCollapsed] = useState({
     gender: false,
@@ -27,31 +28,31 @@ export default function Type() {
 
   const { setAddUserToken, setAddUserProfile, getUserType } = useUserStore();
 
-  useLayoutEffect(() => {
-    const checkToken = async () => {
-      if (params) {
-        const newToken = await setTokenInCookies(params);
-        setAddUserToken(newToken);
+  // useLayoutEffect(() => {
+  //   const checkToken = async () => {
+  //     if (params) {
+  //       const newToken = await setTokenInCookies(params);
+  //       setAddUserToken(newToken);
 
-        const result = await getUserDetail();
-        setAddUserProfile({ token: newToken, profile: result.data });
-        if (result.data.userType) {
-          return router.push(ROUTES.MANAGE.root);
-        }
-        setToken(newToken);
-      } else {
-        const authorizationToken = await getTokenInCookies();
-        const userType = getUserType(authorizationToken);
+  //       const result = await getUserDetail();
+  //       setAddUserProfile({ token: newToken, profile: result.data });
+  //       if (result.data.userType) {
+  //         return router.push(ROUTES.MANAGE.root);
+  //       }
+  //       setToken(newToken);
+  //     } else {
+  //       const authorizationToken = await getTokenInCookies();
+  //       const userType = getUserType(authorizationToken);
 
-        if (userType) {
-          return router.replace(ROUTES.MANAGE.root);
-        }
-        setToken(authorizationToken);
-      }
-    };
-    checkToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //       if (userType) {
+  //         return router.replace(ROUTES.MANAGE.root);
+  //       }
+  //       setToken(authorizationToken);
+  //     }
+  //   };
+  //   checkToken();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const toggleCollapse = (field: 'gender' | 'address' | 'type') => {
     setCollapsed({ gender: true, address: true, type: true, [field]: false });
@@ -60,6 +61,11 @@ export default function Type() {
   const handleSetType = async () => {
     if (!gender || !address.trim() || !type) {
       alert('성별, 주소, 타입을 모두 선택해주세요.');
+      return;
+    }
+
+    if (type === USER_TYPE.INSTRUCTOR && !instructorKey.trim()) {
+      alert('인증키를 입력해주세요.');
       return;
     }
 
@@ -156,6 +162,22 @@ export default function Type() {
           </div>
         )}
       </div>
+
+      {/* 인증키 입력 (수영 강사 선택 시) */}
+      {type === USER_TYPE.INSTRUCTOR && (
+        <div className={styles.section}>
+          <div className={styles.header}>수영 강사 인증키 입력</div>
+          <div className={styles.content}>
+            <input
+              type="text"
+              placeholder="인증키를 입력하세요"
+              value={instructorKey}
+              onChange={(e) => setInstructorKey(e.target.value)}
+              className={styles.input}
+            />
+          </div>
+        </div>
+      )}
 
       {/* 완료 버튼 */}
       {gender && address.trim() && type && (

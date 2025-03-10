@@ -9,7 +9,6 @@ import Sidebar from './_components/sidebar/sidebar';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const params = useSearchParams().get('token');
-  const [token, setToken] = useState<string>('');
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -17,8 +16,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         setTokenInCookies(params);
       }
 
-      const token = await getTokenInCookies();
-      setToken(token || '');
+      await getTokenInCookies();
     };
 
     fetchToken();
