@@ -3,7 +3,7 @@
 import { getLectureDetail } from '@/_apis';
 
 import { getLecturesInfo } from '@apis';
-import { LectureForDashboardProps } from '@types';
+import { LectureDetailProps } from '@types';
 import { useEffect, useState } from 'react';
 import { LectureDetailInfoModal, AddButton, EditButton } from '@components';
 
@@ -11,13 +11,12 @@ import styles from './page.module.scss';
 import { feeFormat } from '@utils';
 
 export default function LecturePage() {
-  const [lecturesInfo, setLecturesInfo] = useState<LectureForDashboardProps[]>(
-    [],
-  );
+  const [lecturesInfo, setLecturesInfo] = useState<LectureDetailProps[]>([]);
   const [selectedLecture, setSelectedLecture] =
-    useState<LectureForDashboardProps | null>(null);
+    useState<LectureDetailProps | null>(null);
   const [isLectureDetailModalOpen, setIsLectureDetailModalOpen] =
     useState(false);
+  console.log(lecturesInfo);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
-import { CustomerDetailProps } from './typeCustomer';
-import { LectureForDashboardProps } from './typeLecture';
+import { LectureDetailProps } from './typeLecture';
 import { PaymentForDashboardProps } from './typePayment';
+import { MemberProps } from './typeMember';
 
 export interface ModalBodyProps {
   children?: React.ReactNode;
@@ -9,11 +9,11 @@ export interface ModalBodyProps {
 }
 
 export interface CustomerDetailInfoModalProps extends ModalBodyProps {
-  detailInfo: CustomerDetailProps;
+  detailInfo: MemberProps;
 }
 
 export interface LectureDetailInfoModalProps extends ModalBodyProps {
-  detailInfo: LectureForDashboardProps;
+  detailInfo: LectureDetailProps;
 }
 
 export interface PaymentDetailInfoModalProps extends ModalBodyProps {

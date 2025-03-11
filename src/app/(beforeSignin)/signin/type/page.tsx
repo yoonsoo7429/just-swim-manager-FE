@@ -28,31 +28,31 @@ export default function Type() {
 
   const { setAddUserToken, setAddUserProfile, getUserType } = useUserStore();
 
-  // useLayoutEffect(() => {
-  //   const checkToken = async () => {
-  //     if (params) {
-  //       const newToken = await setTokenInCookies(params);
-  //       setAddUserToken(newToken);
+  useLayoutEffect(() => {
+    const checkToken = async () => {
+      if (params) {
+        const newToken = await setTokenInCookies(params);
+        setAddUserToken(newToken);
 
-  //       const result = await getUserDetail();
-  //       setAddUserProfile({ token: newToken, profile: result.data });
-  //       if (result.data.userType) {
-  //         return router.push(ROUTES.MANAGE.root);
-  //       }
-  //       setToken(newToken);
-  //     } else {
-  //       const authorizationToken = await getTokenInCookies();
-  //       const userType = getUserType(authorizationToken);
+        const result = await getUserDetail();
+        setAddUserProfile({ token: newToken, profile: result.data });
+        if (result.data.userType) {
+          return router.push(ROUTES.MANAGE.root);
+        }
+        setToken(newToken);
+      } else {
+        const authorizationToken = await getTokenInCookies();
+        const userType = getUserType(authorizationToken);
 
-  //       if (userType) {
-  //         return router.replace(ROUTES.MANAGE.root);
-  //       }
-  //       setToken(authorizationToken);
-  //     }
-  //   };
-  //   checkToken();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+        if (userType) {
+          return router.replace(ROUTES.MANAGE.root);
+        }
+        setToken(authorizationToken);
+      }
+    };
+    checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleCollapse = (field: 'gender' | 'address' | 'type') => {
     setCollapsed({ gender: true, address: true, type: true, [field]: false });

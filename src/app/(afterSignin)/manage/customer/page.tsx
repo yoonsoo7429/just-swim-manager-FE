@@ -1,24 +1,17 @@
 'use client';
 
-import { getCustomerDetail } from '@/_apis';
+import { getMemberDetail, getMembersInfo } from '@/_apis';
 import styles from './page.module.scss';
 
-import { getCustomersInfo } from '@apis';
-import { CustomerDetailProps, CustomerProps, ProgressColorMap } from '@types';
+import { MemberProps, ProgressColorMap } from '@types';
 import { useEffect, useState } from 'react';
-import {
-  CustomerDetailInfoModal,
-  AddButton,
-  EditButton,
-  ExportExcelModal,
-} from '@components';
+import { CustomerDetailInfoModal, ExportExcelModal } from '@components';
 import { UploadExcelModal } from '@/_components/modal/uploadExcelModal';
 import { dateFormate } from '@utils';
 
 export default function CustomerPage() {
-  const [customersInfo, setCustomersInfo] = useState<CustomerProps[]>([]);
-  const [selectedCustomer, setSelectedCustomer] =
-    useState<CustomerDetailProps | null>(null);
+  const [membersInfo, setMembersInfo] = useState<MemberProps[]>([]);
+  const [selectedMember, setSelectedMember] = useState<MemberProps | null>(null);
   const [isCustomerDetailModalOpen, setIsCustomerDetailModalOpen] =
     useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -27,10 +20,10 @@ export default function CustomerPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const customersInfo = await getCustomersInfo();
-        setCustomersInfo(customersInfo);
+        const membersInfo = await getMembersInfo();
+        setMembersInfo(membersInfo);
       } catch (error) {
-        console.error('Error fetching CustomerInfo', error);
+        console.error('Error fetching MemberInfo', error);
       }
     };
     fetchData();
@@ -38,17 +31,18 @@ export default function CustomerPage() {
 
   const handleCustomerClick = async (id: string) => {
     try {
-      const customerDetail = await getCustomerDetail(parseInt(id));
-      setSelectedCustomer(customerDetail);
+      const memberDetail = await getMemberDetail(parseInt(id));
+      console.log(memberDetail);
+      setSelectedMember(memberDetail);
       setIsCustomerDetailModalOpen(true);
     } catch (error) {
-      console.error('Error fetching customer detail', error);
+      console.error('Error fetching member detail', error);
     }
   };
 
   const handleCloseModal = () => {
     setIsCustomerDetailModalOpen(false);
-    setSelectedCustomer(null);
+    setSelectedMember(null);
   };
 
   return (
@@ -66,7 +60,6 @@ export default function CustomerPage() {
             onClick={() => setIsExportModalOpen(true)}>
             엑셀 Export
           </button>
-          <AddButton type="customer" />
         </div>
       </div>
       <div className={styles.dashboard}>
@@ -76,47 +69,43 @@ export default function CustomerPage() {
               <th>이름</th>
               <th>성별</th>
               <th>전화번호</th>
-              <th>진도</th>
+              <th>강습명</th>
               <th>생년월일</th>
               <th>주소</th>
               <th>서비스 가입일</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-            {customersInfo.map((customer) => (
+            {membersInfo.map((member) => (
               <tr
-                key={customer.customerId}
-                onClick={() => handleCustomerClick(customer.customerId)}>
-                <td>{customer.name}</td>
-                <td>{customer.gender}</td>
-                <td>{customer.phoneNumber}</td>
+                key={member.memberId}
+                onClick={() => handleCustomerClick(member.memberId)}>
+                <td>{member.user.name}</td>
+                <td>{member.user.gender}</td>
+                <td>{member.user.phoneNumber}</td>
                 <td>
                   <span
                     style={{
                       backgroundColor:
                         ProgressColorMap[
-                          customer?.progress as keyof typeof ProgressColorMap
+                          member.memberProgress as keyof typeof ProgressColorMap
                         ] || '#000',
                     }}>
-                    {customer.progress}
+                    {member.memberProgress}
                   </span>
                 </td>
-                <td>{customer.birthDate}</td>
-                <td>{customer.address}</td>
-                <td>{dateFormate(customer.customerCreatedAt)}</td>
-                <td>
-                  <EditButton type="customer" id={customer.customerId} />
-                </td>
+                <td>{member.user.birth}</td>
+                <td>{member.user.address}</td>
+                <td>{dateFormate(member.user.createdAt)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {isCustomerDetailModalOpen && selectedCustomer && (
+      {isCustomerDetailModalOpen && selectedMember && (
         <CustomerDetailInfoModal
-          detailInfo={selectedCustomer}
+          detailInfo={selectedMember}
           hideModal={handleCloseModal}
         />
       )}

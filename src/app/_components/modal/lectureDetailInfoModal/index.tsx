@@ -52,38 +52,35 @@ export function LectureDetailInfoModal({
             </thead>
             <tbody>
               {detailInfo?.member?.map((member) => {
-                const isNew = moment(member.customer?.customerCreatedAt).isSame(
+                const isNew = moment(member?.createdAt).isSame(
                   moment(),
                   'month',
                 );
                 return (
                   <tr key={member.memberId}>
-                    <td
-                      style={{
-                        backgroundColor: isNew ? '#f1c40f' : '',
-                      }}>
-                      {member.customer?.name}
+                    <td>
+                      <span
+                        style={{
+                          backgroundColor: isNew ? '#f1c40f' : '',
+                        }}>
+                        {member.user?.name}
+                      </span>
                     </td>
-                    <td>{member.customer?.gender}</td>
-                    <td>{member.customer?.birthDate}</td>
+                    <td>{member.user?.gender}</td>
+                    <td>{member.user?.birth}</td>
                     <td>
                       <span
                         style={{
                           backgroundColor:
                             ProgressColorMap[
-                              member.customer
-                                ?.progress as keyof typeof ProgressColorMap
+                              member.memberProgress as keyof typeof ProgressColorMap
                             ] || '#000',
                         }}>
-                        {member.customer?.progress}
+                        {member.memberProgress}
                       </span>
                     </td>
-                    <td>{member.customer?.phoneNumber}</td>
-                    <td>
-                      {new Date(
-                        member.customer.customerCreatedAt,
-                      ).toLocaleDateString()}
-                    </td>
+                    <td>{member.user?.phoneNumber}</td>
+                    <td>{new Date(member.createdAt).toLocaleDateString()}</td>
                   </tr>
                 );
               })}

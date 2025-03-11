@@ -13,9 +13,9 @@ export interface PaymentProps {
   lectureId: string;
   paymentFee: string;
   paymentDate: string;
-  paymentCreatedAt: string;
-  paymentUpdatedAt: string;
-  paymentDeletedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }
 
 export interface PaymentForDashboardProps extends PaymentProps {

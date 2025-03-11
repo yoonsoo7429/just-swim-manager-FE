@@ -11,7 +11,7 @@ export interface InstructorProps {
   youtubeLink: string;
   instagramLink: string;
   facebookLink: string;
-  instructorCreatedAt: string;
-  instructorUpdatedAt: string;
-  instructorDeletedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }

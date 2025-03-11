@@ -29,9 +29,9 @@ export interface UserProps {
   birth: string;
   address: string;
   phoneNumber: string;
-  userCreatedAt: string;
-  userUpdatedAt: string;
-  userDeletedAt: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }
 
 export interface UserDetailProps extends UserProps {
