@@ -16,7 +16,6 @@ export default function LecturePage() {
     useState<LectureDetailProps | null>(null);
   const [isLectureDetailModalOpen, setIsLectureDetailModalOpen] =
     useState(false);
-  console.log(lecturesInfo);
 
   useEffect(() => {
     const fetchData = async () => {

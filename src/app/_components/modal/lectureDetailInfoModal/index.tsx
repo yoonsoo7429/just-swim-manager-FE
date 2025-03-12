@@ -8,12 +8,14 @@ import { ConfirmModal } from '../confirmModal';
 import { deleteLecture } from '@apis';
 import { useCallback, useState } from 'react';
 import moment from 'moment';
+import { ExportExcelModal } from '../exportExcelModal';
 
 export function LectureDetailInfoModal({
   detailInfo,
   hideModal,
 }: LectureDetailInfoModalProps) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string>('');
 
   const openDeleteModal = useCallback((id: string) => {
@@ -88,11 +90,19 @@ export function LectureDetailInfoModal({
           </table>
         </div>
       </div>
-      <button
-        onClick={() => openDeleteModal(detailInfo.lectureId)}
-        className={styles.delete_button}>
-        강습 삭제
-      </button>
+
+      <div className={styles.button_group}>
+        <button
+          onClick={() => openDeleteModal(detailInfo.lectureId)}
+          className={styles.delete_button}>
+          강습 삭제
+        </button>
+        <button
+          className={styles.export_excel_button}
+          onClick={() => setIsExportModalOpen(true)}>
+          엑셀 Export
+        </button>
+      </div>
 
       {isDeleteModalOpen && (
         <ConfirmModal
@@ -100,6 +110,10 @@ export function LectureDetailInfoModal({
           hideModal={closeDeleteModal}
           confirmCallback={() => deleteInfo(deleteId)}
         />
+      )}
+
+      {isExportModalOpen && (
+        <ExportExcelModal onClose={() => setIsExportModalOpen(false)} />
       )}
     </ModalBody>
   );

@@ -10,8 +10,10 @@ import { UploadExcelModal } from '@/_components/modal/uploadExcelModal';
 import { dateFormate } from '@utils';
 
 export default function CustomerPage() {
-  const [membersInfo, setMembersInfo] = useState<MemberProps[]>([]);
-  const [selectedMember, setSelectedMember] = useState<MemberProps | null>(null);
+  const [customersInfo, setCustomersInfo] = useState<MemberProps[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<MemberProps | null>(
+    null,
+  );
   const [isCustomerDetailModalOpen, setIsCustomerDetailModalOpen] =
     useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -21,7 +23,7 @@ export default function CustomerPage() {
     const fetchData = async () => {
       try {
         const membersInfo = await getMembersInfo();
-        setMembersInfo(membersInfo);
+        setCustomersInfo(membersInfo);
       } catch (error) {
         console.error('Error fetching MemberInfo', error);
       }
@@ -31,9 +33,8 @@ export default function CustomerPage() {
 
   const handleCustomerClick = async (id: string) => {
     try {
-      const memberDetail = await getMemberDetail(parseInt(id));
-      console.log(memberDetail);
-      setSelectedMember(memberDetail);
+      const customerDetail = await getMemberDetail(parseInt(id));
+      setSelectedCustomer(customerDetail);
       setIsCustomerDetailModalOpen(true);
     } catch (error) {
       console.error('Error fetching member detail', error);
@@ -42,7 +43,7 @@ export default function CustomerPage() {
 
   const handleCloseModal = () => {
     setIsCustomerDetailModalOpen(false);
-    setSelectedMember(null);
+    setSelectedCustomer(null);
   };
 
   return (
@@ -76,24 +77,14 @@ export default function CustomerPage() {
             </tr>
           </thead>
           <tbody>
-            {membersInfo.map((member) => (
+            {customersInfo.map((member) => (
               <tr
                 key={member.memberId}
                 onClick={() => handleCustomerClick(member.memberId)}>
                 <td>{member.user.name}</td>
                 <td>{member.user.gender}</td>
                 <td>{member.user.phoneNumber}</td>
-                <td>
-                  <span
-                    style={{
-                      backgroundColor:
-                        ProgressColorMap[
-                          member.memberProgress as keyof typeof ProgressColorMap
-                        ] || '#000',
-                    }}>
-                    {member.memberProgress}
-                  </span>
-                </td>
+                <td>{member.lecture.lectureTitle}</td>
                 <td>{member.user.birth}</td>
                 <td>{member.user.address}</td>
                 <td>{dateFormate(member.user.createdAt)}</td>
@@ -103,9 +94,9 @@ export default function CustomerPage() {
         </table>
       </div>
 
-      {isCustomerDetailModalOpen && selectedMember && (
+      {isCustomerDetailModalOpen && selectedCustomer && (
         <CustomerDetailInfoModal
-          detailInfo={selectedMember}
+          detailInfo={selectedCustomer}
           hideModal={handleCloseModal}
         />
       )}

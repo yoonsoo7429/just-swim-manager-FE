@@ -8,80 +8,44 @@
   font-weight: bold;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  scrollbar-width: none; // Firefox에서 스크롤 바 숨김
-  -ms-overflow-style: none; // IE, Edge에서 스크롤 바 숨김
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-    display: none; // Webkit 기반 브라우저에서 스크롤 바 숨김
-  }
-
-  h3 {
-    font-size: 1.8rem;
-    color: $--gray-900;
-    text-align: center;
-  }
-
-  p {
-    font-size: 1rem;
-    color: $--gray-800;
-    line-height: 1.6;
-    margin-bottom: 10px;
+    display: none;
   }
 
   .section {
     margin-bottom: 15px;
     border-radius: 8px;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 10px;
+
+    h3 {
+      font-size: 1.8rem;
+      color: $--gray-900;
+      text-align: center;
+    }
 
     h4 {
       font-size: 1.3rem;
       margin-bottom: 12px;
       text-align: center;
       color: #333;
+      width: 100%;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-
-      li {
-        padding: 15px;
-        border: 1px solid #e6e6e6;
-        border-radius: 8px;
-        margin-bottom: 12px;
-        background-color: #fafafa;
-
-        &:hover {
-          background-color: #f7f7f7;
-        }
-
-        p {
-          font-size: 1rem;
-          color: #333;
-        }
-      }
+    p {
+      font-size: 1rem;
+      color: $--gray-800;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      min-width: 45%;
+      word-break: keep-all;
     }
-  }
-}
-
-.delete_button {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background-color: #f44336;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #d32f2f;
-  }
-
-  &:focus {
-    outline: none;
   }
 }
