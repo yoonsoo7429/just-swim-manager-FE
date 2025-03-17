@@ -22,6 +22,7 @@ export interface PaymentDetailInfoModalProps extends ModalBodyProps {
 
 export interface excelModalProps {
   onClose: () => void;
+  lecture?: LectureDetailProps;
 }
 
 export interface ConfirmModalProps extends ModalBodyProps {

@@ -113,7 +113,10 @@ export function LectureDetailInfoModal({
       )}
 
       {isExportModalOpen && (
-        <ExportExcelModal onClose={() => setIsExportModalOpen(false)} />
+        <ExportExcelModal
+          onClose={() => setIsExportModalOpen(false)}
+          lecture={detailInfo}
+        />
       )}
     </ModalBody>
   );

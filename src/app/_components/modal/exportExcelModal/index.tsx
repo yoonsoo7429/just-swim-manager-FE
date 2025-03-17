@@ -6,7 +6,7 @@ import { useState } from 'react';
 import styles from './styles.module.scss';
 import { getTokenInCookies } from '@utils';
 
-export function ExportExcelModal({ onClose }: excelModalProps) {
+export function ExportExcelModal({ onClose, lecture }: excelModalProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleExport = async () => {
@@ -15,21 +15,24 @@ export function ExportExcelModal({ onClose }: excelModalProps) {
     const token = await getTokenInCookies();
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/export/excel`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const url = lecture
+        ? `${process.env.NEXT_PUBLIC_API_URL}/export/excel?lectureId=${parseInt(lecture.lectureId)}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/export/excel`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       if (response.ok) {
         const blob = await response.blob();
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = '고객 정보.xlsx';
+        link.download = lecture
+          ? `${lecture.lectureTitle} 수강생 목록.xlsx`
+          : '고객 정보.xlsx';
         link.click();
 
         onClose();
@@ -47,11 +50,11 @@ export function ExportExcelModal({ onClose }: excelModalProps) {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal_content}>
-        <h3>고객 정보 내보내기</h3>
+        <h3>{lecture ? '수강생 정보 내보내기' : '고객 정보 내보내기'}</h3>
         <div className={styles.button_box}>
           <button onClick={onClose}>취소</button>
           <button onClick={handleExport} disabled={isDownloading}>
-            {isDownloading ? '다운로드 중...' : '엑셀 다운로드'}
+            {isDownloading ? '다운로드 중...' : '다운로드'}
           </button>
         </div>
       </div>
