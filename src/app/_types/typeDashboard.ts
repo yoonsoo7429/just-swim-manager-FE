@@ -1,9 +1,11 @@
 import { CustomerProps } from './typeCustomer';
-import { LectureForDashboardProps } from './typeLecture';
+import { LectureDetailProps } from './typeLecture';
 import { PaymentProps } from './typePayment';
+import { RegistrationProps } from './typeRegistration';
 
 export interface DashboardProps {
   customers: CustomerProps[];
-  lectures: LectureForDashboardProps[];
+  lectures: LectureDetailProps[];
   payments: PaymentProps[];
+  registrations: RegistrationProps[];
 }

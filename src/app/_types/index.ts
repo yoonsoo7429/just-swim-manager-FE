@@ -10,3 +10,4 @@ export * from './typeHeader';
 export * from './typeForm';
 export * from './typeConstants';
 export * from './typeUser';
+export * from './typeRegistration';
