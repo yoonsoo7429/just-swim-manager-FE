@@ -1,5 +1,7 @@
 import { CustomerProps } from './typeCustomer';
 import { LectureProps } from './typeLecture';
+import { RegistrationProps } from './typeRegistration';
+import { UserProps } from './typeUser';
 
 export enum PaymentState {
   COMPLETE = '결제 완납',
@@ -9,18 +11,14 @@ export enum PaymentState {
 
 export interface PaymentProps {
   paymentId: string;
-  customerId: string;
-  lectureId: string;
+  user: UserProps;
+  lecture: LectureProps;
+  registration: RegistrationProps;
   paymentFee: string;
-  paymentDate: string;
+  paymentDate: string | null;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-}
-
-export interface PaymentForDashboardProps extends PaymentProps {
-  customer: CustomerProps;
-  lecture: LectureProps;
 }
 
 export interface PaymentBasicProps {

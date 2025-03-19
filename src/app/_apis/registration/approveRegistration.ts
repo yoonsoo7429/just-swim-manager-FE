@@ -2,19 +2,18 @@
 
 import { notFound } from 'next/navigation';
 
-import { PaymentProps } from '@types';
 import { Fetch } from '@utils';
 
-export async function getPaymentDetail(
-  paymentId: number,
-): Promise<PaymentProps> {
+export async function approveRegistration(registrationId: number): Promise<{
+  status: boolean;
+  message: string;
+}> {
   const result = await Fetch<{
     status: boolean;
     message: string;
-    data: PaymentProps;
   }>({
-    url: `${process.env.NEXT_PUBLIC_API_URL}/payment/${paymentId}`,
-    method: 'GET',
+    url: `${process.env.NEXT_PUBLIC_API_URL}/registration/${registrationId}`,
+    method: 'PATCH',
     header: {
       token: true,
       json: true,
@@ -23,7 +22,7 @@ export async function getPaymentDetail(
   });
 
   if (result.status) {
-    return result.data;
+    return result;
   } else {
     return notFound();
   }

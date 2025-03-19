@@ -5,6 +5,8 @@ import styles from './page.module.scss';
 import { getDashboardInfo } from '@/_apis/auth';
 import { useEffect, useState } from 'react';
 import { DashboardProps } from '@types';
+import { getPaymentDetail } from '@apis';
+import { approveRegistration } from '@/_apis/registration';
 
 export default function ManagePage() {
   const [dashboardInfo, setDashboardInfo] = useState<DashboardProps>();
@@ -38,7 +40,44 @@ export default function ManagePage() {
       return createdDate === todayString;
     }).length ?? 0;
 
-  //
+  const handleApprove = async (registrationId: string) => {
+    try {
+      const registration = dashboardInfo?.registrations.find(
+        (reg) => reg.registrationId === registrationId,
+      );
+
+      if (!registration || !registration.payment.length) {
+        console.error('결제 정보가 없습니다.');
+        return;
+      }
+
+      const latestPayment = registration.payment.sort(
+        (a, b) =>
+          new Date(b.paymentDate ?? '').getTime() -
+          new Date(a.paymentDate ?? '').getTime(),
+      )[0];
+
+      if (!latestPayment) {
+        console.error('최근 결제를 찾을 수 없습니다.');
+        return;
+      }
+
+      const lectureFee = parseFloat(registration.lecture.lectureFee);
+      const paymentFee = parseFloat(latestPayment.paymentFee);
+
+      if (paymentFee < lectureFee) {
+        // 결제 금액이 부족하면 결제 페이지로 이동
+        window.location.href = `/manage/payment`; // 결제 페이지 URL로 리디렉션
+      } else {
+        // 결제 금액이 충분하면 승인 처리
+        await approveRegistration(parseInt(registrationId));
+        // 페이지 새로 고침
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('승인 처리 중 오류 발생', error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -87,25 +126,31 @@ export default function ManagePage() {
             </p>
           </div>
         </div>
+      </div>
 
-        {/* 수강 신청 현황 */}
+      {/* 수강 신청 현황 */}
+      <div className={styles.dashboardRegistration}>
         <h2>수강 신청 관리</h2>
-        <div className={styles.dashboard}>
-          <div className={styles.dashboardItem}>
-            <div className={styles.registrationList}>
-              {dashboardInfo?.registrations.map((registration) => (
-                <div
-                  key={registration.registrationId}
-                  className={styles.registrationItem}>
-                  <h4> {registration.user.name}</h4>
-                  <p> {registration.lecture.lectureTitle}</p>
-                  <p>
-                    신청일:{' '}
-                    {new Date(registration.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-              ))}
-            </div>
+        <div className={styles.dashboardRegistrationItem}>
+          <div className={styles.registrationList}>
+            {dashboardInfo?.registrations.map((registration) => (
+              <div
+                key={registration.registrationId}
+                className={styles.registrationItem}>
+                <h4> {registration.user.name}</h4>
+                <p> {registration.lecture.lectureTitle}</p>
+                <p> {registration.user.gender}</p>
+                <p> {registration.user.phoneNumber}</p>
+                <p>
+                  신청일: {new Date(registration.createdAt).toLocaleDateString()}
+                </p>
+                <button
+                  className={styles.approveButton}
+                  onClick={() => handleApprove(registration.registrationId)}>
+                  승인하기
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

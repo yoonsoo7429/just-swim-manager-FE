@@ -3,7 +3,7 @@
 import styles from './page.module.scss';
 
 import { useEffect, useState } from 'react';
-import { PaymentForDashboardProps, PaymentState } from '@types';
+import { PaymentProps, PaymentState } from '@types';
 import { getPaymentDetail, getPaymentsInfo } from '@apis';
 import { AddButton, EditButton } from '@components';
 import { PaymentDetailInfoModal } from '@/_components/modal/paymentDetailInfoModal';
@@ -11,11 +11,10 @@ import { feeFormat } from '@utils';
 import SearchInput from '@/_components/form/input/searchInput';
 
 export default function PaymentPage() {
-  const [paymentsInfo, setPaymentsInfo] = useState<PaymentForDashboardProps[]>(
-    [],
+  const [paymentsInfo, setPaymentsInfo] = useState<PaymentProps[]>([]);
+  const [selectedPayment, setSelectedPayment] = useState<PaymentProps | null>(
+    null,
   );
-  const [selectedPayment, setSelectedPayment] =
-    useState<PaymentForDashboardProps | null>(null);
   const [isPaymentDetailModalOpen, setIsPaymentDetailModalOpen] =
     useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -69,7 +68,7 @@ export default function PaymentPage() {
     );
 
     return (
-      payment.customer.name.includes(sanitizedSearchTerm) ||
+      payment.user.name.includes(sanitizedSearchTerm) ||
       payment.lecture.lectureTitle.includes(sanitizedSearchTerm) ||
       paymentDate.includes(sanitizedSearchTerm)
     );
@@ -107,7 +106,7 @@ export default function PaymentPage() {
                 <tr
                   key={payment.paymentId}
                   onClick={() => handlePaymentClick(payment.paymentId)}>
-                  <td>{payment.customer.name}</td>
+                  <td>{payment.user.name}</td>
                   <td>{payment.lecture.lectureTitle}</td>
                   <td>{`${feeFormat(payment.lecture.lectureFee)} 원`}</td>
                   <td>{`${feeFormat(payment.paymentFee)} 원`}</td>
