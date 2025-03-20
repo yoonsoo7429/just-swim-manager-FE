@@ -67,7 +67,7 @@ export default function ManagePage() {
 
       if (paymentFee < lectureFee) {
         // 결제 금액이 부족하면 결제 페이지로 이동
-        window.location.href = `/manage/payment`; // 결제 페이지 URL로 리디렉션
+        window.location.href = `/manage/payment`;
       } else {
         // 결제 금액이 충분하면 승인 처리
         await approveRegistration(parseInt(registrationId));

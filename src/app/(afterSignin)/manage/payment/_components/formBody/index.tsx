@@ -12,7 +12,7 @@ import { formAction } from './action';
 import { FormButton, HistoryBackHeader } from '@components';
 import FeeInput from '@/_components/form/input/feeInput';
 import DateInput from '@/_components/form/input/dateInput';
-import { LectureProps, MemberInfoForLectureProps } from '@types';
+import { LectureProps, MemberProps, UserProps } from '@types';
 import { getLecturesInfo, getMembersInfo } from '@apis';
 import { dateFormate } from '@utils';
 
@@ -67,9 +67,9 @@ export function FormBody({
   const [selectedLecture, setSelectedLecture] = useState<LectureProps | null>(
     null,
   );
-  const [members, setMembers] = useState<MemberInfoForLectureProps[]>([]);
-  const [selectedMember, setSelectedMember] =
-    useState<MemberInfoForLectureProps | null>(null);
+  const [members, setMembers] = useState<MemberProps[]>([]);
+  const [registrationUser, setRegistrationUser] = useState<UserProps[]>([]);
+  const [selectedMember, setSelectedMember] = useState<MemberProps | null>(null);
 
   useEffect(() => {
     async function fetchLectures() {
@@ -81,34 +81,50 @@ export function FormBody({
 
   useEffect(() => {
     if (isModify && payment) {
-      setValue('paymentDate', payment.paymentDate);
+      setValue('paymentDate', payment.paymentDate || null);
       setValue('paymentFee', payment.paymentFee);
-    } else {
-      if (selectedLecture) {
-        setValue('paymentFee', selectedLecture.lectureFee);
-        setValue('paymentDate', dateFormate(new Date()));
-      }
+      setValue('lectureId', payment.lectureId);
+      setValue('userId', payment.userId);
+
+      // 강의 및 회원 정보 미리 선택
+      // @ts-ignore
+      setSelectedLecture(payment.lecture);
+      // @ts-ignore
+      setSelectedMember(payment.user);
+
+      // 강의 리스트를 해당 강의만 남기기
+      // @ts-ignore
+      setLectures([payment.lecture]);
+      // @ts-ignore
+      setRegistrationUser([payment.user]);
     }
-  }, [selectedLecture, setValue, isModify, payment]);
+  }, [isModify, payment, setValue]);
 
   const handleLectureSelect = async (lecture: LectureProps) => {
+    if (isModify) return;
+
     setSelectedLecture(lecture);
 
     const memberList = await getMembersInfo(lecture.lectureId);
     setMembers(memberList);
-
     setSelectedMember(null);
   };
 
-  const handleMemberSelect = async (member: MemberInfoForLectureProps) => {
+  const handleMemberSelect = async (member: MemberProps) => {
+    if (isModify) return;
     setSelectedMember(member);
   };
 
   const onSubmit = handleSubmit(async (input: PaymentType) => {
     const data = {
       ...input,
-      lectureId: selectedLecture?.lectureId,
-      customerId: selectedMember?.customerId,
+      // @ts-ignore
+      lectureId: parseInt(selectedLecture?.lectureId),
+      userId:
+        // @ts-ignore
+        parseInt(selectedMember?.userId) ||
+        // @ts-ignore
+        parseInt(selectedLecture?.member.user.userId),
     };
 
     const result = await formAction(data, type, id);
@@ -157,20 +173,26 @@ export function FormBody({
 
         {/* 고객 선택 */}
         <div className={styles.mid_container}>
-          <h3>수강생 선택</h3>
+          <h3>고객 선택</h3>
           <ul>
-            {members.map((member) => (
-              <li
-                key={member.memberId}
-                onClick={() => handleMemberSelect(member)}
-                className={
-                  selectedMember?.memberId === member.memberId
-                    ? styles.active
-                    : ''
-                }>
-                {member.customer.name} ({member.customer.birthDate})
-              </li>
-            ))}
+            {isModify && registrationUser.length > 0
+              ? registrationUser.map((user) => (
+                  <li key={user.userId} className={styles.active}>
+                    {user.name} ({user.birth})
+                  </li>
+                ))
+              : members.map((member) => (
+                  <li
+                    key={member.memberId}
+                    onClick={() => handleMemberSelect(member)}
+                    className={
+                      selectedMember?.memberId === member.memberId
+                        ? styles.active
+                        : ''
+                    }>
+                    {member.user.name} ({member.user.birth})
+                  </li>
+                ))}
           </ul>
         </div>
 
@@ -197,7 +219,7 @@ export function FormBody({
             <DateInput
               {...register('paymentDate')}
               valid={!errors.paymentDate}
-              value={watch('paymentDate')}
+              value={watch('paymentDate') || ''}
               errorMessage={errors.paymentDate?.message}
             />
           </InputWrapper>

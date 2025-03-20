@@ -74,6 +74,12 @@ export interface EditButtonProps {
   id: string;
 }
 
+export interface PaymentButtonProps {
+  type: string;
+  id: string;
+  disabled: boolean;
+}
+
 export interface ConfirmButtonProps {
   text: string;
   kind: 'confirm' | 'confirm-sub' | 'cancel' | 'cancel-sub' | 'normal';

@@ -25,11 +25,13 @@ function _FeeInput(
   }: FeeInputProps & InputHTMLAttributes<HTMLInputElement>,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const [fee, setFee] = useState<string>(String(value));
+  const [fee, setFee] = useState<string>(
+    value === 0 || value === '0' ? '' : String(value),
+  );
   const targetRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setFee(String(value));
+    setFee(value === 0 || value === '0' ? '' : String(value));
   }, [value]);
 
   const formatNumber = (num: string) => {
@@ -61,7 +63,6 @@ function _FeeInput(
         value={fee}
         onChange={onChangeHandler}
       />
-
       {errorMessage && (
         <div className={styles.error_message}>
           <p>{errorMessage}</p>

@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 import { LectureDetailProps } from './typeLecture';
-import { PaymentForDashboardProps } from './typePayment';
+import { PaymentProps } from './typePayment';
 import { MemberProps } from './typeMember';
 
 export interface ModalBodyProps {
@@ -17,7 +17,7 @@ export interface LectureDetailInfoModalProps extends ModalBodyProps {
 }
 
 export interface PaymentDetailInfoModalProps extends ModalBodyProps {
-  detailInfo: PaymentForDashboardProps;
+  detailInfo: PaymentProps;
 }
 
 export interface excelModalProps {

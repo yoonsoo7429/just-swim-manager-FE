@@ -7,6 +7,7 @@ export async function formAction(
   type: 'add' | 'modify',
   id: string,
 ) {
+  console.log(data);
   const errors = {
     duplicate: '',
   };
@@ -23,6 +24,7 @@ export async function formAction(
     if (result.status) {
       redirect('/manage/payment');
     } else {
+      console.log(result);
       return notFound();
     }
   } else {

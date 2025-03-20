@@ -5,7 +5,7 @@ import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
 import { PaymentProps, PaymentState } from '@types';
 import { getPaymentDetail, getPaymentsInfo } from '@apis';
-import { AddButton, EditButton } from '@components';
+import { AddButton, PaymentButton } from '@components';
 import { PaymentDetailInfoModal } from '@/_components/modal/paymentDetailInfoModal';
 import { feeFormat } from '@utils';
 import SearchInput from '@/_components/form/input/searchInput';
@@ -102,27 +102,33 @@ export default function PaymentPage() {
           </thead>
           <tbody>
             {paymentsInfo &&
-              filteredPayments.map((payment) => (
-                <tr
-                  key={payment.paymentId}
-                  onClick={() => handlePaymentClick(payment.paymentId)}>
-                  <td>{payment.user.name}</td>
-                  <td>{payment.lecture.lectureTitle}</td>
-                  <td>{`${feeFormat(payment.lecture.lectureFee)} 원`}</td>
-                  <td>{`${feeFormat(payment.paymentFee)} 원`}</td>
-                  <td>
-                    {getPaymentState(
-                      payment.paymentFee,
-                      payment.lecture.lectureFee,
-                    )}
-                  </td>
-                  <td>{payment.paymentDate ? payment.paymentDate : '-'}</td>
+              filteredPayments.map((payment) => {
+                const paymentState = getPaymentState(
+                  payment.paymentFee,
+                  payment.lecture.lectureFee,
+                );
 
-                  <td>
-                    <EditButton type="payment" id={payment.paymentId} />
-                  </td>
-                </tr>
-              ))}
+                return (
+                  <tr
+                    key={payment.paymentId}
+                    onClick={() => handlePaymentClick(payment.paymentId)}>
+                    <td>{payment.user.name}</td>
+                    <td>{payment.lecture.lectureTitle}</td>
+                    <td>{`${feeFormat(payment.lecture.lectureFee)} 원`}</td>
+                    <td>{`${feeFormat(payment.paymentFee)} 원`}</td>
+                    <td>{paymentState}</td>
+                    <td>{payment.paymentDate ? payment.paymentDate : '-'}</td>
+
+                    <td>
+                      <PaymentButton
+                        type="payment"
+                        id={payment.paymentId}
+                        disabled={paymentState === PaymentState.COMPLETE}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

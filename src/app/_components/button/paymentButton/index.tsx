@@ -1,14 +1,12 @@
-import { EditButtonProps } from '@types';
+import { PaymentButtonProps } from '@types';
 
 import styles from './styles.module.scss';
 import Link from 'next/link';
 
-export function EditButton({ type, id }: EditButtonProps) {
+export function PaymentButton({ type, id }: PaymentButtonProps) {
   let linkHref: string | undefined;
 
-  if (type === 'lecture') {
-    linkHref = `/manage/lecture/edit/${id}`;
-  } else if (type === 'payment') {
+  if (type === 'payment') {
     linkHref = `/manage/payment/edit/${id}`;
   }
 
@@ -18,7 +16,7 @@ export function EditButton({ type, id }: EditButtonProps) {
 
   return (
     <Link href={linkHref} className={styles.link}>
-      수정
+      결제
     </Link>
   );
 }

@@ -8,11 +8,16 @@ export default async function PaymentEditPage({
 }) {
   const param = await params;
   const paymentDetail = await getPaymentDetail(parseInt(param.id));
+  const payment = {
+    lectureId: parseInt(paymentDetail.lecture.lectureId),
+    userId: parseInt(paymentDetail.user.userId),
+    ...paymentDetail,
+  };
 
   return (
     <>
       {paymentDetail && (
-        <FormBody type="modify" id={param.id} payment={paymentDetail} />
+        <FormBody type="modify" id={param.id} payment={payment} />
       )}
     </>
   );

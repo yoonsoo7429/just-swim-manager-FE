@@ -2,18 +2,18 @@
 
 import { notFound } from 'next/navigation';
 
-import { PaymentForDashboardProps } from '@types';
+import { PaymentProps } from '@types';
 import { Fetch } from '@utils';
 
 export async function getPaymentsInfo(
   lectureId?: number,
-): Promise<PaymentForDashboardProps[]> {
+): Promise<PaymentProps[]> {
   const query = lectureId ? `?lectureId=${lectureId}` : '';
 
   const result = await Fetch<{
     status: boolean;
     message: string;
-    data: PaymentForDashboardProps[];
+    data: PaymentProps[];
   }>({
     url: `${process.env.NEXT_PUBLIC_API_URL}/payment${query}`,
     method: 'GET',

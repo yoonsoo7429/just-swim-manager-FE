@@ -22,10 +22,10 @@ export interface PaymentProps {
 }
 
 export interface PaymentBasicProps {
-  customerId: string | undefined;
-  lectureId: string | undefined;
+  lectureId: number | undefined;
+  userId: number | undefined;
   paymentFee: string;
-  paymentDate: string;
+  paymentDate: string | null;
 }
 
 export interface PaymentDetailProps extends PaymentProps {
