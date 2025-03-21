@@ -3,7 +3,11 @@ import { PaymentButtonProps } from '@types';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 
-export function PaymentButton({ type, id }: PaymentButtonProps) {
+export function PaymentButton({ type, id, disabled }: PaymentButtonProps) {
+  if (disabled) {
+    return null;
+  }
+
   let linkHref: string | undefined;
 
   if (type === 'payment') {
