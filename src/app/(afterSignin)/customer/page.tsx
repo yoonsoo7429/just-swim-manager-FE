@@ -8,7 +8,7 @@ import { DashboardProps } from '@types';
 import { getPaymentDetail } from '@apis';
 import { approveRegistration } from '@/_apis/registration';
 
-export default function ManagePage() {
+export default function CustomerPage() {
   const [dashboardInfo, setDashboardInfo] = useState<DashboardProps>();
 
   useEffect(() => {
