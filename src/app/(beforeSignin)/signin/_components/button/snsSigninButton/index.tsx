@@ -32,11 +32,10 @@ export function SNSSignInButton({ sns }: { sns: Provider }) {
       }
       setAddUserProfile({ token: authorizationToken, profile: userInfo.data });
       const checkType = getUserType(authorizationToken);
-      if (
-        checkType === USER_TYPE.INSTRUCTOR ||
-        checkType === USER_TYPE.CUSTOMER
-      ) {
+      if (checkType === USER_TYPE.INSTRUCTOR) {
         return router.replace(ROUTES.MANAGE.root);
+      } else if (checkType === USER_TYPE.CUSTOMER) {
+        return router.replace(ROUTES.CUSTOMER.root);
       }
       return router.replace(ROUTES.ONBOARDING.type);
     }
