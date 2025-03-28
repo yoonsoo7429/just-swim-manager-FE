@@ -6,9 +6,9 @@ import { getLecturesInfo } from '@apis';
 import { LectureDetailProps } from '@types';
 import { useEffect, useState } from 'react';
 import { LectureDetailInfoModal, AddButton, EditButton } from '@components';
+import { feeFormat } from '@utils';
 
 import styles from './page.module.scss';
-import { feeFormat } from '@utils';
 
 export default function LecturePage() {
   const [lecturesInfo, setLecturesInfo] = useState<LectureDetailProps[]>([]);

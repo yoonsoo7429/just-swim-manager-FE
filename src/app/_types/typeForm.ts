@@ -80,6 +80,10 @@ export interface PaymentButtonProps {
   disabled: boolean;
 }
 
+export interface RegistrationButtonProps {
+  onClick: () => void;
+}
+
 export interface ConfirmButtonProps {
   text: string;
   kind: 'confirm' | 'confirm-sub' | 'cancel' | 'cancel-sub' | 'normal';

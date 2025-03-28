@@ -6,7 +6,7 @@ import { getDashboardInfo } from '@/_apis/auth';
 import { useEffect, useState } from 'react';
 import { DashboardProps } from '@types';
 import { getPaymentDetail } from '@apis';
-import { approveRegistration } from '@/_apis/registration';
+import { approveRegistration } from '@/_apis';
 
 export default function ManagePage() {
   const [dashboardInfo, setDashboardInfo] = useState<DashboardProps>();

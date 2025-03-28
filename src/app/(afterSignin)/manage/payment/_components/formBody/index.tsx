@@ -86,13 +86,11 @@ export function FormBody({
       setValue('lectureId', payment.lectureId);
       setValue('userId', payment.userId);
 
-      // 강의 및 회원 정보 미리 선택
       // @ts-ignore
       setSelectedLecture(payment.lecture);
       // @ts-ignore
       setSelectedMember(payment.user);
 
-      // 강의 리스트를 해당 강의만 남기기
       // @ts-ignore
       setLectures([payment.lecture]);
       // @ts-ignore

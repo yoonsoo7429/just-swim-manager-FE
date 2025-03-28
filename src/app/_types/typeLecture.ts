@@ -1,4 +1,5 @@
 import { MemberDetailProps } from './typeMember';
+import { RegistrationProps } from './typeRegistration';
 
 export enum LectureLevel {
   BEGGINER_LEVEL = '초급',
@@ -19,6 +20,7 @@ export interface LectureProps {
   updatedAt: string;
   deletedAt: string | null;
   member: MemberDetailProps[];
+  registration: RegistrationProps[];
 }
 
 export interface LectureDetailProps extends LectureProps {}
