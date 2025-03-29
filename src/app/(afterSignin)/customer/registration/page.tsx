@@ -58,7 +58,7 @@ export default function RegistrationPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>강습 관리</h2>
+        <h2 className={styles.title}>수강 신청</h2>
       </div>
       <div className={styles.dashboard}>
         <table className={styles.table}>

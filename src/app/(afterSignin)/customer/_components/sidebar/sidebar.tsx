@@ -18,11 +18,11 @@ export default function Sidebar() {
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />
-          <Link href="/customer/registration">수강 신청</Link>
+          <Link href="/customer/lecture">수강 관리</Link>
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />
-          <Link href="/customer/lecture">수강 관리</Link>
+          <Link href="/customer/registration">수강 신청</Link>
         </li>
         <li>
           <IconArrowRight width={12} height={12} fill="#fff" />

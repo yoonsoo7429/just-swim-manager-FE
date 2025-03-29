@@ -2,16 +2,16 @@
 
 import { notFound } from 'next/navigation';
 
-import { MemberProps } from '@types';
+import { RegistrationProps } from '@types';
 import { Fetch } from '@utils';
 
-export async function getMembersInfo(): Promise<MemberProps[]> {
+export async function getRegistrationsInfo(): Promise<RegistrationProps[]> {
   const result = await Fetch<{
     status: boolean;
     message: string;
-    data: MemberProps[];
+    data: RegistrationProps[];
   }>({
-    url: `${process.env.NEXT_PUBLIC_API_URL}/member`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/registration`,
     method: 'GET',
     header: {
       token: true,
