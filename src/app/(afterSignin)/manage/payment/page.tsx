@@ -25,7 +25,7 @@ export default function PaymentPage() {
         const paymentsInfo = await getPaymentsInfo();
         setPaymentsInfo(paymentsInfo);
       } catch (error) {
-        console.error('Error fetching PaymentInfo', error);
+        console.error('Error fetching PaymentInfo(Instructor)', error);
       }
     };
     fetchData();
