@@ -60,6 +60,7 @@ export default function LecturePage() {
               <th>급수</th>
               <th>요일</th>
               <th>시간</th>
+              <th>날짜</th>
               <th>인원</th>
               <th>금액</th>
               <th></th>
@@ -74,6 +75,7 @@ export default function LecturePage() {
                 <td>{lecture.lectureLevel}</td>
                 <td>{lecture.lectureDays}</td>
                 <td>{lecture.lectureTime}</td>
+                <td>{lecture.lectureDate}</td>
                 <td>
                   {lecture?.member?.length} / {lecture.lectureCapacity}
                 </td>

@@ -16,6 +16,7 @@ export interface LectureProps {
   lectureTime: string;
   lectureFee: string;
   lectureCapacity: string;
+  lectureDate: string | null;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
@@ -32,4 +33,5 @@ export interface LectureBasicProps {
   lectureTime: string;
   lectureFee: string;
   lectureCapacity: number;
+  lectureDate: string | null;
 }

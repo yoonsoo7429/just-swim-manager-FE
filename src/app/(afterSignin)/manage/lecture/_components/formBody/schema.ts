@@ -12,6 +12,7 @@ export const lectureSchema = z.object({
   lectureTime: z.string(),
   lectureFee: z.string().min(1, '수업료를 넣어주세요.'),
   lectureCapacity: z.string(),
+  lectureDate: z.string(),
 });
 
 export type LectureType = z.infer<typeof lectureSchema>;

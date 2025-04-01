@@ -4,7 +4,7 @@ import styles from './page.module.scss';
 
 import { getDashboardInfo } from '@/_apis/auth';
 import { useEffect, useState } from 'react';
-import { DashboardProps } from '@types';
+import { DashboardProps, LectureProps } from '@types';
 import { getPaymentDetail } from '@apis';
 import { approveRegistration } from '@/_apis';
 
@@ -24,7 +24,7 @@ export default function ManagePage() {
   }, []);
 
   // 총 고객 수
-  const totalCustomers = dashboardInfo?.customers.length;
+  const totalCustomers = dashboardInfo?.customers?.length;
 
   // 오늘 날짜 계산
   const today = new Date();
@@ -32,7 +32,7 @@ export default function ManagePage() {
 
   // 오늘 추가된 고객 계산
   const recentCustomers =
-    dashboardInfo?.customers.filter((customer) => {
+    dashboardInfo?.customers?.filter((customer) => {
       const createdDate = new Date(customer.createdAt)
         .toISOString()
         .split('T')[0];
@@ -102,12 +102,13 @@ export default function ManagePage() {
         <div className={styles.dashboardItem}>
           <h3>수업 현황</h3>
           <div className={styles.dashboardStats}>
-            {dashboardInfo?.lectures.map((lecture) => (
-              <div key={lecture.lectureId} className={styles.statCard}>
-                <h4>{lecture.lectureTitle} : </h4>
-                <p>{lecture.member?.length ?? 0}명</p>
-              </div>
-            ))}
+            {dashboardInfo?.lectures &&
+              (dashboardInfo?.lectures as LectureProps[]).map((lecture) => (
+                <div key={lecture.lectureId} className={styles.statCard}>
+                  <h4>{lecture.lectureTitle} : </h4>
+                  <p>{lecture.member?.length ?? 0}명</p>
+                </div>
+              ))}
           </div>
         </div>
 
