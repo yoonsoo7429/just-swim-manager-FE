@@ -1,6 +1,7 @@
 'use client';
 
 import styles from './styles.module.scss';
+import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
 
 import { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 import { lectureSchema, LectureType } from './schema';
@@ -16,8 +17,7 @@ import DayInput from '@/_components/form/input/dayInput';
 import TimeInput from '@/_components/form/input/timeInput';
 import FeeInput from '@/_components/form/input/feeInput';
 import CapacityInput from '@/_components/form/input/capacityInput';
-
-import IconCheckboxInvalid from '@assets/icon_checkbox_invalid.svg';
+import DateInput from '@/_components/form/input/dateInput';
 
 function InputWrapper({
   children,
@@ -200,15 +200,26 @@ export function FormBody({
 
           {/* 수용 가능 인원 */}
           <InputWrapper
-            name="인원수"
+            name="수업 인원"
             required={true}
             onClick={clearDuplicateError}>
             <CapacityInput
               {...register('lectureCapacity')}
-              placeholder="인원수를 입력해주세요"
+              placeholder="수업 인원"
               valid={!errors.lectureCapacity}
               value={isModify ? lecture?.lectureCapacity : ''}
               errorMessage={errors.lectureCapacity?.message}
+            />
+          </InputWrapper>
+
+          {/* 수업 날짜 */}
+          <InputWrapper name="수업 날짜" onClick={clearDuplicateError}>
+            <DateInput
+              {...register('lectureDate')}
+              placeholder="수업 날짜"
+              valid={!errors.lectureDate}
+              value={isModify ? (lecture?.lectureDate ?? undefined) : undefined}
+              errorMessage={errors.lectureDate?.message}
             />
           </InputWrapper>
 

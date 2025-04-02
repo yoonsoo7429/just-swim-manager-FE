@@ -36,7 +36,9 @@ function _dateInput(
   }, [value]);
 
   useEffect(() => {
-    const dateData = `${dateParts.year}.${dateParts.month}.${dateParts.date}`;
+    const { year, month, date } = dateParts;
+    const dateData = year && month && date ? `${year}.${month}.${date}` : null;
+
     onChange({
       target: {
         name,

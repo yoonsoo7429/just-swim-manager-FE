@@ -103,7 +103,7 @@ export function FormBody({
 
     setSelectedLecture(lecture);
 
-    const memberList = await getMembersInfo(lecture.lectureId);
+    const memberList = await getMembersInfo();
     setMembers(memberList);
     setSelectedMember(null);
   };

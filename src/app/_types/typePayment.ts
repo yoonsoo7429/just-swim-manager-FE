@@ -4,7 +4,7 @@ import { RegistrationProps } from './typeRegistration';
 import { UserProps } from './typeUser';
 
 export enum PaymentState {
-  COMPLETE = '결제 완납',
+  COMPLETE = '결제 완료',
   ADDITIONAL_REQUIRED = '추가 결제 필요',
   PENDING = '결제 필요',
 }
