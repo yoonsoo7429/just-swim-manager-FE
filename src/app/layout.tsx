@@ -6,6 +6,9 @@ import { Suspense } from 'react';
 export const metadata: Metadata = {
   title: 'Just Swim Manager',
   description: 'Swimming Pool Customer Manager Service',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 type Props = {

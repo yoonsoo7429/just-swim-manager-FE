@@ -1,0 +1,119 @@
+@import '@/globals.scss';
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  width: 100%;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  background-color: $--Primary-blue;
+  justify-content: space-between;
+
+  .logo {
+    img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  .menu {
+    display: flex;
+    gap: 32px;
+
+    li {
+      @include Title3-M;
+      color: $--White;
+      cursor: pointer;
+    }
+  }
+
+  .sub_menu {
+    display: flex;
+    gap: 12px;
+
+    @include Title3-M;
+    color: $--White;
+
+    button {
+      @include Title3-M;
+      color: $--White;
+    }
+  }
+}
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  background-image: url('/assets/Onboarding.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: $--Black;
+
+  text-align: center;
+  color: $--White;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    @include Heading1;
+    margin-bottom: 10px;
+  }
+
+  p {
+    @include Title2-M;
+    margin-bottom: 20px;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: transparent;
+    border: 1px solid $--White;
+    color: $--White;
+    border-radius: 4px;
+    @include Title3-M;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $--White;
+      color: $--Black;
+    }
+  }
+}
+
+.floatingChat {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background-color: $--Primary-blue;
+  color: $--White;
+  border: none;
+  border-radius: 100px;
+  padding: 10px 18px;
+  @include Body2-R;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: $--Secondary;
+    color: $--Black;
+  }
+}

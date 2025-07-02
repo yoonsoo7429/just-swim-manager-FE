@@ -1,123 +1,11 @@
 @font-face {
   font-family: 'SUIT Variable';
   font-weight: 100 900;
-  src: url('../../public/SUIT-Variable-woff2/SUIT-Variable.woff2')
-    format('woff2-variations');
+  src: url('/SUIT-Variable-woff2/SUIT-Variable.woff2') format('woff2-variations');
+  font-display: swap;
 }
 
-@mixin Body5-R {
-  font-size: 10px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 400;
-}
-
-@mixin Body4-R {
-  font-size: 12px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 400;
-}
-
-@mixin Body3-R {
-  font-size: 13px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 400;
-}
-
-@mixin Body2-R {
-  font-size: 14px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 400;
-}
-
-@mixin Body1-R {
-  font-size: 16px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 400;
-}
-
-@mixin Title5-M {
-  font-size: 14px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 500;
-}
-
-@mixin Title5-SB {
-  font-size: 14px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 600;
-}
-
-@mixin Title4-M {
-  font-size: 15px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 500;
-}
-
-@mixin Title4-SB {
-  font-size: 15px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 600;
-}
-
-@mixin Title3-M {
-  font-size: 16px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 500;
-}
-
-@mixin Title3-SB {
-  font-size: 16px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 600;
-}
-
-@mixin Title2-M {
-  font-size: 19px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 500;
-}
-
-@mixin Title2-SB {
-  font-size: 19px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 600;
-}
-
-@mixin Title1-B {
-  font-size: 23px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 700;
-}
-
-@mixin Heading2 {
-  font-size: 15px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 500;
-}
-
-@mixin Heading1 {
-  font-size: 24px;
-  letter-spacing: -0.03em;
-  line-height: 150%;
-  font-weight: 700;
-}
-
-$font-size: 16px;
+// 색상 변수 정의
 $--Primary-blue: #3689ff;
 $--Secondary: #7ae8f8;
 $--Chips: #eff6ff;
@@ -137,3 +25,136 @@ $--gray-100: #f5f5f6;
 $--gray-50: #f8f9fa;
 
 $--line-height: 150%;
+
+// 기본 폰트 사이즈
+$font-size: 16px;
+
+// 반응형 믹스인
+@mixin responsive($breakpoint) {
+  @if $breakpoint == tablet {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+// Typography 스타일 (SUIT Variable 기반)
+@mixin Body5-R {
+  font-size: 10px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 400;
+}
+
+@mixin Body4-R {
+  font-size: 12px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 400;
+}
+
+@mixin Body3-R {
+  font-size: 13px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 400;
+}
+
+@mixin Body2-R {
+  font-size: 14px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 400;
+}
+
+@mixin Body1-R {
+  font-size: 16px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 400;
+}
+
+@mixin Title5-M {
+  font-size: 14px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 500;
+}
+
+@mixin Title5-SB {
+  font-size: 14px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 600;
+}
+
+@mixin Title4-M {
+  font-size: 15px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 500;
+}
+
+@mixin Title4-SB {
+  font-size: 15px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 600;
+}
+
+@mixin Title3-M {
+  font-size: 16px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 500;
+}
+
+@mixin Title3-SB {
+  font-size: 16px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 600;
+}
+
+@mixin Title2-M {
+  font-size: 19px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 500;
+}
+
+@mixin Title2-SB {
+  font-size: 19px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 600;
+}
+
+@mixin Title1-B {
+  font-size: 23px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 700;
+}
+
+@mixin Heading1 {
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 700;
+}
+
+@mixin Heading2 {
+  font-size: 15px;
+  letter-spacing: -0.03em;
+  line-height: $--line-height;
+  font-weight: 500;
+}
+
+.container {
+  width: 100%;
+}
