@@ -12,6 +12,7 @@
 }
 
 .navbar {
+  position: relative;
   width: 100%;
   padding: 10px 40px;
   display: flex;
@@ -19,10 +20,55 @@
   background-color: $--Primary-blue;
   justify-content: space-between;
 
+  .sidebar {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .sidebar_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: $--gray-800;
+    z-index: 1002;
+    padding: 20px;
+  }
+
+  .sidebar_backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+  }
+
+  .close_button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
   .logo {
+    margin-left: 48px;
+
     img {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
     }
   }
 
@@ -31,7 +77,7 @@
     gap: 32px;
 
     li {
-      @include Title3-M;
+      @include Title3-SB;
       color: $--White;
       cursor: pointer;
     }
@@ -39,14 +85,19 @@
 
   .sub_menu {
     display: flex;
+    justify-content: flex-end;
+    align-items: center;
     gap: 12px;
+    min-width: 130px;
+    text-align: right;
 
-    @include Title3-M;
-    color: $--White;
-
+    a,
     button {
-      @include Title3-M;
       color: $--White;
+      @include Title3-SB;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   }
 }

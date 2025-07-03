@@ -3,15 +3,44 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Link from 'next/link';
+import { useState } from 'react';
+import Sidebar from './_components/sidebar';
+
 import Symbol from '@assets/Symbol.png';
 import Onboarding from '@assets/Onboarding.png';
+import IconBars from '@assets/icon_bars.svg';
 
 export default function Page() {
-  const isLoggedIn = true; // 실제로는 로그인 여부에 따라 분기해야 함 (예: useSession or cookies 등)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const isLoggedIn = false; // 실제로는 로그인 여부에 따라 분기해야 함 (예: useSession or cookies 등)
 
   return (
     <div className={styles.container}>
       <nav className={styles.navbar}>
+        <button
+          className={styles.sidebar}
+          onClick={() => setIsSidebarOpen(true)}>
+          <IconBars width={24} height={24} fill="#fff" />
+        </button>
+
+        {isSidebarOpen && (
+          <>
+            <div
+              className={styles.sidebar_backdrop}
+              onClick={() => setIsSidebarOpen(false)}
+            />
+            <div className={styles.sidebar_wrapper}>
+              <Sidebar />
+              <button
+                className={styles.close_button}
+                onClick={() => setIsSidebarOpen(false)}>
+                ✕
+              </button>
+            </div>
+          </>
+        )}
+
         <div className={styles.logo}>
           <Image src={Symbol} alt="symbol" />
         </div>
@@ -34,11 +63,11 @@ export default function Page() {
       </nav>
 
       <main className={styles.hero}>
-        <h1>JUST SWIM</h1>
+        {/* <h1>JUST SWIM</h1>
         <p>수영을 더 자유롭게, 더 전문적으로</p>
         <Link href="/signin" className={styles.cta}>
           DIVE IN
-        </Link>
+        </Link> */}
       </main>
 
       {/* <button className={styles.floatingChat}>문의</button> */}
