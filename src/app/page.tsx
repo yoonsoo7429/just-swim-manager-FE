@@ -3,17 +3,23 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from './_components/sidebar';
 
 import Symbol from '@assets/Symbol.png';
-import Onboarding from '@assets/Onboarding.png';
+import Logo from '@assets/logo.jpg';
 import IconBars from '@assets/icon_bars.svg';
 
 export default function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const isLoggedIn = false; // 실제로는 로그인 여부에 따라 분기해야 함 (예: useSession or cookies 등)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const cookies = document.cookie;
+    const hasAuthToken = cookies.includes('authorization=');
+    setIsLoggedIn(hasAuthToken);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -42,7 +48,7 @@ export default function Page() {
         )}
 
         <div className={styles.logo}>
-          <Image src={Symbol} alt="symbol" />
+          <Image src={Logo} alt="symbol" />
         </div>
         <ul className={styles.menu}>
           <li>ABOUT</li>

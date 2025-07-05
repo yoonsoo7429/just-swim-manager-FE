@@ -5,11 +5,6 @@ export const USER_TYPE = {
   CUSTOMER: 'customer',
 } as const;
 
-export const USER_GENDER = {
-  MAN: '남자',
-  WOMAN: '여자',
-} as const;
-
 export const SNS = {
   KAKAO: 'kakao',
   NAVER: 'naver',
@@ -18,4 +13,10 @@ export const SNS = {
 export const OnBoardingType = {
   SIGNIN: 'Sign In',
   SIGNUP: 'Sign Up',
+} as const;
+
+export const STATUS = {
+  PENDING: 'pending',
+  APPROVED: 'approved',
+  REJECTED: 'rejected',
 } as const;

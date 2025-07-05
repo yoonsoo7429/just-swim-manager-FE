@@ -12,7 +12,7 @@ export async function updateUser(
     status: boolean;
     message: string;
   }>({
-    url: `${process.env.NEXT_PUBLIC_API_URL}/user`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
     method: 'PATCH',
     header: {
       token: true,

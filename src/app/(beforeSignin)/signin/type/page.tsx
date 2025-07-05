@@ -2,189 +2,186 @@
 
 import styles from './pages.module.scss';
 
-import { useLayoutEffect, useState } from 'react';
-import { USER_GENDER, USER_TYPE, TEXT, HTTP_STATUS, ROUTES } from '@data';
-import { UserGender, UserType } from '@types';
+import { useEffect, useState } from 'react';
+import { USER_TYPE, TEXT, HTTP_STATUS, ROUTES } from '@data';
+import { UserType } from '@types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getUserDetail, updateUser } from '@apis';
-import { useUserStore } from '@store';
-import { getTokenInCookies, setTokenInCookies } from '@utils';
+import Image from 'next/image';
+
+import Symbol from '@assets/Symbol.png';
+import IconInputValid from '@assets/icon_input_valid.svg';
+import { setTokenInCookies } from '@utils';
 
 export default function Type() {
   const router = useRouter();
-  const params = useSearchParams().get('token');
+  const token = useSearchParams().get('token');
 
-  const [type, setType] = useState<UserType>();
-  const [gender, setGender] = useState<UserGender>();
-  const [address, setAddress] = useState<string>('');
-  const [token, setToken] = useState<string>();
-  const [instructorKey, setInstructorKey] = useState<string>('');
+  const [userType, setUserType] = useState<UserType>();
+  const [name, setName] = useState<string>('');
+  const [birth, setBirth] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
 
-  const [collapsed, setCollapsed] = useState({
-    gender: false,
-    address: true,
-    type: true,
-  });
+  const [valid, setValid] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const { setAddUserToken, setAddUserProfile, getUserType } = useUserStore();
+  useEffect(() => {
+    const checkUserType = async () => {
+      if (token) {
+        await setTokenInCookies(token);
 
-  useLayoutEffect(() => {
-    const checkToken = async () => {
-      if (params) {
-        const newToken = await setTokenInCookies(params);
-        setAddUserToken(newToken);
+        try {
+          const data = await getUserDetail();
+          setName(data?.data.name);
 
-        const result = await getUserDetail();
-        setAddUserProfile({ token: newToken, profile: result.data });
-        if (result.data.userType) {
-          return router.push(ROUTES.MANAGE.root);
+          if (data?.data.userType) {
+            router.replace(ROUTES.ONBOARDING.home);
+          }
+        } catch (err: any) {
+          console.error('[checkUserType error]', err);
+          setErrorMsg(err?.message || '에러가 발생했습니다.');
         }
-        setToken(newToken);
       } else {
-        const authorizationToken = await getTokenInCookies();
-        const userType = getUserType(authorizationToken);
-
-        if (userType) {
-          return router.replace(ROUTES.MANAGE.root);
-        }
-        setToken(authorizationToken);
+        console.log('token이 없습니다.');
       }
     };
-    checkToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const toggleCollapse = (field: 'gender' | 'address' | 'type') => {
-    setCollapsed({ gender: true, address: true, type: true, [field]: false });
+    checkUserType();
+  }, [router]);
+
+  useEffect(() => {
+    const isValid =
+      userType !== null &&
+      name.trim().length > 0 &&
+      birth.length === 10 &&
+      phoneNumber.length === 13;
+
+    setValid(isValid);
+  }, [userType, name, birth, phoneNumber]);
+
+  const handleNextPage = async () => {
+    const { status } = await updateUser({
+      name,
+      birth,
+      phoneNumber,
+      userType,
+    });
+
+    if (status === true) {
+      router.push(ROUTES.ONBOARDING.home);
+    }
   };
 
-  const handleSetType = async () => {
-    if (!gender || !address.trim() || !type) {
-      alert('성별, 주소, 타입을 모두 선택해주세요.');
-      return;
-    }
+  const handleInputName = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setName(evt.target.value);
+  };
 
-    if (type === USER_TYPE.INSTRUCTOR && !instructorKey.trim()) {
-      alert('인증키를 입력해주세요.');
-      return;
-    }
+  const handleInputBirth = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // 숫자만 남김
 
-    if (!token) {
-      router.replace(ROUTES.ONBOARDING.signin);
+    if (value.length > 8) value = value.slice(0, 8);
+
+    if (value.length >= 7) {
+      value = `${value.slice(0, 4)}.${value.slice(4, 6)}.${value.slice(6)}`;
+    } else if (value.length >= 5) {
+      value = `${value.slice(0, 4)}.${value.slice(4)}`;
     } else {
-      const result = await updateUser({ gender, address, userType: type });
-
-      if (result.status) {
-        setAddUserProfile({
-          token: token,
-          profile: { userType: type },
-        });
-        return router.push(ROUTES.MANAGE.root);
-      }
+      value = value;
     }
-  };
-  return (
-    <div className={styles.container}>
-      <h1>회원 가입을 완료해주세요</h1>
-      {/* 성별 선택 */}
-      <div className={styles.section}>
-        <div className={styles.header} onClick={() => toggleCollapse('gender')}>
-          <span>{gender ? `성별: ${gender}` : '성별을 선택하세요'}</span>
-        </div>
-        {!collapsed.gender && (
-          <div className={styles.content}>
-            {Object.values(USER_GENDER).map((g) => (
-              <button
-                key={g}
-                className={`${styles.button} ${gender === g ? styles.selected : ''}`}
-                onClick={() => {
-                  setGender(g);
-                  setCollapsed((prev) => ({
-                    ...prev,
-                    gender: true,
-                    address: false,
-                  }));
-                }}>
-                {g}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {/* 주소 입력 */}
-      <div className={styles.section}>
-        <div className={styles.header} onClick={() => toggleCollapse('address')}>
-          <span>{address ? `주소: ${address}` : '주소를 입력하세요'}</span>
-        </div>
-        {!collapsed.address && (
-          <div className={styles.content}>
+    setBirth(value);
+  };
+
+  const handleInputPhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+
+    if (value.length > 11) value = value.slice(0, 11);
+
+    if (value.length >= 8) {
+      value = `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`;
+    } else if (value.length >= 4) {
+      value = `${value.slice(0, 3)}-${value.slice(3)}`;
+    }
+
+    setPhoneNumber(value);
+  };
+
+  return (
+    <>
+      <div className={styles.container}>
+        <nav className={styles.navbar}>
+          <div className={styles.logo}>
+            <Image src={Symbol} alt="symbol" />
+          </div>
+        </nav>
+
+        <div className={styles.user_info_section}>
+          <h1>회원 가입을 완료해주세요</h1>
+
+          {/* 유저 타입 */}
+          <div className={styles.input_wrapper}>
+            <div className={styles.content}>
+              {Object.values(USER_TYPE).map((data) => (
+                <button
+                  key={data}
+                  className={`${styles.button} ${userType === data ? styles.selected : ''}`}
+                  onClick={() => {
+                    setUserType(data);
+                  }}>
+                  {TEXT.TYPE_SELECT_PAGE.userType[data]}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 이름 */}
+          <div className={styles.nickname_wrapper}>
             <input
               type="text"
-              placeholder="예: 서울특별시 강남구"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={name}
+              onChange={handleInputName}
+              className={styles.nickname}
+            />
+            {valid && <IconInputValid width={18} height={18} />}
+          </div>
+
+          {/* 전화 번호 */}
+          <div className={styles.input_wrapper}>
+            <input
+              type="tel"
+              value={phoneNumber}
+              onChange={handleInputPhoneNumber}
+              inputMode="numeric"
+              placeholder="전화번호 ex) 010-1234-5678"
               className={styles.input}
             />
+          </div>
+
+          {/* 생년 월일 */}
+          <div className={styles.input_wrapper}>
+            <input
+              type="text"
+              value={birth}
+              onChange={handleInputBirth}
+              inputMode="numeric"
+              placeholder="생년월일 ex) 1995.09.13"
+              className={styles.input}
+            />
+          </div>
+        </div>
+
+        {/* 완료 버튼 */}
+        <div className={styles.profile_setting_footer}>
+          <div className={styles.button_wrapper}>
             <button
-              className={styles.next_button}
-              onClick={() =>
-                setCollapsed((prev) => ({ ...prev, address: true, type: false }))
-              }>
-              다음
+              className={`${styles.select_button} ${valid ? styles.active : ''}`}
+              onClick={handleNextPage}>
+              {valid ? TEXT.COMMON.done : TEXT.COMMON.next}
             </button>
           </div>
-        )}
-      </div>
-
-      {/* 타입 선택 */}
-      <div className={styles.section}>
-        <div className={styles.header} onClick={() => toggleCollapse('type')}>
-          <span>
-            {type
-              ? `회원 타입: ${TEXT.TYPE_SELECT_PAGE.type[type]}`
-              : '회원 타입을 선택하세요'}
-          </span>
         </div>
-        {!collapsed.type && (
-          <div className={styles.content}>
-            {Object.values(USER_TYPE).map((data) => (
-              <button
-                key={data}
-                className={`${styles.button} ${type === data ? styles.selected : ''}`}
-                onClick={() => {
-                  setType(data);
-                  setCollapsed((prev) => ({ ...prev, type: true }));
-                }}>
-                {TEXT.TYPE_SELECT_PAGE.type[data]}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
-
-      {/* 인증키 입력 (수영 강사 선택 시) */}
-      {type === USER_TYPE.INSTRUCTOR && (
-        <div className={styles.section}>
-          <div className={styles.header}>수영 강사 인증키 입력</div>
-          <div className={styles.content}>
-            <input
-              type="text"
-              placeholder="인증키를 입력하세요"
-              value={instructorKey}
-              onChange={(e) => setInstructorKey(e.target.value)}
-              className={styles.input}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* 완료 버튼 */}
-      {gender && address.trim() && type && (
-        <button className={styles.submit_button} onClick={handleSetType}>
-          완료
-        </button>
-      )}
-    </div>
+      {errorMsg && <div className={styles.error_box}>{errorMsg}</div>}
+    </>
   );
 }

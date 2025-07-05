@@ -1,134 +1,233 @@
 @import '@/globals.scss';
 
 .container {
+  width: 100%;
+  height: 100vh;
+  background-color: $--Black;
+  background-size: cover;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  width: 60vw;
-  margin: auto;
+
+  .navbar {
+    position: relative;
+    width: 100%;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    background-color: $--Primary-blue;
+
+    .logo {
+      img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
 
   h1 {
     @include Heading1;
+    color: $--White;
   }
-}
 
-.section {
-  width: 100%;
-  background-color: #f7faff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+  .user_info_section {
+    width: 250px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+    .nickname_wrapper {
+      position: relative;
+      width: inherit;
 
-.content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 14px;
 
-  .button {
-    flex: 1 1 calc(33.333% - 10px);
-    padding: 10px 0;
+      .nickname {
+        @include Title3-M;
 
-    border: 2px solid $--gray-100;
-    border-radius: 8px;
+        height: 51px;
+        padding: 15px 16px;
+        background-color: $--gray-50;
+        outline: 2px solid $--gray-100;
+        border-radius: 6px;
+        border: none;
+      }
 
-    background-color: $--gray-50;
-    color: $--gray-600;
-    font-size: 16px;
-    font-weight: bold;
+      svg {
+        position: absolute;
 
-    cursor: pointer;
-    transition:
-      background-color 0.2s,
-      color 0.2s,
-      border-color 0.2s;
+        top: 50%;
+        transform: translate(0, -50%);
 
-    &:hover {
-      background-color: $--gray-100;
+        right: 16px;
+      }
     }
 
-    &.selected {
+    .input_wrapper {
+      position: relative;
+      width: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 14px;
+      background-color: $--White;
+      border-radius: 6px;
+
+      input {
+        @include Title3-M;
+
+        height: 51px;
+        padding: 15px 16px;
+        background-color: $--gray-50;
+        outline: 2px solid $--gray-100;
+        border-radius: 6px;
+        border: none;
+      }
+
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 6px;
+
+        .button {
+          flex: 1 1 calc(50% - 10px);
+          padding: 15px 16px;
+
+          border: 2px solid $--gray-100;
+          border-radius: 6px;
+
+          background-color: $--gray-50;
+          color: $--gray-600;
+          font-size: 16px;
+          font-weight: bold;
+
+          cursor: pointer;
+          transition:
+            background-color 0.2s,
+            color 0.2s,
+            border-color 0.2s;
+
+          &:hover {
+            background-color: $--gray-100;
+          }
+
+          &.selected {
+            background-color: $--Primary-blue;
+            color: #fff;
+            border-color: $--Primary-blue;
+          }
+        }
+      }
+    }
+
+    .next_button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
       background-color: $--Primary-blue;
-      color: #fff;
-      border-color: $--Primary-blue;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #005ecb;
+      }
+    }
+
+    .input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .submit_button {
+      background-color: $--Primary-blue;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 16px;
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    .selected_info_bar {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .selected_item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: white;
+      padding: 8px 15px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #1e8ee2;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: white;
+        transform: scale(1.05);
+      }
     }
   }
 }
 
-.next_button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: $--Primary-blue;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #005ecb;
-  }
-}
-
-.input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.submit_button {
-  background-color: $--Primary-blue;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 25px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-}
-
-.selected_info_bar {
+.profile_setting_footer {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.selected_item {
-  display: flex;
-  align-items: center;
+  justify-content: flex-end;
   gap: 10px;
-  background-color: white;
-  padding: 8px 15px;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 14px;
-  color: #1e8ee2;
-  transition: all 0.3s ease;
+  width: 100%;
 
-  &:hover {
-    background-color: white;
-    transform: scale(1.05);
+  .button_wrapper {
+    width: inherit;
+    height: 52px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .select_button {
+    @include Title3-SB;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+
+  .active {
+    background-color: $--Primary-blue;
+    color: $--White;
+  }
+
+  .inactive {
+    background-color: $--gray-300;
+    color: $--White;
+    cursor: not-allowed;
   }
 }

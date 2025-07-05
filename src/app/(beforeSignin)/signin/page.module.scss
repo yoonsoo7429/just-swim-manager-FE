@@ -1,44 +1,68 @@
 @import '@/globals.scss';
 
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f8f9fb;
-  padding: 20px;
-}
-
-.header {
-  @include Title1-B;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f9fb;
-
-  h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 10px;
-  }
-
-  p {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 40px;
-    max-width: 400px;
-  }
-}
-
-.sns_section {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  gap: 20px;
   width: 100%;
-  max-width: 360px;
+  height: 100vh;
+  background-color: $--Black;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .navbar {
+    position: relative;
+    width: 100%;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    background-color: $--Primary-blue;
+
+    .logo {
+      img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+
+  .signin_section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .header {
+      @include Title1-B;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $--Black;
+
+      h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: $--White;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 16px;
+        color: $--White;
+        margin-bottom: 40px;
+        max-width: 400px;
+      }
+    }
+
+    .sns_section {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      gap: 20px;
+      width: 100%;
+      max-width: 360px;
+    }
+  }
 }

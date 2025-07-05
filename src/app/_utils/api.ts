@@ -1,6 +1,9 @@
+'use server';
+
 import { notFound, redirect } from 'next/navigation';
 
 import { getTokenInCookies } from '@utils';
+import { cookies } from 'next/headers';
 
 export async function Fetch<T>({
   url,
@@ -23,31 +26,34 @@ export async function Fetch<T>({
   };
   body?: Object | null;
 }): Promise<T> {
-  const token = await getTokenInCookies();
+  const accessToken = (await cookies()).get('authorization')?.value || '';
 
-  if (!token) {
-    redirect('/signin');
-  }
+  let cookieHeader = `authorization=${accessToken};`;
 
-  try {
-    const response = await fetch(url, {
+  const buildHeaders = (): Record<string, string> => {
+    const headers: Record<string, string> = {};
+    if (header.json) headers['Content-Type'] = 'application/json';
+    headers['Cookie'] = cookieHeader;
+    return headers;
+  };
+
+  const doRequest = async (): Promise<{
+    status: number;
+    ok: boolean;
+    data: T;
+  }> => {
+    const res = await fetch(url, {
       method,
-      headers: {
-        'Content-Type': header.json
-          ? 'application/json'
-          : header.formData
-            ? 'multipart/form-data'
-            : '',
-        Authorization: header.token ? `Bearer ${token}` : '',
-        credentials: header.credential ? 'include' : '',
-      },
-      body: body && JSON.stringify(body),
+      headers: buildHeaders(),
+      credentials: header.credential ? 'include' : 'same-origin',
+      body: body ? JSON.stringify(body) : null,
     });
 
-    const result = await response.json();
+    const json = await res.json();
+    return { status: res.status, ok: res.ok, data: json };
+  };
 
-    return result;
-  } catch (error) {
-    return notFound();
-  }
+  let response = await doRequest();
+
+  return response.data;
 }

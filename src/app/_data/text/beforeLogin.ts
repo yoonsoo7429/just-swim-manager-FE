@@ -20,11 +20,7 @@ export const SELECT_TEXT = {
     first: '원활한 서비스 이용을 위해',
     second: '회원 타입을 선택해주세요.',
   },
-  gender: {
-    man: '남자',
-    woman: '여자',
-  },
-  type: {
+  userType: {
     instructor: '수영 강사',
     customer: '수강생',
   },

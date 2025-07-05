@@ -1,3 +1,7 @@
+const HOME_ROUTE = {
+  home: '/',
+} as const;
+
 const SIGNIN_ROUTE = {
   signin: '/signin',
   type: '/signin/type',
@@ -12,7 +16,6 @@ const CUSTOMER_ROUTE = {
 } as const;
 
 export const ROUTES = {
-  ONBOARDING: { ...SIGNIN_ROUTE },
-  CUSTOMER: { ...CUSTOMER_ROUTE },
-  MANAGE: { ...MANAGE_ROUTE },
+  ONBOARDING: { ...HOME_ROUTE },
+  SINGIN: { ...SIGNIN_ROUTE },
 } as const;

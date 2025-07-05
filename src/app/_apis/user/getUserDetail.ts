@@ -2,18 +2,18 @@
 
 import { notFound } from 'next/navigation';
 
-import { UserDetailProps } from '@types';
+import { UserProps } from '@types';
 import { Fetch } from '@utils';
 
 export async function getUserDetail(): Promise<{
   status: number;
   message: string;
-  data: UserDetailProps;
+  data: UserProps;
 }> {
   const result = await Fetch<{
     status: number;
     message: string;
-    data: UserDetailProps;
+    data: UserProps;
   }>({
     url: `${process.env.NEXT_PUBLIC_API_URL}/user`,
     method: 'GET',

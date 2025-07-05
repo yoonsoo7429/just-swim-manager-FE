@@ -17,28 +17,9 @@ const SNS_ICONS = {
 
 export function SNSSignInButton({ sns }: { sns: Provider }) {
   const router = useRouter();
-  const { setAddUserProfile, setAddUserToken, getUserType } = useUserStore();
   const Icon = SNS_ICONS[sns];
 
   const handleOnboarding = async () => {
-    const authorizationToken = await getTokenInCookies();
-
-    if (authorizationToken) {
-      const userInfo = await getUserDetail();
-
-      if (userInfo.status === HTTP_STATUS.NOT_ACCEPTABLE) {
-        setAddUserToken('');
-        return router.replace(ROUTES.ONBOARDING.signin);
-      }
-      setAddUserProfile({ token: authorizationToken, profile: userInfo.data });
-      const checkType = getUserType(authorizationToken);
-      if (checkType === USER_TYPE.INSTRUCTOR) {
-        return router.replace(ROUTES.MANAGE.root);
-      } else if (checkType === USER_TYPE.CUSTOMER) {
-        return router.replace(ROUTES.CUSTOMER.root);
-      }
-      return router.replace(ROUTES.ONBOARDING.type);
-    }
     const redirectURL = await signin(sns);
     if (!redirectURL) {
       throw new Error('Failed to get the redirect URL');
